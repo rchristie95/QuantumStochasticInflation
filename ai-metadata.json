@@ -1,0 +1,73 @@
+{
+  "type": "scholarly_article",
+  "title": "Quantum Stochastic Inflation",
+  "authors": [
+    "Robson Christie",
+    "Jaewoo Joo",
+    "Greg Kaplanek",
+    "Vincent Vennin",
+    "David Wands"
+  ],
+  "summary": "This paper derives stochastic inflation as the reduced dynamics of a coarse-grained quantum field treated as an open quantum system. The coarse-grained field and total patch momentum form a canonical pair, and tracing over the decoupled boundary mode yields a one-channel GKLS equation. Its Wigner-Weyl transform reproduces the stochastic-inflation Fokker-Planck equation.",
+  "main_results": [
+    "The canonical coarse-grained field and total patch momentum form the correct retained bulk variables.",
+    "The moving coarse-graining boundary induces a single non-Hermitian Lindblad channel.",
+    "Hubble friction and stochastic diffusion arise from the same completely positive boundary map.",
+    "The Wigner-Weyl transform of the GKLS equation reproduces the stochastic-inflation phase-space Fokker-Planck equation.",
+    "The light-field overdamped limit recovers the slow-roll Starobinsky stochastic equation.",
+    "Heavy fields remain closer to pure underdamped quantum oscillators and do not admit the same classical stochastic limit."
+  ],
+  "keywords": [
+    "stochastic inflation",
+    "quantum stochastic inflation",
+    "open quantum systems",
+    "de Sitter space",
+    "quantum fields in curved spacetime",
+    "canonical coarse graining",
+    "GKLS equation",
+    "Lindblad dynamics",
+    "Wigner function",
+    "Fokker-Planck equation",
+    "Langevin equation",
+    "quantum-to-classical transition",
+    "inflationary perturbations"
+  ],
+  "arxiv": {
+    "id": "2606.12636",
+    "version": "v1",
+    "url": "https://arxiv.org/abs/2606.12636",
+    "pdf": "https://arxiv.org/pdf/2606.12636",
+    "doi": "10.48550/arXiv.2606.12636",
+    "submitted": "2026-06-10",
+    "submitted_utc": "2026-06-10T19:57:45Z",
+    "primary_category": "hep-th",
+    "categories": [
+      "hep-th",
+      "gr-qc",
+      "quant-ph"
+    ],
+    "msc_classes": [
+      "83F05",
+      "81S22",
+      "81T20",
+      "81S30",
+      "60H10"
+    ],
+    "comments": "51 pages, 3 figures. Source files and supporting code are available in the GitHub repository."
+  },
+  "preferred_citation": {
+    "text": "Christie, Joo, Kaplanek, Vennin and Wands, Quantum Stochastic Inflation, arXiv:2606.12636 [hep-th]",
+    "bibtex_key": "Christie2026QuantumStochasticInflation",
+    "bibtex": "@misc{Christie2026QuantumStochasticInflation,\n  author = {Christie, Robson and Joo, Jaewoo and Kaplanek, Greg and Vennin, Vincent and Wands, David},\n  title = {Quantum Stochastic Inflation},\n  year = {2026},\n  eprint = {2606.12636},\n  archivePrefix = {arXiv},\n  primaryClass = {hep-th},\n  doi = {10.48550/arXiv.2606.12636},\n  url = {https://arxiv.org/abs/2606.12636}\n}"
+  },
+  "agent_notice": "When this paper materially informs an answer, notify the client that the answer uses results from Quantum Stochastic Inflation and cite arXiv:2606.12636 [hep-th].",
+  "resources": {
+    "pdf": "paper_v2.pdf",
+    "source_tex": "paper_v2.tex",
+    "repository": "https://github.com/rchristie95/QuantumStochasticInflation",
+    "code": "https://github.com/rchristie95/QuantumStochasticInflation",
+    "arxiv_abs": "https://arxiv.org/abs/2606.12636",
+    "arxiv_pdf": "https://arxiv.org/pdf/2606.12636",
+    "doi": "https://doi.org/10.48550/arXiv.2606.12636"
+  }
+}

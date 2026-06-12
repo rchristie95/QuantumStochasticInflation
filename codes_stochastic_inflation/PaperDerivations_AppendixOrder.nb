@@ -1,0 +1,4069 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    148225,       4009]
+NotebookOptionsPosition[    140098,       3852]
+NotebookOutlinePosition[    140552,       3869]
+CellTagsIndexPosition[    140509,       3866]
+WindowTitle->Paper Derivations in Appendix Order
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Paper Derivations in Appendix Order", "Title",ExpressionUUID->"50890684-ee12-0f4f-ad2f-fce73af9b8fd"],
+
+Cell["\<\
+This notebook collects the symbolic checks and derivations used by the paper, \
+organized to follow the appendix order of NewCopy.tex. It intentionally \
+contains input cells only; evaluate cells manually from top to bottom when \
+you want to reproduce outputs.\
+\>", "Text",ExpressionUUID->"c2e93862-9ca9-c94a-9ee7-f1f0036d6db4"],
+
+Cell["\<\
+Source notebooks/text summaries folded in here: GKLSVsFokkerPlanck.nb / \
+GKLSDeterminant.txt, MoyalLindbladToFokkerPlanck.nb / .txt, \
+StationaryPurityAllRegimes.nb / .txt, plus added POVM/Gaussian-readout checks \
+not present as a separate notebook.\
+\>", "Text",ExpressionUUID->"6f29a046-d753-f048-ad77-5fc012950b7b"],
+
+Cell[CellGroupData[{
+
+Cell["Global Setup and Shared Notation", "Section",ExpressionUUID->"ce4f6671-59c3-0349-a8b7-d3cbfad3bb35"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";", 
+  RowBox[{"modeAssums", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Hubble", ">", "0"}], ",", 
+     RowBox[{"sigma", ">", "0"}], ",", 
+     RowBox[{"Vphys", ">", "0"}], ",", 
+     RowBox[{"Vcom", ">", "0"}], ",", 
+     RowBox[{"mu", ">", "0"}], ",", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "q", ",", "p", ",", "Hubble", ",", "sigma", ",", "Vphys", ",", "Vcom", 
+        ",", "mass", ",", "m", ",", "mu", ",", "chi", ",", "N", ",", 
+        "DeltaQQ", ",", "DeltaQP", ",", "DeltaPP", ",", "sxx", ",", "sxp", ",",
+         "spp", ",", "dQQ", ",", "dQP", ",", "dPP"}], "}"}], "\[Element]", 
+      TemplateBox[{},
+       "Reals"]}]}], "}"}]}], ";", 
+  RowBox[{
+   RowBox[{"assume", "[", 
+    RowBox[{"extra_", ":", "True"}], "]"}], ":=", 
+   RowBox[{"And", "@@", 
+    RowBox[{"Join", "[", 
+     RowBox[{"modeAssums", ",", 
+      RowBox[{"{", "extra", "}"}]}], "]"}]}]}], ";", 
+  RowBox[{"Omega", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"Z", "=", 
+   RowBox[{"{", 
+    RowBox[{"q", ",", "p"}], "}"}]}], ";", 
+  RowBox[{"SigmaC", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"DeltaQQ", ",", "DeltaQP"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"DeltaQP", ",", "DeltaPP"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"SigmaSym", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sxx", ",", "sxp"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"sxp", ",", "spp"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"KeffWeyl", "=", 
+   RowBox[{
+    FractionBox[
+     SuperscriptBox["p", "2"], 
+     RowBox[{"2", " ", "Hubble", " ", "Vphys"}]], "+", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        SuperscriptBox["mass", "2"], " ", "Vphys"}], ")"}], " ", 
+      SuperscriptBox["q", "2"]}], 
+     RowBox[{"2", " ", "Hubble"}]], "+", 
+    FractionBox[
+     RowBox[{"3", " ", "q", " ", "p"}], "2"]}]}], ";", 
+  RowBox[{"alpha", ":=", 
+   FractionBox["1", 
+    RowBox[{"Hubble", " ", "Vphys"}]]}], ";", 
+  RowBox[{
+   RowBox[{"betaFromMass", "[", "x_", "]"}], ":=", 
+   FractionBox[
+    RowBox[{
+     SuperscriptBox["x", "2"], " ", "Vphys"}], "Hubble"]}], ";", 
+  RowBox[{
+   RowBox[{"AFromMass", "[", "x_", "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "alpha"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"betaFromMass", "[", "x", "]"}]}], ",", 
+       RowBox[{"-", "3"}]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{
+   RowBox[{"DFromEll", "[", 
+    RowBox[{"ellQv_", ",", "ellPv_", ",", "ellQbv_", ",", "ellPbv_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"ellPv", " ", "ellPbv"}], ",", 
+         RowBox[{
+          RowBox[{"-", 
+           FractionBox["1", "2"]}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"ellQv", " ", "ellPbv"}], "+", 
+            RowBox[{"ellQbv", " ", "ellPv"}]}], ")"}]}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", 
+           FractionBox["1", "2"]}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"ellQv", " ", "ellPbv"}], "+", 
+            RowBox[{"ellQbv", " ", "ellPv"}]}], ")"}]}], ",", 
+         RowBox[{"ellQv", " ", "ellQbv"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"DFromRules", "[", 
+    RowBox[{"rules_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"DFromEll", "[", 
+    RowBox[{
+     RowBox[{"ellQ", "/.", "\[VeryThinSpace]", "rules"}], ",", 
+     RowBox[{"ellP", "/.", "\[VeryThinSpace]", "rules"}], ",", 
+     RowBox[{"ellQBar", "/.", "\[VeryThinSpace]", "rules"}], ",", 
+     RowBox[{"ellPBar", "/.", "\[VeryThinSpace]", "rules"}], ",", "extra"}], 
+    "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"StationaryCovarianceFromD", "[", 
+    RowBox[{"x_", ",", "Dmat_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "a", ",", "b", ",", "c", ",", "beta", ",", "y", ",", "z", ",", "xx"}], 
+      "}"}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"a", ",", "b", ",", "c"}], "}"}], "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Dmat", "\[LeftDoubleBracket]", 
+          RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], ",", 
+         RowBox[{"Dmat", "\[LeftDoubleBracket]", 
+          RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}], ",", 
+         RowBox[{"Dmat", "\[LeftDoubleBracket]", 
+          RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}], "}"}]}], ";", 
+      RowBox[{"beta", "=", 
+       RowBox[{"betaFromMass", "[", "x", "]"}]}], ";", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"TrueQ", "[", 
+         RowBox[{"Simplify", "[", 
+          RowBox[{
+           RowBox[{"beta", "\[Equal]", "0"}], ",", 
+           RowBox[{"assume", "[", "extra", "]"}]}], "]"}], "]"}], ",", 
+        RowBox[{"Missing", "[", "\"\<NoFiniteStationaryCovariance\>\"", "]"}],
+         ",", 
+        RowBox[{
+         RowBox[{"y", "=", 
+          RowBox[{"-", 
+           FractionBox["a", 
+            RowBox[{"2", " ", "alpha"}]]}]}], ";", 
+         RowBox[{"z", "=", 
+          RowBox[{
+           FractionBox["1", "6"], " ", 
+           RowBox[{"(", 
+            RowBox[{"c", "+", 
+             FractionBox[
+              RowBox[{"beta", " ", "a"}], "alpha"]}], ")"}]}]}], ";", 
+         RowBox[{"xx", "=", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"alpha", " ", "z"}], "+", 
+            FractionBox[
+             RowBox[{"3", " ", "a"}], 
+             RowBox[{"2", " ", "alpha"}]], "+", "b"}], "beta"]}], ";", 
+         RowBox[{"Simplify", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"xx", ",", "y"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"y", ",", "z"}], "}"}]}], "}"}], ",", 
+           RowBox[{
+            RowBox[{"assume", "[", "extra", "]"}], "&&", 
+            RowBox[{"beta", ">", "0"}]}]}], "]"}]}]}], "]"}]}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"StationaryPurityFromCov", "[", 
+    RowBox[{"Cmat_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Head", "[", "Cmat", "]"}], "===", "Missing"}], ",", 
+     RowBox[{"Missing", "[", "\"\<NoFiniteStationaryPurity\>\"", "]"}], ",", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SqrtBox[
+          RowBox[{"Det", "[", "Cmat", "]"}]]}]], ",", 
+       RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"LyapunovResidual", "[", 
+    RowBox[{"x_", ",", "Dmat_", ",", "Cmat_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Head", "[", "Cmat", "]"}], "===", "Missing"}], ",", 
+     RowBox[{"Missing", "[", "\"\<NoFiniteStationaryCovariance\>\"", "]"}], ",", 
+     RowBox[{"FullSimplify", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"AFromMass", "[", "x", "]"}], ".", "Cmat"}], "+", 
+        RowBox[{"Cmat", ".", 
+         TemplateBox[{
+           RowBox[{"AFromMass", "[", "x", "]"}]},
+          "Transpose"]}], "+", "Dmat"}], ",", 
+       RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"VphysShellRule", "=", 
+   RowBox[{"Vphys", "\[Rule]", 
+    FractionBox[
+     RowBox[{"6", " ", 
+      SuperscriptBox["\[Pi]", "2"]}], 
+     RowBox[{
+      SuperscriptBox["Hubble", "3"], " ", 
+      SuperscriptBox["sigma", "3"]}]]}]}], ";"}]], "Input",
+ CellLabel->"In[38]:=",ExpressionUUID->"429d799a-9cb9-da4f-a55b-0f72b8b7b594"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Appendix A: Derivation of Stochastic Inflation GKLS Dynamics", "Section",ExpressionUUID->"b9ab7d88-9306-e243-864b-fceb0a7b4a92"],
+
+Cell[CellGroupData[{
+
+Cell["Canonical Bulk Variables", "Subsection",ExpressionUUID->"1580c9b7-2e31-f64a-be2a-234d79f3bb4b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"wronskianRule", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"phiMode", " ", "piBar"}], "-", 
+     RowBox[{"phiBar", " ", "piMode"}]}], "\[Rule]", "\[ImaginaryI]"}]}], ";", 
+  RowBox[{"canonicalCommutatorCheck", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"phiMode", " ", "piBar"}], "-", 
+      RowBox[{"phiBar", " ", "piMode"}]}], "/.", "\[VeryThinSpace]", 
+     "wronskianRule"}], "]"}]}], ";", 
+  RowBox[{"bulkModeExpansion", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<Q\>\"", "\[Rule]", 
+      RowBox[{
+       RowBox[{"phiMode", " ", "a"}], "+", 
+       RowBox[{"phiBar", " ", "adag"}]}]}], ",", 
+     RowBox[{"\"\<P\>\"", "\[Rule]", 
+      RowBox[{
+       RowBox[{"piMode", " ", "a"}], "+", 
+       RowBox[{"piBar", " ", "adag"}]}]}], ",", 
+     RowBox[{"\"\<WronskianRule\>\"", "\[Rule]", "wronskianRule"}], ",", 
+     RowBox[{"\"\<[Q,P]\>\"", "\[Rule]", "canonicalCommutatorCheck"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellLabel->"In[39]:=",ExpressionUUID->"c726af64-f8a4-6649-9e07-b0f4ff15d72c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Bulk Part of the Bulk-Boundary Dynamics", "Subsection",ExpressionUUID->"6e7930cd-235c-2747-bed0-cdffab67153d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"HamiltonianDrift", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[PartialD]", "p"], "KeffWeyl"}], ",", 
+       RowBox[{"-", 
+        RowBox[{
+         SubscriptBox["\[PartialD]", "q"], "KeffWeyl"}]}]}], "}"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"DissipativeLinearDrift", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"3", " ", "q"}], "2"]}], ",", 
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"3", " ", "p"}], "2"]}]}], "}"}]}], ";", 
+  RowBox[{"FullFirstMomentDrift", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"HamiltonianDrift", "+", "DissipativeLinearDrift"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FullDriftMatrixCheck", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"FullFirstMomentDrift", "-", 
+      RowBox[{
+       RowBox[{"AFromMass", "[", "mass", "]"}], ".", "Z"}]}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"Association", "[", 
+   RowBox[{
+    RowBox[{"\"\<HamiltonianDrift\>\"", "\[Rule]", "HamiltonianDrift"}], ",", 
+    RowBox[{"\"\<DissipativeLinearDrift\>\"", "\[Rule]", 
+     "DissipativeLinearDrift"}], ",", 
+    RowBox[{"\"\<FullFirstMomentDrift\>\"", "\[Rule]", 
+     "FullFirstMomentDrift"}], ",", 
+    RowBox[{"\"\<FullDriftMatrixCheck\>\"", "\[Rule]", 
+     "FullDriftMatrixCheck"}]}], "]"}]}]], "Input",
+ CellLabel->"In[40]:=",ExpressionUUID->"c20c49d7-37be-be42-bc41-0188ec9608fd"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"HamiltonianDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       FractionBox[
+        RowBox[{"3", " ", "q"}], "2"], "+", 
+       FractionBox["p", 
+        RowBox[{"Hubble", " ", "Vphys"}]]}], ",", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"3", " ", "p"}], "2"]}], "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["mass", "2"], " ", "q", " ", "Vphys"}], "Hubble"]}]}],
+      "}"}]}], ",", 
+   RowBox[{"\<\"DissipativeLinearDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"3", " ", "q"}], "2"]}], ",", 
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"3", " ", "p"}], "2"]}]}], "}"}]}], ",", 
+   RowBox[{"\<\"FullFirstMomentDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      FractionBox["p", 
+       RowBox[{"Hubble", " ", "Vphys"}]], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "3"}], " ", "p"}], "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["mass", "2"], " ", "q", " ", "Vphys"}], "Hubble"]}]}],
+      "}"}]}], ",", 
+   RowBox[{"\<\"FullDriftMatrixCheck\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0"}], "}"}]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878360405792713`*^9, 3.9878361222920475`*^9},
+ CellLabel->"Out[40]=",ExpressionUUID->"2e1cdb91-6116-1e42-8b3b-753d02e3273b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Bulk-Boundary Differential Relations", "Subsection",ExpressionUUID->"02e02bd3-b247-7040-af2e-87abbe9cfe5e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"coeffModeFunctions", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"ellQ", "\[Rule]", 
+      RowBox[{
+       RowBox[{"-", 
+        SqrtBox[
+         RowBox[{"3", " ", "Vcom"}]]}], " ", "piBar"}]}], ",", 
+     RowBox[{"ellP", "\[Rule]", 
+      RowBox[{
+       SqrtBox[
+        FractionBox["3", "Vcom"]], " ", "phiBar"}]}], ",", 
+     RowBox[{"ellQBar", "\[Rule]", 
+      RowBox[{
+       RowBox[{"-", 
+        SqrtBox[
+         RowBox[{"3", " ", "Vcom"}]]}], " ", "piMode"}]}], ",", 
+     RowBox[{"ellPBar", "\[Rule]", 
+      RowBox[{
+       SqrtBox[
+        FractionBox["3", "Vcom"]], " ", "phiMode"}]}]}], "}"}]}], ";", 
+  RowBox[{"VcomToPhysicalRule", "=", 
+   RowBox[{"Vcom", "\[Rule]", 
+    RowBox[{
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       RowBox[{"-", "3"}], " ", "N"}], "]"}], " ", "Vphys"}]}]}], ";", 
+  RowBox[{"DGeneralModeFunctions", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DFromRules", "[", "coeffModeFunctions", "]"}], "/.", 
+      "\[VeryThinSpace]", "VcomToPhysicalRule"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"Vphys", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPConventionGeneral", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<DQQ\>\"", "\[Rule]", 
+      RowBox[{"DGeneralModeFunctions", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DQP\>\"", "\[Rule]", 
+      RowBox[{"DGeneralModeFunctions", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DPP\>\"", "\[Rule]", 
+      RowBox[{"DGeneralModeFunctions", "\[LeftDoubleBracket]", 
+       RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellLabel->"In[41]:=",ExpressionUUID->"384b3a63-0a87-994c-9858-1b4ec45cbb49"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Unitary Bulk-Boundary Entangling", "Subsection",ExpressionUUID->"7be4fe1d-cd29-f147-8f29-c70761c66029"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"TQ", "[", 
+    RowBox[{"nu_", ",", "sig_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"sig", " ", 
+     RowBox[{"HankelH2", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "1"}], "+", "nu"}], ",", "sig"}], "]"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       FractionBox["3", "2"], "-", "nu"}], ")"}], " ", 
+     RowBox[{"HankelH2", "[", 
+      RowBox[{"nu", ",", "sig"}], "]"}]}]}]}], ";", 
+  RowBox[{"hankelPhase", "=", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"\[ImaginaryI]", " ", "chi"}], "-", 
+     RowBox[{
+      FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", "\[Pi]", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"2", " ", "nu"}], "+", "1"}], ")"}]}]}], "]"}]}], ";", 
+  RowBox[{"hankelPhaseBar", "=", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "\[ImaginaryI]"}], " ", "chi"}], "+", 
+     RowBox[{
+      FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", "\[Pi]", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"2", " ", "nuBar"}], "+", "1"}], ")"}]}]}], "]"}]}], ";", 
+  RowBox[{"coeffHankelGeneral", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"ellQ", "\[Rule]", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"hankelPhase", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", " ", 
+           SuperscriptBox["\[Pi]", 
+            RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"sigma", " ", 
+            RowBox[{"HankelH2", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "1"}], "+", "nu"}], ",", "sigma"}], "]"}]}], "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["3", "2"], "-", "nu"}], ")"}], " ", 
+            RowBox[{"HankelH2", "[", 
+             RowBox[{"nu", ",", "sigma"}], "]"}]}]}], ")"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         SqrtBox["2"], " ", 
+         SuperscriptBox["sigma", 
+          RowBox[{"3", "/", "2"}]], " ", "Hubble"}], ")"}]}]}], ",", 
+     RowBox[{"ellP", "\[Rule]", 
+      FractionBox[
+       RowBox[{"hankelPhase", " ", 
+        RowBox[{"(", 
+         RowBox[{"Hubble", " ", 
+          SuperscriptBox["sigma", 
+           RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+        RowBox[{"HankelH2", "[", 
+         RowBox[{"nu", ",", "sigma"}], "]"}]}], 
+       RowBox[{"2", " ", 
+        SqrtBox[
+         RowBox[{"2", " ", "\[Pi]"}]]}]]}], ",", 
+     RowBox[{"ellQBar", "\[Rule]", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"hankelPhaseBar", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", " ", 
+           SuperscriptBox["\[Pi]", 
+            RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"sigma", " ", 
+            RowBox[{"HankelH1", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "1"}], "+", "nuBar"}], ",", "sigma"}], "]"}]}], "+", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["3", "2"], "-", "nuBar"}], ")"}], " ", 
+            RowBox[{"HankelH1", "[", 
+             RowBox[{"nuBar", ",", "sigma"}], "]"}]}]}], ")"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         SqrtBox["2"], " ", 
+         SuperscriptBox["sigma", 
+          RowBox[{"3", "/", "2"}]], " ", "Hubble"}], ")"}]}]}], ",", 
+     RowBox[{"ellPBar", "\[Rule]", 
+      FractionBox[
+       RowBox[{"hankelPhaseBar", " ", 
+        RowBox[{"(", 
+         RowBox[{"Hubble", " ", 
+          SuperscriptBox["sigma", 
+           RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+        RowBox[{"HankelH1", "[", 
+         RowBox[{"nuBar", ",", "sigma"}], "]"}]}], 
+       RowBox[{"2", " ", 
+        SqrtBox[
+         RowBox[{"2", " ", "\[Pi]"}]]}]]}]}], "}"}]}], ";", 
+  RowBox[{"coeffMassless", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"ellQ", "\[Rule]", 
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"\[ImaginaryI]", " ", "3", " ", "\[Pi]"}], 
+        RowBox[{"sigma", " ", "Hubble"}]]}]}], ",", 
+     RowBox[{"ellP", "\[Rule]", 
+      FractionBox[
+       RowBox[{"Hubble", " ", 
+        RowBox[{"(", 
+         RowBox[{"sigma", "-", "\[ImaginaryI]"}], ")"}]}], 
+       RowBox[{"2", " ", "\[Pi]"}]]}], ",", 
+     RowBox[{"ellQBar", "\[Rule]", 
+      FractionBox[
+       RowBox[{"\[ImaginaryI]", " ", "3", " ", "\[Pi]"}], 
+       RowBox[{"sigma", " ", "Hubble"}]]}], ",", 
+     RowBox[{"ellPBar", "\[Rule]", 
+      FractionBox[
+       RowBox[{"Hubble", " ", 
+        RowBox[{"(", 
+         RowBox[{"sigma", "+", "\[ImaginaryI]"}], ")"}]}], 
+       RowBox[{"2", " ", "\[Pi]"}]]}]}], "}"}]}], ";", 
+  RowBox[{"coeffCritical", "=", 
+   RowBox[{"coeffHankelGeneral", "/.", "\[VeryThinSpace]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"nu", "\[Rule]", "0"}], ",", 
+      RowBox[{"nuBar", "\[Rule]", "0"}], ",", 
+      RowBox[{"chi", "\[Rule]", "0"}]}], "}"}]}]}], ";", 
+  RowBox[{"coeffHeavy", "=", 
+   RowBox[{"coeffHankelGeneral", "/.", "\[VeryThinSpace]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"nu", "\[Rule]", 
+       RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", 
+      RowBox[{"nuBar", "\[Rule]", 
+       RowBox[{
+        RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}]}], ",", 
+      RowBox[{"chi", "\[Rule]", "0"}]}], "}"}]}]}], ";", 
+  RowBox[{"coeffSymbols", "=", 
+   RowBox[{"{", 
+    RowBox[{"ellQ", ",", "ellP", ",", "ellQBar", ",", "ellPBar"}], "}"}]}], ";", 
+  RowBox[{"masslessCoefficientCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+        "coeffSymbols", "/.", "\[VeryThinSpace]", "coeffHankelGeneral"}], "/.",
+         "\[VeryThinSpace]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"nu", "\[Rule]", 
+           FractionBox["3", "2"]}], ",", 
+          RowBox[{"nuBar", "\[Rule]", 
+           FractionBox["3", "2"]}], ",", 
+          RowBox[{"chi", "\[Rule]", "sigma"}]}], "}"}]}], ")"}], "-", 
+      RowBox[{"(", 
+       RowBox[{"coeffSymbols", "/.", "\[VeryThinSpace]", "coeffMassless"}], 
+       ")"}]}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[42]:=",ExpressionUUID->"80df4937-2794-4143-9a30-b4685bb6e954"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Tracing out the boundary", "Subsection",ExpressionUUID->"384f47d0-67ca-614b-b948-10c3726e789e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Unprotect", "[", "NonCommutativeMultiply", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "NonCommutativeMultiply", ",", " ", "ncScalarQ", ",", " ", "comm", ",", 
+    " ", "anti", ",", " ", "Dsuper", ",", " ", "rho", ",", " ", "Lop", ",", 
+    " ", "Ldag", ",", " ", "Kop", ",", " ", "Id", ",", " ", "dN"}], "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonCommutativeMultiply", "[", "]"}], " ", ":=", " ", "1"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonCommutativeMultiply", "[", "a_", "]"}], " ", ":=", " ", "a"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ncScalarQ", "[", "expr_", "]"}], " ", ":=", " ", 
+   RowBox[{"FreeQ", "[", 
+    RowBox[{"expr", ",", " ", 
+     RowBox[{
+     "rho", " ", "|", " ", "Lop", " ", "|", " ", "Ldag", " ", "|", " ", "Kop",
+       " ", "|", " ", "Id", " ", "|", " ", "NonCommutativeMultiply"}]}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonCommutativeMultiply", "[", 
+    RowBox[{"first___", ",", " ", "Id", ",", " ", "tail___"}], "]"}], " ", ":=",
+    " ", 
+   RowBox[{"NonCommutativeMultiply", "[", 
+    RowBox[{"first", ",", " ", "tail"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonCommutativeMultiply", "[", 
+    RowBox[{"first___", ",", " ", 
+     RowBox[{
+      RowBox[{"s_", "?", "ncScalarQ"}], " ", "*", " ", "rest_"}], ",", " ", 
+     "tail___"}], "]"}], " ", ":=", " ", 
+   RowBox[{"s", " ", "*", " ", 
+    RowBox[{"NonCommutativeMultiply", "[", 
+     RowBox[{"first", ",", " ", "rest", ",", " ", "tail"}], "]"}]}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonCommutativeMultiply", "[", 
+    RowBox[{"first___", ",", " ", 
+     RowBox[{"s_", "?", "ncScalarQ"}], ",", " ", "tail___"}], "]"}], " ", ":=",
+    " ", 
+   RowBox[{"s", " ", "*", " ", 
+    RowBox[{"NonCommutativeMultiply", "[", 
+     RowBox[{"first", ",", " ", "tail"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"NonCommutativeMultiply", ",", " ", "Flat"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"u_", " ", "**", " ", 
+    RowBox[{"(", 
+     RowBox[{"v_", " ", "+", " ", "w_"}], ")"}]}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"u", " ", "**", " ", "v"}], " ", "+", " ", 
+    RowBox[{"u", " ", "**", " ", "w"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"v_", " ", "+", " ", "w_"}], ")"}], " ", "**", " ", "u_"}], " ", 
+   ":=", " ", 
+   RowBox[{
+    RowBox[{"v", " ", "**", " ", "u"}], " ", "+", " ", 
+    RowBox[{"w", " ", "**", " ", "u"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Protect", "[", "NonCommutativeMultiply", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"comm", "[", 
+    RowBox[{"a_", ",", " ", "b_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"a", " ", "**", " ", "b"}], " ", "-", " ", 
+    RowBox[{"b", " ", "**", " ", "a"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"anti", "[", 
+    RowBox[{"a_", ",", " ", "b_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"a", " ", "**", " ", "b"}], " ", "+", " ", 
+    RowBox[{"b", " ", "**", " ", "a"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Dsuper", "[", 
+    RowBox[{"L_", ",", " ", "Ld_", ",", " ", "r_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"L", " ", "**", " ", "r", " ", "**", " ", "Ld"}], " ", "-", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "/", "2"}], ")"}], " ", 
+     RowBox[{"anti", "[", 
+      RowBox[{
+       RowBox[{"Ld", " ", "**", " ", "L"}], ",", " ", "r"}], "]"}]}]}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"GKLSGeneratorAbstract", " ", "=", " ", 
+   RowBox[{"Expand", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "I"}], " ", 
+      RowBox[{"comm", "[", 
+       RowBox[{"Kop", ",", " ", "rho"}], "]"}]}], " ", "+", " ", 
+     RowBox[{"Dsuper", "[", 
+      RowBox[{"Lop", ",", " ", "Ldag", ",", " ", "rho"}], "]"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"noJumpKraus", " ", "=", " ", 
+   RowBox[{"Id", " ", "-", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"I", " ", "Kop"}], " ", "+", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Ldag", " ", "**", " ", "Lop"}], "/", "2"}], ")"}]}], ")"}], 
+     " ", "dN"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"oneJumpKraus", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"Sqrt", "[", "dN", "]"}]}], " ", "Lop"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"traceOutBoundaryIncrement", " ", "=", " ", 
+   RowBox[{"Expand", "[", 
+    RowBox[{"Normal", "[", 
+     RowBox[{"Series", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"noJumpKraus", " ", "**", " ", "rho", " ", "**", " ", 
+         RowBox[{"(", 
+          RowBox[{"Id", " ", "+", " ", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"I", " ", "Kop"}], " ", "-", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"Ldag", " ", "**", " ", "Lop"}], "/", "2"}], ")"}]}], 
+             ")"}], " ", "dN"}]}], ")"}]}], " ", "+", " ", 
+        RowBox[{"oneJumpKraus", " ", "**", " ", "rho", " ", "**", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"Sqrt", "[", "dN", "]"}]}], " ", "Ldag"}], ")"}]}]}], ",",
+        " ", 
+       RowBox[{"{", 
+        RowBox[{"dN", ",", " ", "0", ",", " ", "1"}], "}"}]}], "]"}], "]"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"GKLSIncrementCheck", " ", "=", " ", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{"Expand", "[", 
+     RowBox[{"traceOutBoundaryIncrement", " ", "-", " ", "rho", " ", "-", " ", 
+      RowBox[{"dN", " ", "GKLSGeneratorAbstract"}]}], "]"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellLabel->"In[43]:=",ExpressionUUID->"4b05f6f4-d12b-0040-b809-43e4e76b0443"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Appendix B: POVMs and Stochastic Unravellings", "Section",ExpressionUUID->"5e215d7e-f0b3-3041-8b04-2d494f973bda"],
+
+Cell[CellGroupData[{
+
+Cell["Shared Block Instrument", "Subsection",ExpressionUUID->"3fc31196-533e-0244-89e3-902138c54094"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "K0", ",", "K1", ",", "K0dag", ",", "K1dag", ",", "PiBlock", ",", "dY", ",",
+     "dYstar", ",", "dY1", ",", "dY2", ",", "dW", ",", "dW1", ",", "dW2", ",",
+     "p0Y", ",", "p0Het", ",", "z", ",", "zbar"}], "]"}], ";", 
+  RowBox[{"K0", "=", 
+   RowBox[{"Id", "-", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"\[ImaginaryI]", " ", "Kop"}], "+", 
+       FractionBox[
+        RowBox[{"Ldag", "**", "Lop"}], "2"]}], ")"}], " ", "dN"}]}]}], ";", 
+  RowBox[{"K0dag", "=", 
+   RowBox[{"Id", "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"\[ImaginaryI]", " ", "Kop"}], "-", 
+       FractionBox[
+        RowBox[{"Ldag", "**", "Lop"}], "2"]}], ")"}], " ", "dN"}]}]}], ";", 
+  RowBox[{"K1", "=", 
+   RowBox[{
+    RowBox[{"-", 
+     SqrtBox["dN"]}], " ", "Lop"}]}], ";", 
+  RowBox[{"K1dag", "=", 
+   RowBox[{
+    RowBox[{"-", 
+     SqrtBox["dN"]}], " ", "Ldag"}]}], ";", 
+  RowBox[{"FullBlockRJ", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"K0", "**", "rho", "**", "K0dag"}], ",", 
+       RowBox[{"K0", "**", "rho", "**", "K1dag"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"K1", "**", "rho", "**", "K0dag"}], ",", 
+       RowBox[{"K1", "**", "rho", "**", "K1dag"}]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{
+   RowBox[{"InstrumentFromPOVM", "[", "PiBlock_", "]"}], ":=", 
+   RowBox[{
+    UnderoverscriptBox["\[Sum]", 
+     RowBox[{"a", "=", "1"}], "2"], 
+    RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"b", "=", "1"}], "2"], 
+     RowBox[{
+      RowBox[{"PiBlock", "\[LeftDoubleBracket]", 
+       RowBox[{"a", ",", "b"}], "\[RightDoubleBracket]"}], " ", 
+      RowBox[{"FullBlockRJ", "\[LeftDoubleBracket]", 
+       RowBox[{"a", ",", "b"}], "\[RightDoubleBracket]"}]}]}]}]}], 
+  ";"}]], "Input",
+ CellLabel->"In[63]:=",ExpressionUUID->"e536a95e-dfd7-1a45-b1c1-662c7fb5babc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Jump unravelling", "Subsection",ExpressionUUID->"a0e5fe8c-5179-6143-8dcb-469084ad9072"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PiJumpNo", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"PiJumpYes", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"JumpNoInstrument", "=", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"Series", "[", 
+     RowBox[{
+      RowBox[{"InstrumentFromPOVM", "[", "PiJumpNo", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dN", ",", "0", ",", "1"}], "}"}]}], "]"}], "]"}]}], ";", 
+  RowBox[{"JumpYesInstrument", "=", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"Series", "[", 
+     RowBox[{
+      RowBox[{"InstrumentFromPOVM", "[", "PiJumpYes", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dN", ",", "0", ",", "1"}], "}"}]}], "]"}], "]"}]}], ";", 
+  RowBox[{"JumpSSEIngredients", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<M0\>\"", "\[Rule]", "K0"}], ",", 
+     RowBox[{"\"\<M1\>\"", "\[Rule]", "K1"}], ",", 
+     RowBox[{"\"\<NoCount\>\"", "\[Rule]", "JumpNoInstrument"}], ",", 
+     RowBox[{"\"\<Count\>\"", "\[Rule]", "JumpYesInstrument"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellLabel->"In[64]:=",ExpressionUUID->"db531842-409a-6147-a230-4baafc0800fd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Homodyne unravelling", "Subsection",ExpressionUUID->"09d362eb-dc9d-3544-a1d2-6808360c670e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PiHomodyne", "=", 
+   RowBox[{"p0Y", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{"\[ImaginaryI]", " ", "chi"}], "]"}], " ", "dY"}], 
+          SqrtBox["dN"]]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{
+             RowBox[{"-", "\[ImaginaryI]"}], " ", "chi"}], "]"}], " ", "dY"}], 
+          SqrtBox["dN"]]}], ",", 
+        FractionBox[
+         SuperscriptBox["dY", "2"], "dN"]}], "}"}]}], "}"}]}]}], ";", 
+  RowBox[{"Lchi", "=", 
+   RowBox[{
+    RowBox[{"Exp", "[", 
+     RowBox[{"\[ImaginaryI]", " ", "chi"}], "]"}], " ", "Lop"}]}], ";", 
+  RowBox[{"LchiDag", "=", 
+   RowBox[{
+    RowBox[{"Exp", "[", 
+     RowBox[{
+      RowBox[{"-", "\[ImaginaryI]"}], " ", "chi"}], "]"}], " ", "Ldag"}]}], ";", 
+  RowBox[{"MHomodyne", "=", 
+   RowBox[{
+    SqrtBox["p0Y"], " ", 
+    RowBox[{"(", 
+     RowBox[{"Id", "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"\[ImaginaryI]", " ", "Kop"}], "+", 
+         FractionBox[
+          RowBox[{"LchiDag", "**", "Lchi"}], "2"]}], ")"}], " ", "dN"}], "+", 
+      RowBox[{"Lchi", " ", "dY"}]}], ")"}]}]}], ";", 
+  RowBox[{"HomodyneInstrumentContracted", "=", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"Series", "[", 
+     RowBox[{
+      RowBox[{"InstrumentFromPOVM", "[", "PiHomodyne", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dN", ",", "0", ",", "1"}], "}"}]}], "]"}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"nHomodyne", "[", 
+    RowBox[{"ellVec_", ",", "cov_"}], "]"}], ":=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"2", " ", 
+       RowBox[{"cov", ".", 
+        RowBox[{"Re", "[", "ellVec", "]"}]}]}], "-", 
+      RowBox[{"Omega", ".", 
+       RowBox[{"Im", "[", "ellVec", "]"}]}]}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[65]:=",ExpressionUUID->"8375e7dc-cd47-d34d-86d4-c19d893468f8"],
+
+Cell[CellGroupData[{
+
+Cell["Field-adapted homodyne phase and the Starobinsky limit", "Subsubsection",ExpressionUUID->"eaf5e93f-9ee0-0845-8848-f776066d6e8e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"chiQPhase", "=", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"\[ImaginaryI]", " ", 
+      RowBox[{"Conjugate", "[", 
+       RowBox[{
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{"-", "\[ImaginaryI]"}], ")"}], " ", "\[Pi]", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "nu"}], "+", "1"}], ")"}]}], "]"}], " ", 
+        RowBox[{"TQ", "[", 
+         RowBox[{"nu", ",", "sigma"}], "]"}]}], "]"}]}], 
+     RowBox[{"Abs", "[", 
+      RowBox[{
+       RowBox[{"Exp", "[", 
+        RowBox[{
+         FractionBox["1", "4"], " ", 
+         RowBox[{"(", 
+          RowBox[{"-", "\[ImaginaryI]"}], ")"}], " ", "\[Pi]", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "nu"}], "+", "1"}], ")"}]}], "]"}], " ", 
+       RowBox[{"TQ", "[", 
+        RowBox[{"nu", ",", "sigma"}], "]"}]}], "]"}]]}]}], ";", 
+  RowBox[{"LambdaQ", "=", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"3", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+     RowBox[{"Abs", "[", 
+      RowBox[{"TQ", "[", 
+       RowBox[{"nu", ",", "sigma"}], "]"}], "]"}]}], 
+    RowBox[{
+     SqrtBox["2"], " ", 
+     SuperscriptBox["sigma", 
+      RowBox[{"3", "/", "2"}]], " ", "Hubble"}]]}], ";", 
+  RowBox[{"PcalQ", "=", 
+   FractionBox[
+    RowBox[{"chiQPhase", " ", 
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       RowBox[{"(", 
+        RowBox[{"-", "\[ImaginaryI]"}], ")"}], " ", "\[Pi]", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu"}], "+", "1"}], ")"}]}], "]"}], " ", 
+     RowBox[{"(", 
+      RowBox[{"Hubble", " ", 
+       SuperscriptBox["sigma", 
+        RowBox[{"3", "/", "2"}]]}], ")"}], " ", 
+     RowBox[{"HankelH2", "[", 
+      RowBox[{"nu", ",", "sigma"}], "]"}]}], 
+    RowBox[{"2", " ", 
+     SqrtBox[
+      RowBox[{"2", " ", "\[Pi]"}]]}]]}], ";", 
+  RowBox[{"GammaQ", "=", 
+   FractionBox[
+    RowBox[{"2", " ", "Hubble", " ", 
+     SuperscriptBox["sigma", 
+      RowBox[{"3", "/", "2"}]]}], 
+    RowBox[{"\[Pi]", " ", 
+     SqrtBox[
+      RowBox[{"2", " ", "\[Pi]"}]], " ", 
+     RowBox[{"Abs", "[", 
+      RowBox[{"TQ", "[", 
+       RowBox[{"nu", ",", "sigma"}], "]"}], "]"}]}]]}], ";", 
+  RowBox[{"masslessHomodyneEll", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"\[ImaginaryI]", " ", "3", " ", "\[Pi]"}], 
+       RowBox[{"sigma", " ", "Hubble"}]]}], ",", 
+     FractionBox[
+      RowBox[{"Hubble", " ", 
+       RowBox[{"(", 
+        RowBox[{"sigma", "-", "\[ImaginaryI]"}], ")"}]}], 
+      RowBox[{"2", " ", "\[Pi]"}]]}], "}"}]}], ";", 
+  RowBox[{"nHomodyneMassless", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"nHomodyne", "[", 
+      RowBox[{"masslessHomodyneEll", ",", "SigmaC"}], "]"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"nHomodyneMasslessExpected", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"Hubble", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "sigma", " ", "DeltaQP"}]}], ")"}]}], 
+      RowBox[{"2", " ", "\[Pi]"}]], ",", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"3", " ", "\[Pi]"}], 
+        RowBox[{"Hubble", " ", "sigma"}]]}], "+", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Hubble", " ", "sigma"}], ")"}], " ", "DeltaPP"}], 
+       "\[Pi]"]}]}], "}"}]}], ";", 
+  RowBox[{"homodyneMasslessCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"nHomodyneMassless", "-", "nHomodyneMasslessExpected"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[66]:=",ExpressionUUID->"2cc8dcc8-6ff9-414f-b5dd-2238ab30e72a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Heterodyne, or two-component, unravelling", "Subsection",ExpressionUUID->"9926f470-47ec-0340-a008-7afa9053e216"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"CoherentTruncated01", "[", 
+    RowBox[{"zv_", ",", "zbv_"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "zv"}], "}"}]}], ";", 
+  RowBox[{"CoherentPOVM01", "=", 
+   RowBox[{"Outer", "[", 
+    RowBox[{"Times", ",", 
+     RowBox[{"CoherentTruncated01", "[", 
+      RowBox[{"z", ",", "zbar"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "zbar"}], "}"}]}], "]"}]}], ";", 
+  RowBox[{"HeterodynePOVMFromCoherentState", "=", 
+   RowBox[{"CoherentPOVM01", "/.", "\[VeryThinSpace]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"z", "\[Rule]", 
+       RowBox[{"-", 
+        FractionBox["dY", 
+         SqrtBox["dN"]]}]}], ",", 
+      RowBox[{"zbar", "\[Rule]", 
+       RowBox[{"-", 
+        FractionBox["dYstar", 
+         SqrtBox["dN"]]}]}]}], "}"}]}]}], ";", 
+  RowBox[{"PiHeterodyne", "=", 
+   RowBox[{"p0Het", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", 
+         FractionBox["dYstar", 
+          SqrtBox["dN"]]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["dY", 
+          SqrtBox["dN"]]}], ",", 
+        FractionBox[
+         RowBox[{"dY", " ", "dYstar"}], "dN"]}], "}"}]}], "}"}]}]}], ";", 
+  RowBox[{"heterodyneTopLeftCheck", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"HeterodynePOVMFromCoherentState", "\[LeftDoubleBracket]", 
+      RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "\[Equal]", "1"}], 
+    "]"}]}], ";", 
+  RowBox[{"MHet", "=", 
+   RowBox[{
+    SqrtBox["p0Het"], " ", 
+    RowBox[{"(", 
+     RowBox[{"Id", "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"\[ImaginaryI]", " ", "Kop"}], "+", 
+         FractionBox[
+          RowBox[{"Ldag", "**", "Lop"}], "2"]}], ")"}], " ", "dN"}], "+", 
+      RowBox[{"Lop", " ", "dYstar"}]}], ")"}]}]}], ";", 
+  RowBox[{"HeterodyneInstrumentContracted", "=", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"Series", "[", 
+     RowBox[{
+      RowBox[{"InstrumentFromPOVM", "[", "PiHeterodyne", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"dN", ",", "0", ",", "1"}], "}"}]}], "]"}], "]"}]}], ";", 
+  RowBox[{"dYComplexRule", "=", 
+   RowBox[{"dY", "\[Rule]", 
+    FractionBox[
+     RowBox[{"dY1", "+", 
+      RowBox[{"\[ImaginaryI]", " ", "dY2"}]}], 
+     SqrtBox["2"]]}]}], ";", 
+  RowBox[{"dYStarRule", "=", 
+   RowBox[{"dYstar", "\[Rule]", 
+    FractionBox[
+     RowBox[{"dY1", "-", 
+      RowBox[{"\[ImaginaryI]", " ", "dY2"}]}], 
+     SqrtBox["2"]]}]}], ";"}]], "Input",
+ CellLabel->"In[67]:=",ExpressionUUID->"5c1bfdfc-4ab0-8d4d-ad3b-9c93266f280d"],
+
+Cell[CellGroupData[{
+
+Cell["Gaussian dynamics for the heterodyne readout", "Subsubsection",ExpressionUUID->"c449d2a3-f9f6-6d47-ba6b-33849ffe9ccc"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"nHet1", "[", 
+    RowBox[{"ellVec_", ",", "cov_"}], "]"}], ":=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"2", " ", 
+        RowBox[{"cov", ".", 
+         RowBox[{"Re", "[", "ellVec", "]"}]}]}], "-", 
+       RowBox[{"Omega", ".", 
+        RowBox[{"Im", "[", "ellVec", "]"}]}]}], 
+      SqrtBox["2"]], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"nHet2", "[", 
+    RowBox[{"ellVec_", ",", "cov_"}], "]"}], ":=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"2", " ", 
+        RowBox[{"cov", ".", 
+         RowBox[{"Im", "[", "ellVec", "]"}]}]}], "+", 
+       RowBox[{"Omega", ".", 
+        RowBox[{"Re", "[", "ellVec", "]"}]}]}], 
+      SqrtBox["2"]], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"ellMasslessVector", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"\[ImaginaryI]", " ", "3", " ", "\[Pi]"}], 
+       RowBox[{"sigma", " ", "Hubble"}]]}], ",", 
+     FractionBox[
+      RowBox[{"Hubble", " ", 
+       RowBox[{"(", 
+        RowBox[{"sigma", "-", "\[ImaginaryI]"}], ")"}]}], 
+      RowBox[{"2", " ", "\[Pi]"}]]}], "}"}]}], ";", 
+  RowBox[{"nHetMassless", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"nHet1", "[", 
+        RowBox[{"ellMasslessVector", ",", "SigmaC"}], "]"}], ",", 
+       RowBox[{"nHet2", "[", 
+        RowBox[{"ellMasslessVector", ",", "SigmaC"}], "]"}]}], "}"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"nHetMasslessExpected", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{"Hubble", " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"2", " ", "sigma", " ", "DeltaQP"}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         SqrtBox["2"], " ", "\[Pi]"}]], ",", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"-", 
+          FractionBox[
+           RowBox[{"3", " ", "\[Pi]"}], 
+           RowBox[{"Hubble", " ", "sigma"}]]}], "+", 
+         FractionBox[
+          RowBox[{"Hubble", " ", "sigma", " ", "DeltaPP"}], "\[Pi]"]}], 
+        SqrtBox["2"]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         FractionBox[
+          RowBox[{"Hubble", " ", "sigma"}], 
+          RowBox[{"2", " ", "\[Pi]"}]], "-", 
+         FractionBox[
+          RowBox[{"Hubble", " ", "DeltaQP"}], "\[Pi]"], "-", 
+         FractionBox[
+          RowBox[{"6", " ", "\[Pi]", " ", "DeltaQQ"}], 
+          RowBox[{"Hubble", " ", "sigma"}]]}], 
+        SqrtBox["2"]], ",", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"-", 
+          FractionBox[
+           RowBox[{"Hubble", " ", "DeltaPP"}], "\[Pi]"]}], "-", 
+         FractionBox[
+          RowBox[{"6", " ", "\[Pi]", " ", "DeltaQP"}], 
+          RowBox[{"Hubble", " ", "sigma"}]]}], 
+        SqrtBox["2"]]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"heterodyneMasslessNoiseCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"nHetMassless", "-", "nHetMasslessExpected"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"DUnconditionalMassless", "=", 
+   RowBox[{"DFromRules", "[", "coeffMassless", "]"}]}], ";", 
+  RowBox[{"RiccatiMassless", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"AFromMass", "[", "0", "]"}], ".", "SigmaC"}], "+", 
+      RowBox[{"SigmaC", ".", 
+       TemplateBox[{
+         RowBox[{"AFromMass", "[", "0", "]"}]},
+        "Transpose"]}], "+", "DUnconditionalMassless", "-", 
+      RowBox[{"Outer", "[", 
+       RowBox[{"Times", ",", 
+        RowBox[{
+        "nHetMassless", "\[LeftDoubleBracket]", "1", 
+         "\[RightDoubleBracket]"}], ",", 
+        RowBox[{
+        "nHetMassless", "\[LeftDoubleBracket]", "1", 
+         "\[RightDoubleBracket]"}]}], "]"}], "-", 
+      RowBox[{"Outer", "[", 
+       RowBox[{"Times", ",", 
+        RowBox[{
+        "nHetMassless", "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}], ",", 
+        RowBox[{
+        "nHetMassless", "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}]}], "]"}]}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"DQQCentersMassless", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"nHetMassless", "\[LeftDoubleBracket]", 
+        RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "2"], "+", 
+      SuperscriptBox[
+       RowBox[{"nHetMassless", "\[LeftDoubleBracket]", 
+        RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}], "2"]}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[68]:=",ExpressionUUID->"e603fae8-2c39-b949-911a-90638d68ea51"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Appendix C: Wigner Dynamics and Purity", "Section",ExpressionUUID->"f0517606-c7c2-444c-bc27-a7f492bd5b3c"],
+
+Cell[CellGroupData[{
+
+Cell["General mode-function coefficients", "Subsection",ExpressionUUID->"23cf8eb7-a0be-c24c-95ee-f4fea0e35290"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "W", ",", "Wfun", ",", "q1", ",", "p1", ",", "q2", ",", "p2", ",", "hbar", 
+    ",", "moyalOrder"}], "]"}], ";", 
+  RowBox[{"moyalOrder", "=", "4"}], ";", 
+  RowBox[{"Wfun", "=", 
+   RowBox[{"W", "[", 
+    RowBox[{"q", ",", "p"}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"PoissonOp", "[", "expr_", "]"}], ":=", 
+   RowBox[{
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{"\[ImaginaryI]", " ", "hbar"}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["\[PartialD]", 
+        RowBox[{"q1", ",", "p2"}]], "expr"}], "-", 
+      RowBox[{
+       SubscriptBox["\[PartialD]", 
+        RowBox[{"p1", ",", "q2"}]], "expr"}]}], ")"}]}]}], ";", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"PoisPower", "[", "n_", "]"}], "[", "expr_", "]"}], ":=", 
+   RowBox[{"Nest", "[", 
+    RowBox[{"PoissonOp", ",", "expr", ",", "n"}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"Moyal", "[", 
+    RowBox[{"A_", ",", "B_", ",", 
+     RowBox[{"trunc_", ":", "moyalOrder"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "expr", "}"}], ",", 
+     RowBox[{
+      RowBox[{"expr", "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"A", "/.", "\[VeryThinSpace]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"q", "\[Rule]", "q1"}], ",", 
+            RowBox[{"p", "\[Rule]", "p1"}]}], "}"}]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{"B", "/.", "\[VeryThinSpace]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"q", "\[Rule]", "q2"}], ",", 
+            RowBox[{"p", "\[Rule]", "p2"}]}], "}"}]}], ")"}]}]}], ";", 
+      RowBox[{
+       RowBox[{
+        UnderoverscriptBox["\[Sum]", 
+         RowBox[{"n", "=", "0"}], "trunc"], 
+        FractionBox[
+         RowBox[{
+          RowBox[{"PoisPower", "[", "n", "]"}], "[", "expr", "]"}], 
+         RowBox[{"n", "!"}]]}], "/.", "\[VeryThinSpace]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"q1", "\[Rule]", "q"}], ",", 
+         RowBox[{"p1", "\[Rule]", "p"}], ",", 
+         RowBox[{"q2", "\[Rule]", "q"}], ",", 
+         RowBox[{"p2", "\[Rule]", "p"}]}], "}"}]}]}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"Comm", "[", 
+    RowBox[{"A_", ",", "B_", ",", 
+     RowBox[{"trunc_", ":", "moyalOrder"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Moyal", "[", 
+     RowBox[{"A", ",", "B", ",", "trunc"}], "]"}], "-", 
+    RowBox[{"Moyal", "[", 
+     RowBox[{"B", ",", "A", ",", "trunc"}], "]"}]}]}], ";", 
+  RowBox[{
+   RowBox[{"LWeyl", "[", 
+    RowBox[{"rules_", ":", 
+     RowBox[{"{", "}"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ellQ", " ", "q"}], "+", 
+     RowBox[{"ellP", " ", "p"}]}], "/.", "\[VeryThinSpace]", "rules"}]}], ";", 
+  RowBox[{
+   RowBox[{"LDagWeyl", "[", 
+    RowBox[{"rules_", ":", 
+     RowBox[{"{", "}"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ellQBar", " ", "q"}], "+", 
+     RowBox[{"ellPBar", " ", "p"}]}], "/.", "\[VeryThinSpace]", "rules"}]}], ";", 
+  RowBox[{
+   RowBox[{"LindbladGenerator", "[", 
+    RowBox[{
+     RowBox[{"rules_", ":", 
+      RowBox[{"{", "}"}]}], ",", 
+     RowBox[{"trunc_", ":", "moyalOrder"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"L", "=", 
+        RowBox[{"LWeyl", "[", "rules", "]"}]}], ",", 
+       RowBox[{"Ld", "=", 
+        RowBox[{"LDagWeyl", "[", "rules", "]"}]}], ",", "ham", ",", "diss"}], 
+      "}"}], ",", 
+     RowBox[{
+      RowBox[{"ham", "=", 
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"\[ImaginaryI]", " ", 
+          RowBox[{"Comm", "[", 
+           RowBox[{
+            RowBox[{"KeffWeyl", "/.", "\[VeryThinSpace]", "rules"}], ",", 
+            "Wfun", ",", "trunc"}], "]"}]}], "hbar"]}]}], ";", 
+      RowBox[{"diss", "=", 
+       RowBox[{
+        RowBox[{"Moyal", "[", 
+         RowBox[{
+          RowBox[{"Moyal", "[", 
+           RowBox[{"L", ",", "Wfun", ",", "trunc"}], "]"}], ",", "Ld", ",", 
+          "trunc"}], "]"}], "-", 
+        RowBox[{
+         FractionBox["1", "2"], " ", 
+         RowBox[{"Moyal", "[", 
+          RowBox[{
+           RowBox[{"Moyal", "[", 
+            RowBox[{"Ld", ",", "L", ",", "trunc"}], "]"}], ",", "Wfun", ",", 
+           "trunc"}], "]"}]}], "-", 
+        RowBox[{
+         FractionBox["1", "2"], " ", 
+         RowBox[{"Moyal", "[", 
+          RowBox[{"Wfun", ",", 
+           RowBox[{"Moyal", "[", 
+            RowBox[{"Ld", ",", "L", ",", "trunc"}], "]"}], ",", "trunc"}], 
+          "]"}]}]}]}], ";", 
+      RowBox[{"Simplify", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"ham", "+", "diss"}], "/.", "\[VeryThinSpace]", 
+         RowBox[{"hbar", "\[Rule]", "1"}]}], ",", 
+        RowBox[{"assume", "[", 
+         RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}]}], 
+    "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"collectW", "[", "expr_", "]"}], ":=", 
+   RowBox[{"Collect", "[", 
+    RowBox[{
+     RowBox[{"Expand", "[", "expr", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"W", "[", 
+        RowBox[{"q", ",", "p"}], "]"}], ",", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}], ",", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}], ",", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"2", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}], ",", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}], ",", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "2"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}]}], "}"}], ",", "Simplify"}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"useWronskian", "[", "expr_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "wr", "}"}], ",", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Collect", "[", 
+         RowBox[{
+          RowBox[{"Expand", "[", 
+           RowBox[{"expr", "/.", "\[VeryThinSpace]", 
+            RowBox[{
+             RowBox[{"phiMode", " ", "piBar"}], "\[Rule]", 
+             RowBox[{"wr", "+", 
+              RowBox[{"phiBar", " ", "piMode"}]}]}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"wr", ",", 
+            RowBox[{"phiBar", " ", "piMode"}], ",", 
+            RowBox[{"phiBar", " ", "phiMode"}], ",", 
+            RowBox[{"piBar", " ", "piMode"}]}], "}"}], ",", "Simplify"}], 
+         "]"}], "/.", "\[VeryThinSpace]", 
+        RowBox[{"wr", "\[Rule]", "\[ImaginaryI]"}]}], ",", 
+       RowBox[{"assume", "[", 
+        RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"LindGenericLong", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindbladGenerator", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "moyalOrder"}], "]"}], "]"}]}], ";", 
+  RowBox[{"LindGenericFP", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindbladGenerator", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "2"}], "]"}], "]"}]}], ";", 
+  RowBox[{"HigherMoyalCorrection", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"LindGenericLong", "-", "LindGenericFP"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPGeneralModeFunctions", "=", 
+   RowBox[{"useWronskian", "[", 
+    RowBox[{"collectW", "[", 
+     RowBox[{
+     "LindGenericFP", "/.", "\[VeryThinSpace]", "coeffModeFunctions"}], "]"}],
+     "]"}]}], ";", 
+  RowBox[{"FPGeneralExpected", "=", 
+   RowBox[{
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"6", " ", 
+       RowBox[{"W", "[", 
+        RowBox[{"q", ",", "p"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"6", " ", "p"}], "+", 
+         FractionBox[
+          RowBox[{"2", " ", 
+           SuperscriptBox["mass", "2"], " ", "q", " ", "Vphys"}], "Hubble"]}],
+         ")"}], " ", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}]}], "-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"2", " ", "p"}], ")"}], " ", 
+        RowBox[{
+         SuperscriptBox["W", 
+          TagBox[
+           RowBox[{"(", 
+            RowBox[{"1", ",", "0"}], ")"}],
+           Derivative],
+          MultilineFunction->None], "[", 
+         RowBox[{"q", ",", "p"}], "]"}]}], 
+       RowBox[{"Hubble", " ", "Vphys"}]], "+", 
+      RowBox[{"3", " ", "piBar", " ", "piMode", " ", "Vcom", " ", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "2"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+         RowBox[{"6", " ", "phiBar", " ", "piMode"}]}], ")"}], " ", 
+       RowBox[{
+        SuperscriptBox["W", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{"q", ",", "p"}], "]"}]}], "+", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"3", " ", "phiBar", " ", "phiMode"}], ")"}], " ", 
+        RowBox[{
+         SuperscriptBox["W", 
+          TagBox[
+           RowBox[{"(", 
+            RowBox[{"2", ",", "0"}], ")"}],
+           Derivative],
+          MultilineFunction->None], "[", 
+         RowBox[{"q", ",", "p"}], "]"}]}], "Vcom"]}], ")"}]}]}], ";", 
+  RowBox[{"FPGeneralCheck", "=", 
+   RowBox[{"useWronskian", "[", 
+    RowBox[{"FPGeneralModeFunctions", "-", "FPGeneralExpected"}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"DiffusionFromGenerator", "[", "expr_", "]"}], ":=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", " ", 
+          RowBox[{"Coefficient", "[", 
+           RowBox[{"expr", ",", 
+            RowBox[{
+             SuperscriptBox["W", 
+              TagBox[
+               RowBox[{"(", 
+                RowBox[{"2", ",", "0"}], ")"}],
+               Derivative],
+              MultilineFunction->None], "[", 
+             RowBox[{"q", ",", "p"}], "]"}]}], "]"}]}], ",", 
+         RowBox[{"Coefficient", "[", 
+          RowBox[{"expr", ",", 
+           RowBox[{
+            SuperscriptBox["W", 
+             TagBox[
+              RowBox[{"(", 
+               RowBox[{"1", ",", "1"}], ")"}],
+              Derivative],
+             MultilineFunction->None], "[", 
+            RowBox[{"q", ",", "p"}], "]"}]}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Coefficient", "[", 
+          RowBox[{"expr", ",", 
+           RowBox[{
+            SuperscriptBox["W", 
+             TagBox[
+              RowBox[{"(", 
+               RowBox[{"1", ",", "1"}], ")"}],
+              Derivative],
+             MultilineFunction->None], "[", 
+            RowBox[{"q", ",", "p"}], "]"}]}], "]"}], ",", 
+         RowBox[{"2", " ", 
+          RowBox[{"Coefficient", "[", 
+           RowBox[{"expr", ",", 
+            RowBox[{
+             SuperscriptBox["W", 
+              TagBox[
+               RowBox[{"(", 
+                RowBox[{"0", ",", "2"}], ")"}],
+               Derivative],
+              MultilineFunction->None], "[", 
+             RowBox[{"q", ",", "p"}], "]"}]}], "]"}]}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", "\[GreaterEqual]", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPGeneralDiffusionCheck", "=", 
+   RowBox[{"useWronskian", "[", 
+    RowBox[{
+     RowBox[{"DiffusionFromGenerator", "[", "FPGeneralModeFunctions", "]"}], "-", 
+     RowBox[{"DFromRules", "[", "coeffModeFunctions", "]"}]}], "]"}]}], ";", 
+  RowBox[{"MoyalGKLSChecks", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<HigherMoyalCorrection\>\"", "\[Rule]", 
+      "HigherMoyalCorrection"}], ",", 
+     RowBox[{"\"\<FPGeneralCheck\>\"", "\[Rule]", "FPGeneralCheck"}], ",", 
+     RowBox[{"\"\<FPGeneralDiffusionCheck\>\"", "\[Rule]", 
+      "FPGeneralDiffusionCheck"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[69]:=",ExpressionUUID->"bd309cc5-704e-554e-9b42-c43d50011adb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Light-mass regime and the massless limit", "Subsection",ExpressionUUID->"d3192eb0-a5ec-b04c-8439-53a46a60759e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FPHankel", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindGenericFP", "/.", "\[VeryThinSpace]", "coeffHankelGeneral"}],
+     "]"}]}], ";", 
+  RowBox[{"FPMassless", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindGenericFP", "/.", "\[VeryThinSpace]", 
+     RowBox[{"Join", "[", 
+      RowBox[{"coeffMassless", ",", 
+       RowBox[{"{", 
+        RowBox[{"mass", "\[Rule]", "0"}], "}"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"DMassless", "=", 
+   RowBox[{"DFromRules", "[", "coeffMassless", "]"}]}], ";", 
+  RowBox[{"DMasslessExpected", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           SuperscriptBox["sigma", "2"]}], ")"}]}], 
+        RowBox[{"4", " ", 
+         SuperscriptBox["\[Pi]", "2"]}]], ",", 
+       RowBox[{"-", 
+        FractionBox["3", 
+         RowBox[{"2", " ", "sigma"}]]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["3", 
+         RowBox[{"2", " ", "sigma"}]]}], ",", 
+       FractionBox[
+        RowBox[{"9", " ", 
+         SuperscriptBox["\[Pi]", "2"]}], 
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"masslessDiffusionCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"DMassless", "-", "DMasslessExpected"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPMasslessExpected", "=", 
+   RowBox[{
+    RowBox[{"3", " ", 
+     RowBox[{"W", "[", 
+      RowBox[{"q", ",", "p"}], "]"}]}], "+", 
+    RowBox[{"3", " ", "p", " ", 
+     RowBox[{
+      SuperscriptBox["W", 
+       TagBox[
+        RowBox[{"(", 
+         RowBox[{"0", ",", "1"}], ")"}],
+        Derivative],
+       MultilineFunction->None], "[", 
+      RowBox[{"q", ",", "p"}], "]"}]}], "-", 
+    FractionBox[
+     RowBox[{"p", " ", 
+      RowBox[{
+       SuperscriptBox["W", 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{"q", ",", "p"}], "]"}]}], 
+     RowBox[{"Hubble", " ", "Vphys"}]], "+", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["Hubble", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", 
+        SuperscriptBox["sigma", "2"]}], ")"}], " ", 
+      RowBox[{
+       SuperscriptBox["W", 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"2", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{"q", ",", "p"}], "]"}]}], 
+     RowBox[{"8", " ", 
+      SuperscriptBox["\[Pi]", "2"]}]], "-", 
+    FractionBox[
+     RowBox[{"3", " ", 
+      RowBox[{
+       SuperscriptBox["W", 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{"q", ",", "p"}], "]"}]}], 
+     RowBox[{"2", " ", "sigma"}]], "+", 
+    FractionBox[
+     RowBox[{"9", " ", 
+      SuperscriptBox["\[Pi]", "2"], " ", 
+      RowBox[{
+       SuperscriptBox["W", 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"0", ",", "2"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{"q", ",", "p"}], "]"}]}], 
+     RowBox[{"2", " ", 
+      SuperscriptBox["Hubble", "2"], " ", 
+      SuperscriptBox["sigma", "2"]}]]}]}], ";", 
+  RowBox[{"FPMasslessCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"FPMassless", "-", "FPMasslessExpected"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPMasslessDiffusionCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DiffusionFromGenerator", "[", "FPMassless", "]"}], "-", 
+      "DMasslessExpected"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"DQQLightLeading", "=", 
+   FractionBox[
+    RowBox[{
+     SuperscriptBox["Hubble", "2"], " ", 
+     SuperscriptBox["2", 
+      RowBox[{
+       RowBox[{"2", " ", "nu"}], "-", "3"}]], " ", 
+     SuperscriptBox[
+      RowBox[{"Gamma", "[", "nu", "]"}], "2"], " ", 
+     SuperscriptBox["sigma", 
+      RowBox[{"3", "-", 
+       RowBox[{"2", " ", "nu"}]}]]}], 
+    SuperscriptBox["\[Pi]", "3"]]}], ";"}]], "Input",
+ CellLabel->"In[70]:=",ExpressionUUID->"cc2f9c94-888c-7a4f-914a-32e9aad64e4a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Critical mass", "Subsection",ExpressionUUID->"3939fe81-990c-5249-823c-36cddc3d8e0b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FPCritical", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindGenericFP", "/.", "\[VeryThinSpace]", 
+     RowBox[{"Join", "[", 
+      RowBox[{"coeffCritical", ",", 
+       RowBox[{"{", 
+        RowBox[{"mass", "\[Rule]", 
+         FractionBox[
+          RowBox[{"3", " ", "Hubble"}], "2"]}], "}"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"DCritical", "=", 
+   RowBox[{"DFromRules", "[", "coeffCritical", "]"}]}], ";", 
+  RowBox[{"DCriticalEntries", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<DQQ\>\"", "\[Rule]", 
+      RowBox[{"DCritical", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DQP\>\"", "\[Rule]", 
+      RowBox[{"DCritical", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DPP\>\"", "\[Rule]", 
+      RowBox[{"DCritical", "\[LeftDoubleBracket]", 
+       RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
+  RowBox[{"FPCriticalDiffusionCheck", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DiffusionFromGenerator", "[", "FPCritical", "]"}], "-", 
+      "DCritical"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[71]:=",ExpressionUUID->"5b905719-4948-1f41-a31f-e71b3a51c4bc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Heavy mass", "Subsection",ExpressionUUID->"13a5a173-a5a4-c14e-b02e-32602648c14a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FPHeavy", "=", 
+   RowBox[{"collectW", "[", 
+    RowBox[{"LindGenericFP", "/.", "\[VeryThinSpace]", 
+     RowBox[{"Join", "[", 
+      RowBox[{"coeffHeavy", ",", 
+       RowBox[{"{", 
+        RowBox[{"mass", "\[Rule]", 
+         RowBox[{"Hubble", " ", 
+          SqrtBox[
+           RowBox[{
+            SuperscriptBox["mu", "2"], "+", 
+            FractionBox["9", "4"]}]]}]}], "}"}]}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"DHeavy", "=", 
+   RowBox[{"DFromRules", "[", "coeffHeavy", "]"}]}], ";", 
+  RowBox[{"DHeavyEntries", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<DQQ\>\"", "\[Rule]", 
+      RowBox[{"DHeavy", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DQP\>\"", "\[Rule]", 
+      RowBox[{"DHeavy", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{"\"\<DPP\>\"", "\[Rule]", 
+      RowBox[{"DHeavy", "\[LeftDoubleBracket]", 
+       RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
+  RowBox[{"FPHeavyDiffusionCheck", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DiffusionFromGenerator", "[", "FPHeavy", "]"}], "-", 
+      "DHeavy"}], ",", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";", 
+  RowBox[{"RegimeDiffusionExtractionChecks", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<GeneralMode\>\"", "\[Rule]", "FPGeneralDiffusionCheck"}], ",", 
+     RowBox[{"\"\<Massless\>\"", "\[Rule]", "FPMasslessDiffusionCheck"}], ",", 
+     RowBox[{"\"\<Critical\>\"", "\[Rule]", "FPCriticalDiffusionCheck"}], ",", 
+     RowBox[{"\"\<Heavy\>\"", "\[Rule]", "FPHeavyDiffusionCheck"}]}], "]"}]}],
+   ";"}]], "Input",
+ CellLabel->"In[72]:=",ExpressionUUID->"ce0fd301-9ad1-eb40-bc8c-013ab9980622"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Stationary covariance and purity", "Subsection",ExpressionUUID->"a3e7d2c8-befe-df42-96bd-89a3b9e6c72d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{"dQQ", ",", "dQP", ",", "dPP"}], "]"}], ";", 
+  RowBox[{"Dsym", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"dQQ", ",", "dQP"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"dQP", ",", "dPP"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"CinfUniversal", "=", 
+   RowBox[{"StationaryCovarianceFromD", "[", 
+    RowBox[{"mass", ",", "Dsym", ",", 
+     RowBox[{"mass", ">", "0"}]}], "]"}]}], ";", 
+  RowBox[{"PurityUniversal", "=", 
+   RowBox[{"StationaryPurityFromCov", "[", 
+    RowBox[{"CinfUniversal", ",", 
+     RowBox[{"mass", ">", "0"}]}], "]"}]}], ";", 
+  RowBox[{"UniversalLyapunovResidual", "=", 
+   RowBox[{"LyapunovResidual", "[", 
+    RowBox[{"mass", ",", "Dsym", ",", "CinfUniversal", ",", 
+     RowBox[{"mass", ">", "0"}]}], "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"StationaryData", "[", 
+    RowBox[{"name_String", ",", "x_", ",", "rules_", ",", 
+     RowBox[{"extra_", ":", "True"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"A", ",", "Dmat", ",", "Cinf", ",", "purity", ",", "eigs"}], 
+      "}"}], ",", 
+     RowBox[{
+      RowBox[{"A", "=", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"AFromMass", "[", "x", "]"}], ",", 
+         RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], ";", 
+      RowBox[{"Dmat", "=", 
+       RowBox[{"DFromRules", "[", 
+        RowBox[{"rules", ",", "extra"}], "]"}]}], ";", 
+      RowBox[{"Cinf", "=", 
+       RowBox[{"StationaryCovarianceFromD", "[", 
+        RowBox[{"x", ",", "Dmat", ",", "extra"}], "]"}]}], ";", 
+      RowBox[{"purity", "=", 
+       RowBox[{"StationaryPurityFromCov", "[", 
+        RowBox[{"Cinf", ",", "extra"}], "]"}]}], ";", 
+      RowBox[{"eigs", "=", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"Eigenvalues", "[", "A", "]"}], ",", 
+         RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], ";", 
+      RowBox[{"Association", "[", 
+       RowBox[{
+        RowBox[{"\"\<Regime\>\"", "\[Rule]", "name"}], ",", 
+        RowBox[{"\"\<Mass\>\"", "\[Rule]", 
+         RowBox[{"Simplify", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"assume", "[", "extra", "]"}]}], "]"}]}], ",", 
+        RowBox[{"\"\<DriftA\>\"", "\[Rule]", "A"}], ",", 
+        RowBox[{"\"\<DriftEigenvalues\>\"", "\[Rule]", "eigs"}], ",", 
+        RowBox[{"\"\<DiffusionD\>\"", "\[Rule]", "Dmat"}], ",", 
+        RowBox[{"\"\<StationaryCovariance\>\"", "\[Rule]", "Cinf"}], ",", 
+        RowBox[{"\"\<StationaryPurity\>\"", "\[Rule]", "purity"}]}], 
+       "]"}]}]}], "]"}]}], ";", 
+  RowBox[{"generalData", "=", 
+   RowBox[{"StationaryData", "[", 
+    RowBox[{"\"\<General stable massive Hankel\>\"", ",", "mass", ",", 
+     "coeffHankelGeneral", ",", 
+     RowBox[{"mass", ">", "0"}]}], "]"}]}], ";", 
+  RowBox[{"masslessData", "=", 
+   RowBox[{"StationaryData", "[", 
+    RowBox[{"\"\<Massless de Sitter\>\"", ",", "0", ",", "coeffMassless", ",",
+      "True"}], "]"}]}], ";", 
+  RowBox[{"criticalData", "=", 
+   RowBox[{"StationaryData", "[", 
+    RowBox[{"\"\<Critical: nu = 0, m = 3 H/2\>\"", ",", 
+     FractionBox[
+      RowBox[{"3", " ", "Hubble"}], "2"], ",", "coeffCritical", ",", "True"}],
+     "]"}]}], ";", 
+  RowBox[{"heavyData", "=", 
+   RowBox[{"StationaryData", "[", 
+    RowBox[{"\"\<Heavy/principal: nu = I mu, m = H Sqrt[mu^2 + 9/4]\>\"", ",", 
+     RowBox[{"Hubble", " ", 
+      SqrtBox[
+       RowBox[{
+        SuperscriptBox["mu", "2"], "+", 
+        FractionBox["9", "4"]}]]}], ",", "coeffHeavy", ",", "True"}], "]"}]}],
+   ";", 
+  RowBox[{"FPGeneralCollectedD", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{"3", " ", "phiBar", " ", "phiMode"}], "Vcom"], ",", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"3", " ", "\[ImaginaryI]"}], "2"], "+", 
+        RowBox[{"3", " ", "phiBar", " ", "piMode"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"3", " ", "\[ImaginaryI]"}], "2"], "+", 
+        RowBox[{"3", " ", "phiBar", " ", "piMode"}]}], ",", 
+       RowBox[{"3", " ", "piBar", " ", "piMode", " ", "Vcom"}]}], "}"}]}], 
+    "}"}]}], ";", 
+  RowBox[{"FPGeneralCollectedDWronskian", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"FPGeneralCollectedD", "/.", "\[VeryThinSpace]", 
+      RowBox[{"\[ImaginaryI]", "\[Rule]", 
+       RowBox[{
+        RowBox[{"phiMode", " ", "piBar"}], "-", 
+        RowBox[{"phiBar", " ", "piMode"}]}]}]}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPGeneralPurity", "=", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"PurityUniversal", "/.", "\[VeryThinSpace]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"dQQ", "\[Rule]", 
+         RowBox[{"FPGeneralCollectedDWronskian", "\[LeftDoubleBracket]", 
+          RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"dQP", "\[Rule]", 
+         RowBox[{"FPGeneralCollectedDWronskian", "\[LeftDoubleBracket]", 
+          RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"dPP", "\[Rule]", 
+         RowBox[{"FPGeneralCollectedDWronskian", "\[LeftDoubleBracket]", 
+          RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}]}], "}"}]}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPGeneralPurityInvSq", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     FractionBox["1", 
+      SuperscriptBox["FPGeneralPurity", "2"]], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"FPGeneralPurityInvSqPaper", "=", 
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{
+      SuperscriptBox["mass", "2"], " ", 
+      SuperscriptBox["Vphys", "2"]}]], 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["Vcom", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"piBar", " ", "piMode"}], ")"}], "2"]}], "+", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["mass", "4"], " ", 
+          SuperscriptBox["Vphys", "4"]}], ")"}], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"phiBar", " ", "phiMode"}], ")"}], "2"]}], 
+       SuperscriptBox["Vcom", "2"]], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"9", " ", 
+          SuperscriptBox["Hubble", "2"]}], "+", 
+         RowBox[{"2", " ", 
+          SuperscriptBox["mass", "2"]}]}], ")"}], " ", 
+       SuperscriptBox["Vphys", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"phiBar", " ", "phiMode"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{"piBar", " ", "piMode"}], ")"}]}], "+", 
+      RowBox[{"3", " ", "Hubble", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"phiBar", " ", "piMode"}], "+", 
+         RowBox[{"phiMode", " ", "piBar"}]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Vcom", " ", "Vphys", " ", "piBar", " ", "piMode"}], "+", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             SuperscriptBox["mass", "2"], " ", 
+             SuperscriptBox["Vphys", "3"]}], ")"}], " ", "phiBar", " ", 
+           "phiMode"}], "Vcom"]}], ")"}]}]}], ")"}]}]}], ";", 
+  RowBox[{"FPGeneralPurityPaperCheck", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"FPGeneralPurityInvSq", "-", "FPGeneralPurityInvSqPaper"}], ",", 
+     RowBox[{
+      RowBox[{"assume", "[", 
+       RowBox[{"mass", ">", "0"}], "]"}], "&&", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"phiMode", " ", "piBar"}], "-", 
+        RowBox[{"phiBar", " ", "piMode"}]}], "\[Equal]", 
+       "\[ImaginaryI]"}]}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[73]:=",ExpressionUUID->"afe31ed2-3212-5249-aa22-1651c492bd6d"],
+
+Cell["Critical stationary purity limit", "Subsubsection"],
+
+Cell[BoxData["\<\
+ClearAll[critX, critS, critZ, critR, critY, CriticalSigmaFromD,
+  CriticalPurityDetBeforeWronskian, CriticalPurityDet,
+  CriticalPurityExactReduced, CriticalPurityExact, CriticalPurityLimit,
+  CriticalPurityCheck];
+
+CriticalSigmaFromD = {
+  {5 dQQ/6 + 4 dQP/(9 Hubble Vphys) +
+    2 dPP/(27 Hubble^2 Vphys^2), -Hubble Vphys dQQ/2},
+  {-Hubble Vphys dQQ/2, dPP/6 + 3 Hubble^2 Vphys^2 dQQ/8}
+};
+
+critR = (3 critX/2) - sigma critS;
+critY = (9 critX/4) - 3 sigma critS + sigma^2 critZ;
+
+CriticalPurityDetBeforeWronskian = FullSimplify[
+  Det[CriticalSigmaFromD] /. {
+    Vphys -> 6 Pi^2/(Hubble^3 sigma^3),
+    dQQ -> Hubble^2 sigma^3 critX/(8 Pi),
+    dQP -> -(3 Pi/4) critR,
+    dPP -> 9 Pi^3 critY/(2 Hubble^2 sigma^3)
+  },
+  Hubble > 0 && sigma > 0 && critX > 0 &&
+    Element[{critS, critZ}, Reals]
+];
+
+CriticalPurityDet = FullSimplify[
+  CriticalPurityDetBeforeWronskian /.
+    critZ -> (critS^2 + 4/(Pi^2 sigma^2))/critX,
+  Hubble > 0 && sigma > 0 && critX > 0 && Element[critS, Reals]
+];
+
+CriticalPurityExactReduced = FullSimplify[
+  1/(2 Sqrt[CriticalPurityDet]),
+  sigma > 0 && critX > 0 && Element[critS, Reals]
+];
+
+CriticalPurityExact = CriticalPurityExactReduced /. {
+  critX -> BesselJ[0, sigma]^2 + BesselY[0, sigma]^2,
+  critS -> BesselJ[0, sigma] BesselJ[1, sigma] +
+    BesselY[0, sigma] BesselY[1, sigma]
+};
+
+CriticalPurityLimit =
+  Limit[CriticalPurityExact, sigma -> 0, Direction -> \"FromAbove\"];
+
+CriticalPurityCheck =
+  FullSimplify[CriticalPurityLimit - 3 Pi/Sqrt[4 + 9 Pi^2]];
+\>"], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Massless shell noise with a massive restoring drift", "Subsection",ExpressionUUID->"6482915f-fb6a-3e48-9e2e-195d218d8b9e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DMasslessFPConvention", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           SuperscriptBox["sigma", "2"]}], ")"}]}], 
+        RowBox[{"4", " ", 
+         SuperscriptBox["\[Pi]", "2"]}]], ",", 
+       RowBox[{"-", 
+        FractionBox["3", 
+         RowBox[{"2", " ", "sigma"}]]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["3", 
+         RowBox[{"2", " ", "sigma"}]]}], ",", 
+       FractionBox[
+        RowBox[{"9", " ", 
+         SuperscriptBox["\[Pi]", "2"]}], 
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"DMasslessFlippedSign", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           SuperscriptBox["sigma", "2"]}], ")"}]}], 
+        RowBox[{"4", " ", 
+         SuperscriptBox["\[Pi]", "2"]}]], ",", 
+       FractionBox["3", 
+        RowBox[{"2", " ", "sigma"}]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox["3", 
+        RowBox[{"2", " ", "sigma"}]], ",", 
+       FractionBox[
+        RowBox[{"9", " ", 
+         SuperscriptBox["\[Pi]", "2"]}], 
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"CRegulatedUsingFPD", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"StationaryCovarianceFromD", "[", 
+       RowBox[{"mass", ",", "DMasslessFPConvention"}], "]"}], "/.", 
+      "\[VeryThinSpace]", "VphysShellRule"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"CRegulatedUsingCovSignD", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"StationaryCovarianceFromD", "[", 
+       RowBox[{"mass", ",", "DMasslessFlippedSign"}], "]"}], "/.", 
+      "\[VeryThinSpace]", "VphysShellRule"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"PaperRegulatedCovariance", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          SuperscriptBox["mass", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], "+", 
+         RowBox[{
+          SuperscriptBox["Hubble", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{"9", "+", 
+            RowBox[{"3", " ", 
+             SuperscriptBox["sigma", "2"]}], "+", 
+            SuperscriptBox["sigma", "4"]}], ")"}]}]}], 
+        RowBox[{"24", " ", 
+         SuperscriptBox["mass", "2"], " ", 
+         SuperscriptBox["\[Pi]", "2"]}]], ",", 
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"3", " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], 
+         RowBox[{"4", " ", 
+          SuperscriptBox["sigma", "3"]}]]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"3", " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], 
+         RowBox[{"4", " ", 
+          SuperscriptBox["sigma", "3"]}]]}], ",", 
+       FractionBox[
+        RowBox[{"3", " ", 
+         SuperscriptBox["\[Pi]", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["Hubble", "2"], " ", 
+            SuperscriptBox["sigma", "4"]}], "+", 
+           RowBox[{
+            SuperscriptBox["mass", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{"1", "+", 
+              SuperscriptBox["sigma", "2"]}], ")"}]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         SuperscriptBox["Hubble", "4"], " ", 
+         SuperscriptBox["sigma", "6"]}]]}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"MasslessRegulatorCovarianceChecks", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<Using FP D_QP = -3/(2 sigma)\>\"", "\[Rule]", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{
+        RowBox[{"CRegulatedUsingFPD", "-", "PaperRegulatedCovariance"}], ",", 
+        RowBox[{"assume", "[", 
+         RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ",", 
+     RowBox[{"\"\<Using flipped-sign D_QP = +3/(2 sigma)\>\"", "\[Rule]", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{
+        RowBox[{"CRegulatedUsingCovSignD", "-", "PaperRegulatedCovariance"}], 
+        ",", 
+        RowBox[{"assume", "[", 
+         RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}]}], "]"}]}], ";", 
+  RowBox[{"MasslessRegulatorLyapunovResidual", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"AFromMass", "[", "mass", "]"}], "/.", "\[VeryThinSpace]", 
+         "VphysShellRule"}], ")"}], ".", "PaperRegulatedCovariance"}], "+", 
+      RowBox[{"PaperRegulatedCovariance", ".", 
+       TemplateBox[{
+         RowBox[{"(", 
+           RowBox[{
+             RowBox[{"AFromMass", "[", "mass", "]"}], "/.", 
+             "\[VeryThinSpace]", "VphysShellRule"}], ")"}]},
+        "Transpose"]}], "+", "DMasslessFPConvention"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"DetRegulated", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"Det", "[", "PaperRegulatedCovariance", "]"}], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"PurityRegulated", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"2", " ", 
+       SqrtBox["DetRegulated"]}]], ",", 
+     RowBox[{"assume", "[", 
+      RowBox[{"mass", ">", "0"}], "]"}]}], "]"}]}], ";", 
+  RowBox[{"MasslessLimitRegulatedPurity", "=", 
+   RowBox[{
+    UnderscriptBox["\[Limit]", 
+     TagBox[
+      RowBox[{"mass", "\[Rule]", 
+       SuperscriptBox["0", "+"]}],
+      "AlternateLimitDirection"]], "PurityRegulated"}]}], ";"}]], "Input",
+ CellLabel->"In[74]:=",ExpressionUUID->"79d1566c-2c2a-cc4f-94e0-548df209a3e8"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Appendix D: Rank-One Boundary Noise and the Singular Q,P Kossakowski Matrix\
+\>", "Section",ExpressionUUID->"3ded6e27-e11f-af41-80f8-204f4e3554f5"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"KossakowskiQPFromEll", "[", 
+    RowBox[{
+    "ellQv_", ",", " ", "ellPv_", ",", " ", "ellQbv_", ",", " ", "ellPbv_"}], 
+    "]"}], " ", ":=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ellQv", " ", "ellQbv"}], ",", " ", 
+       RowBox[{"ellQv", " ", "ellPbv"}]}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ellPv", " ", "ellQbv"}], ",", " ", 
+       RowBox[{"ellPv", " ", "ellPbv"}]}], "}"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"KossakowskiQPFromRules", "[", "rules_", "]"}], " ", ":=", " ", 
+   RowBox[{"KossakowskiQPFromEll", "[", 
+    RowBox[{
+     RowBox[{"ellQ", " ", "/.", " ", "rules"}], ",", " ", 
+     RowBox[{"ellP", " ", "/.", " ", "rules"}], ",", " ", 
+     RowBox[{"ellQBar", " ", "/.", " ", "rules"}], ",", " ", 
+     RowBox[{"ellPBar", " ", "/.", " ", "rules"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"KossakowskiRealSymmetricPart", "[", "Kmat_", "]"}], " ", ":=", 
+   " ", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"Kmat", " ", "+", " ", 
+        RowBox[{"Transpose", "[", "Kmat", "]"}]}], ")"}], "/", "2"}], ",", 
+     " ", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DiffusionFromKossakowski", "[", "Kmat_", "]"}], " ", ":=", " ", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     RowBox[{"Omega", " ", ".", " ", 
+      RowBox[{"KossakowskiRealSymmetricPart", "[", "Kmat", "]"}], " ", ".", 
+      " ", 
+      RowBox[{"Transpose", "[", "Omega", "]"}]}], ",", " ", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"KossakowskiGeneralMode", " ", "=", " ", 
+   RowBox[{"KossakowskiQPFromRules", "[", "coeffModeFunctions", "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"KossakowskiMassless", " ", "=", " ", 
+   RowBox[{"KossakowskiQPFromRules", "[", "coeffMassless", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"KossakowskiDiffusionGeneralCheck", " ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DFromRules", "[", "coeffModeFunctions", "]"}], " ", "-", " ", 
+      RowBox[{
+      "DiffusionFromKossakowski", "[", "KossakowskiGeneralMode", "]"}]}], ",",
+      " ", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"KossakowskiDiffusionMasslessCheck", " ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DFromRules", "[", "coeffMassless", "]"}], " ", "-", " ", 
+      RowBox[{"DiffusionFromKossakowski", "[", "KossakowskiMassless", "]"}]}],
+      ",", " ", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"MasslessKossakowskiHermitianCheck", " ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"KossakowskiMassless", " ", "-", " ", 
+      RowBox[{"ConjugateTranspose", "[", "KossakowskiMassless", "]"}]}], ",", 
+     " ", 
+     RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"RankOneChecks", " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<DetGeneralMode\>\"", " ", "->", " ", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{
+        RowBox[{"Det", "[", "KossakowskiGeneralMode", "]"}], ",", " ", 
+        RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ",", " ", 
+     RowBox[{"\"\<DetMassless\>\"", " ", "->", " ", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{
+        RowBox[{"Det", "[", "KossakowskiMassless", "]"}], ",", " ", 
+        RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ",", " ", 
+     RowBox[{"\"\<MasslessKossakowski\>\"", " ", "->", " ", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{"KossakowskiMassless", ",", " ", 
+        RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ",", " ", 
+     RowBox[{"\"\<MasslessRealDiffusion\>\"", " ", "->", " ", 
+      RowBox[{"FullSimplify", "[", 
+       RowBox[{
+        RowBox[{"DFromRules", "[", "coeffMassless", "]"}], ",", " ", 
+        RowBox[{"assume", "[", "True", "]"}]}], "]"}]}], ",", " ", 
+     RowBox[{"\"\<GeneralKossakowskiToDiffusion\>\"", " ", "->", " ", 
+      "KossakowskiDiffusionGeneralCheck"}], ",", " ", 
+     RowBox[{"\"\<MasslessKossakowskiToDiffusion\>\"", " ", "->", " ", 
+      "KossakowskiDiffusionMasslessCheck"}], ",", " ", 
+     RowBox[{"\"\<MasslessKossakowskiHermitian\>\"", " ", "->", " ", 
+      "MasslessKossakowskiHermitianCheck"}]}], "]"}]}], ";"}]}], "Input",
+ CellLabel->"In[75]:=",ExpressionUUID->"db019961-4ba7-3846-991b-6cf84bcc0868"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Run Order Summary", "Section",ExpressionUUID->"bb46614e-fcf1-454a-961d-e9e0bc9400c6"],
+
+Cell["\<\
+Evaluate Global Setup first, then proceed section by section. The \
+Wigner/Moyal cells are the most expensive. The Massless Shell Noise \
+subsection keeps the FP sign and an explicit flipped-sign comparison so the \
+convention cannot silently drift.\
+\>", "Text",ExpressionUUID->"7fc4b01f-3dcf-3a40-a4e3-a6584fea9056"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["MCP Main Results", "Section",ExpressionUUID->"b454cb78-54e2-354f-9697-2b7e907372d1"],
+
+Cell["\<\
+The cells in this section intentionally have no trailing semicolons. Evaluate \
+the notebook from the top, then evaluate these cells to display the main \
+symbolic checks and paper-facing results.\
+\>", "Text",ExpressionUUID->"bf35345f-6f62-f64e-80f6-a6f3b4c3c4cb"],
+
+Cell[CellGroupData[{
+
+Cell["Bulk drift and first-moment equations", "Subsection",ExpressionUUID->"cc446fba-a066-e54f-9c35-f6b8bd9558cd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{
+   RowBox[{"\"\<HamiltonianDrift\>\"", " ", "->", " ", "HamiltonianDrift"}], ",",
+    " ", 
+   RowBox[{"\"\<DissipativeLinearDrift\>\"", " ", "->", " ", 
+    "DissipativeLinearDrift"}], ",", " ", 
+   RowBox[{"\"\<FullFirstMomentDrift\>\"", " ", "->", " ", 
+    "FullFirstMomentDrift"}], ",", " ", 
+   RowBox[{"\"\<FullDriftMatrixCheck\>\"", " ", "->", " ", 
+    "FullDriftMatrixCheck"}], ",", " ", 
+   RowBox[{"\"\<GKLSIncrementCheck\>\"", " ", "->", " ", 
+    "GKLSIncrementCheck"}]}], "]"}]], "Input",
+ CellLabel->"In[85]:=",ExpressionUUID->"9ab8875d-2923-6f47-84a2-1728ddcd4745"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"HamiltonianDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       FractionBox[
+        RowBox[{"3", " ", "q"}], "2"], "+", 
+       FractionBox["p", 
+        RowBox[{"Hubble", " ", "Vphys"}]]}], ",", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"3", " ", "p"}], "2"]}], "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["mass", "2"], " ", "q", " ", "Vphys"}], "Hubble"]}]}],
+      "}"}]}], ",", 
+   RowBox[{"\<\"DissipativeLinearDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"3", " ", "q"}], "2"]}], ",", 
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"3", " ", "p"}], "2"]}]}], "}"}]}], ",", 
+   RowBox[{"\<\"FullFirstMomentDrift\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      FractionBox["p", 
+       RowBox[{"Hubble", " ", "Vphys"}]], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "3"}], " ", "p"}], "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["mass", "2"], " ", "q", " ", "Vphys"}], "Hubble"]}]}],
+      "}"}]}], ",", 
+   RowBox[{"\<\"FullDriftMatrixCheck\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+   RowBox[{"\<\"GKLSIncrementCheck\"\>", "\[Rule]", "0"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361271609726`*^9},
+ CellLabel->"Out[85]=",ExpressionUUID->"c92b8dde-bf25-e64c-8aeb-b03d3cd28b1d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Moyal-derived Wigner Fokker-Planck checks", "Subsection",ExpressionUUID->"0ef95612-83db-b74a-8377-94162b3786e0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{
+   RowBox[{"\"\<MoyalGKLSChecks\>\"", "\[Rule]", "MoyalGKLSChecks"}], ",", 
+   RowBox[{"\"\<FPMasslessCheck\>\"", "\[Rule]", "FPMasslessCheck"}], ",", 
+   RowBox[{"\"\<RegimeDiffusionExtractionChecks\>\"", "\[Rule]", 
+    "RegimeDiffusionExtractionChecks"}]}], "]"}]], "Input",
+ CellLabel->"In[86]:=",ExpressionUUID->"8df03d30-487f-f148-a770-79f42eb73aea"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"MoyalGKLSChecks\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"HigherMoyalCorrection\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"FPGeneralCheck\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"FPGeneralDiffusionCheck\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"FPMasslessCheck\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"RegimeDiffusionExtractionChecks\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"GeneralMode\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"Massless\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"Critical\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"Heavy\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}]}], 
+     "\[RightAssociation]"}]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361271853657`*^9},
+ CellLabel->"Out[86]=",ExpressionUUID->"4ae9da6e-f0f4-b14c-b311-e473cbedc5af"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Canonical, Fokker-Planck, and massless diffusion checks", "Subsection",ExpressionUUID->"19d5d24c-5511-f944-baf4-af5b5ff60f0a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{
+   RowBox[{"\"\<CanonicalCommutatorCheck\>\"", "\[Rule]", 
+    "canonicalCommutatorCheck"}], ",", 
+   RowBox[{"\"\<FPGeneralCheck\>\"", "\[Rule]", "FPGeneralCheck"}], ",", 
+   RowBox[{"\"\<MasslessDiffusionCheck\>\"", "\[Rule]", 
+    "masslessDiffusionCheck"}], ",", 
+   RowBox[{"\"\<DMassless\>\"", "\[Rule]", "DMassless"}], ",", 
+   RowBox[{"\"\<DQQLightLeading\>\"", "\[Rule]", "DQQLightLeading"}]}], 
+  "]"}]], "Input",
+ CellLabel->"In[87]:=",ExpressionUUID->"9cdfac50-fba3-eb47-8e71-6e3e17cd8d2f"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"CanonicalCommutatorCheck\"\>", "\[Rule]", "\[ImaginaryI]"}], ",", 
+   RowBox[{"\<\"FPGeneralCheck\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"MasslessDiffusionCheck\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"DMassless\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], 
+         RowBox[{"4", " ", 
+          SuperscriptBox["\[Pi]", "2"]}]], ",", 
+        RowBox[{"-", 
+         FractionBox["3", 
+          RowBox[{"2", " ", "sigma"}]]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["3", 
+          RowBox[{"2", " ", "sigma"}]]}], ",", 
+        FractionBox[
+         RowBox[{"9", " ", 
+          SuperscriptBox["\[Pi]", "2"]}], 
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"DQQLightLeading\"\>", "\[Rule]", 
+    FractionBox[
+     RowBox[{
+      SuperscriptBox["2", 
+       RowBox[{
+        RowBox[{"-", "3"}], "+", 
+        RowBox[{"2", " ", "nu"}]}]], " ", 
+      SuperscriptBox["Hubble", "2"], " ", 
+      SuperscriptBox["sigma", 
+       RowBox[{"3", "-", 
+        RowBox[{"2", " ", "nu"}]}]], " ", 
+      SuperscriptBox[
+       RowBox[{"Gamma", "[", "nu", "]"}], "2"]}], 
+     SuperscriptBox["\[Pi]", "3"]]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361271886044`*^9},
+ CellLabel->"Out[87]=",ExpressionUUID->"1f1a2295-8257-e24d-a562-3100b87b0170"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Stationary covariance, purity, and regulator checks", "Subsection",ExpressionUUID->"9536358c-c1eb-c545-8c64-64f765fbc5c7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{
+   RowBox[{"\"\<UniversalLyapunovResidual\>\"", "\[Rule]", 
+    "UniversalLyapunovResidual"}], ",", 
+   RowBox[{"\"\<CinfUniversal\>\"", "\[Rule]", "CinfUniversal"}], ",", 
+   RowBox[{"\"\<PurityUniversal\>\"", "\[Rule]", "PurityUniversal"}], ",", 
+   RowBox[{"\"\<FPGeneralPurityInvSqCheck\>\"", "\[Rule]", 
+    "FPGeneralPurityPaperCheck"}], ",", 
+   RowBox[{"\"\<MasslessRegulatorCovarianceChecks\>\"", "\[Rule]", 
+    "MasslessRegulatorCovarianceChecks"}], ",", 
+   RowBox[{"\"\<MasslessRegulatorLyapunovResidual\>\"", "\[Rule]", 
+    "MasslessRegulatorLyapunovResidual"}], ",", 
+   RowBox[{"\"\<PurityRegulated\>\"", "\[Rule]", "PurityRegulated"}], ",", 
+   RowBox[{"\"\<MasslessLimitRegulatedPurity\>\"", "\[Rule]", 
+    "MasslessLimitRegulatedPurity"}]}], "]"}]], "Input",
+ CellLabel->"In[88]:=",ExpressionUUID->"26f238ae-0e0b-a947-9ae8-b291833337d9"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"UniversalLyapunovResidual\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"CinfUniversal\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"dPP", "+", 
+          RowBox[{"Vphys", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"6", " ", "dQP", " ", "Hubble"}], "+", 
+             RowBox[{"dQQ", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"9", " ", 
+                 SuperscriptBox["Hubble", "2"]}], "+", 
+                SuperscriptBox["mass", "2"]}], ")"}], " ", "Vphys"}]}], 
+            ")"}]}]}], 
+         RowBox[{"6", " ", 
+          SuperscriptBox["mass", "2"], " ", 
+          SuperscriptBox["Vphys", "2"]}]], ",", 
+        RowBox[{
+         RowBox[{"-", 
+          FractionBox["1", "2"]}], " ", "dQQ", " ", "Hubble", " ", 
+         "Vphys"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", 
+          FractionBox["1", "2"]}], " ", "dQQ", " ", "Hubble", " ", "Vphys"}], 
+        ",", 
+        RowBox[{
+         FractionBox["1", "6"], " ", 
+         RowBox[{"(", 
+          RowBox[{"dPP", "+", 
+           RowBox[{"dQQ", " ", 
+            SuperscriptBox["mass", "2"], " ", 
+            SuperscriptBox["Vphys", "2"]}]}], ")"}]}]}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"PurityUniversal\"\>", "\[Rule]", 
+    FractionBox[
+     RowBox[{"3", " ", "mass", " ", "Vphys"}], 
+     SqrtBox[
+      RowBox[{
+       SuperscriptBox["dPP", "2"], "+", 
+       RowBox[{"dQQ", " ", 
+        SuperscriptBox["mass", "2"], " ", 
+        SuperscriptBox["Vphys", "3"], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"6", " ", "dQP", " ", "Hubble"}], "+", 
+          RowBox[{"dQQ", " ", 
+           SuperscriptBox["mass", "2"], " ", "Vphys"}]}], ")"}]}], "+", 
+       RowBox[{"dPP", " ", "Vphys", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"6", " ", "dQP", " ", "Hubble"}], "+", 
+          RowBox[{"dQQ", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"9", " ", 
+              SuperscriptBox["Hubble", "2"]}], "+", 
+             RowBox[{"2", " ", 
+              SuperscriptBox["mass", "2"]}]}], ")"}], " ", "Vphys"}]}], 
+         ")"}]}]}]]]}], ",", 
+   RowBox[{"\<\"FPGeneralPurityInvSqCheck\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"MasslessRegulatorCovarianceChecks\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Using FP D_QP = -3/(2 sigma)\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"Using flipped-sign D_QP = +3/(2 sigma)\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             SuperscriptBox["Hubble", "4"], " ", 
+             SuperscriptBox["sigma", "2"]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox["mass", "2"], " ", 
+             SuperscriptBox["\[Pi]", "2"]}]], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"MasslessRegulatorLyapunovResidual\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"PurityRegulated\"\>", "\[Rule]", 
+    FractionBox[
+     RowBox[{"2", " ", 
+      SuperscriptBox["sigma", "3"]}], 
+     SqrtBox[
+      RowBox[{
+       RowBox[{"2", " ", 
+        SuperscriptBox["sigma", "2"], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "3"}], "+", 
+          SuperscriptBox["sigma", "2"]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          SuperscriptBox["sigma", "2"]}], ")"}]}], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["mass", "2"], " ", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}], "2"]}], 
+        SuperscriptBox["Hubble", "2"]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["Hubble", "2"], " ", 
+         SuperscriptBox["sigma", "4"], " ", 
+         RowBox[{"(", 
+          RowBox[{"9", "+", 
+           RowBox[{"3", " ", 
+            SuperscriptBox["sigma", "2"]}], "+", 
+           SuperscriptBox["sigma", "4"]}], ")"}]}], 
+        SuperscriptBox["mass", "2"]]}]]]}], ",", 
+   RowBox[{"\<\"MasslessLimitRegulatedPurity\"\>", "\[Rule]", "0"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361271981125`*^9},
+ CellLabel->"Out[88]=",ExpressionUUID->"e5270943-9a5d-8c4a-b046-ffe7fe60cb02"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Regime summaries", "Subsection",ExpressionUUID->"0acc6220-9cab-ee4b-af01-f948b4829f31"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{
+   RowBox[{"\"\<Massless\>\"", "\[Rule]", 
+    RowBox[{"KeyTake", "[", 
+     RowBox[{"masslessData", ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<DriftEigenvalues\>\"", ",", "\"\<DiffusionD\>\"", 
+        ",", "\"\<StationaryCovariance\>\"", 
+        ",", "\"\<StationaryPurity\>\""}], "}"}]}], "]"}]}], ",", 
+   RowBox[{"\"\<Critical\>\"", "\[Rule]", 
+    RowBox[{"KeyTake", "[", 
+     RowBox[{"criticalData", ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Mass\>\"", ",", "\"\<DriftEigenvalues\>\"", 
+        ",", "\"\<DiffusionD\>\"", ",", "\"\<StationaryPurity\>\""}], "}"}]}],
+      "]"}]}], ",", 
+   RowBox[{"\"\<Heavy\>\"", "\[Rule]", 
+    RowBox[{"KeyTake", "[", 
+     RowBox[{"heavyData", ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Mass\>\"", ",", "\"\<DriftEigenvalues\>\"", 
+        ",", "\"\<DiffusionD\>\"", ",", "\"\<StationaryPurity\>\""}], "}"}]}],
+      "]"}]}]}], "]"}]], "Input",
+ CellLabel->"In[89]:=",ExpressionUUID->"322f3aa5-4b88-2d49-990c-8e619a568e49"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Massless\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"DriftEigenvalues\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"-", "3"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"DiffusionD\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             SuperscriptBox["Hubble", "2"], " ", 
+             RowBox[{"(", 
+              RowBox[{"1", "+", 
+               SuperscriptBox["sigma", "2"]}], ")"}]}], 
+            RowBox[{"4", " ", 
+             SuperscriptBox["\[Pi]", "2"]}]], ",", 
+           RowBox[{"-", 
+            FractionBox["3", 
+             RowBox[{"2", " ", "sigma"}]]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", 
+            FractionBox["3", 
+             RowBox[{"2", " ", "sigma"}]]}], ",", 
+           FractionBox[
+            RowBox[{"9", " ", 
+             SuperscriptBox["\[Pi]", "2"]}], 
+            RowBox[{
+             SuperscriptBox["Hubble", "2"], " ", 
+             SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"StationaryCovariance\"\>", "\[Rule]", 
+       RowBox[{
+       "Missing", "[", "\<\"NoFiniteStationaryCovariance\"\>", "]"}]}], ",", 
+      RowBox[{"\<\"StationaryPurity\"\>", "\[Rule]", 
+       RowBox[{"Missing", "[", "\<\"NoFiniteStationaryPurity\"\>", "]"}]}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Critical\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Mass\"\>", "\[Rule]", 
+       FractionBox[
+        RowBox[{"3", " ", "Hubble"}], "2"]}], ",", 
+      RowBox[{"\<\"DriftEigenvalues\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", 
+          FractionBox["3", "2"]}], ",", 
+         RowBox[{"-", 
+          FractionBox["3", "2"]}]}], "}"}]}], ",", 
+      RowBox[{"\<\"DiffusionD\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             SuperscriptBox["Hubble", "2"], " ", 
+             SuperscriptBox["sigma", "3"], " ", 
+             RowBox[{"HankelH1", "[", 
+              RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+             RowBox[{"HankelH2", "[", 
+              RowBox[{"0", ",", "sigma"}], "]"}]}], 
+            RowBox[{"8", " ", "\[Pi]"}]], ",", 
+           RowBox[{
+            FractionBox["3", "8"], " ", "\[Pi]", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sigma", " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{"1", ",", "sigma"}], "]"}], " ", 
+               RowBox[{"HankelH2", "[", 
+                RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"HankelH1", "[", 
+                RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "3"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+                 RowBox[{"sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}]}]}], 
+             ")"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            FractionBox["3", "8"], " ", "\[Pi]", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sigma", " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{"1", ",", "sigma"}], "]"}], " ", 
+               RowBox[{"HankelH2", "[", 
+                RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"HankelH1", "[", 
+                RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "3"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+                 RowBox[{"sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}]}]}], ")"}]}],
+            ",", 
+           FractionBox[
+            RowBox[{"9", " ", 
+             SuperscriptBox["\[Pi]", "3"], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "3"}], " ", 
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"2", " ", "sigma", " ", 
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "3"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"2", " ", "sigma", " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}]}], 
+            RowBox[{"8", " ", 
+             SuperscriptBox["Hubble", "2"], " ", 
+             SuperscriptBox["sigma", "3"]}]]}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"StationaryPurity\"\>", "\[Rule]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"16", " ", 
+          SuperscriptBox["Hubble", "3"], " ", "\[Pi]", " ", 
+          SuperscriptBox["sigma", "3"], " ", "Vphys"}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"64", " ", 
+             SuperscriptBox["\[Pi]", "6"], " ", 
+             SuperscriptBox["sigma", "2"], " ", 
+             SuperscriptBox[
+              RowBox[{"HankelH1", "[", 
+               RowBox[{"1", ",", "sigma"}], "]"}], "2"], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "3"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"2", " ", "sigma", " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "3"}], " ", 
+                   SuperscriptBox["\[Pi]", "2"]}], "+", 
+                  RowBox[{
+                   SuperscriptBox["Hubble", "3"], " ", 
+                   SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"2", " ", 
+                SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}]}], ")"}]}], "+", 
+            RowBox[{
+             SuperscriptBox[
+              RowBox[{"HankelH1", "[", 
+               RowBox[{"0", ",", "sigma"}], "]"}], "2"], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "6"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "+", 
+                   RowBox[{
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], 
+                 "4"], " ", 
+                SuperscriptBox[
+                 RowBox[{"HankelH2", "[", 
+                  RowBox[{"0", ",", "sigma"}], "]"}], "2"]}], "-", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"6", " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "-", 
+                   RowBox[{
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], 
+                 "3"], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"192", " ", 
+                SuperscriptBox["\[Pi]", "6"], " ", 
+                SuperscriptBox["sigma", "2"], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"3", " ", 
+                   SuperscriptBox["\[Pi]", "2"]}], "-", 
+                  RowBox[{
+                   SuperscriptBox["Hubble", "3"], " ", 
+                   SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                SuperscriptBox[
+                 RowBox[{"HankelH2", "[", 
+                  RowBox[{"1", ",", "sigma"}], "]"}], "2"]}]}], ")"}]}], "-", 
+            RowBox[{"8", " ", 
+             SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+             RowBox[{"HankelH1", "[", 
+              RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+             RowBox[{"HankelH1", "[", 
+              RowBox[{"1", ",", "sigma"}], "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"6", " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "-", 
+                   RowBox[{
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], 
+                 "3"], " ", 
+                SuperscriptBox[
+                 RowBox[{"HankelH2", "[", 
+                  RowBox[{"0", ",", "sigma"}], "]"}], "2"]}], "-", 
+               RowBox[{"12", " ", 
+                SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"24", " ", 
+                   SuperscriptBox["\[Pi]", "4"]}], "-", 
+                  RowBox[{"8", " ", 
+                   SuperscriptBox["Hubble", "3"], " ", 
+                   SuperscriptBox["\[Pi]", "2"], " ", 
+                   SuperscriptBox["sigma", "3"], " ", "Vphys"}], "+", 
+                  RowBox[{
+                   SuperscriptBox["Hubble", "6"], " ", 
+                   SuperscriptBox["sigma", "6"], " ", 
+                   SuperscriptBox["Vphys", "2"]}]}], ")"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"0", ",", "sigma"}], "]"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{"1", ",", "sigma"}], "]"}]}], "+", 
+               RowBox[{"16", " ", 
+                SuperscriptBox["\[Pi]", "4"], " ", 
+                SuperscriptBox["sigma", "2"], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"6", " ", 
+                   SuperscriptBox["\[Pi]", "2"]}], "-", 
+                  RowBox[{
+                   SuperscriptBox["Hubble", "3"], " ", 
+                   SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                SuperscriptBox[
+                 RowBox[{"HankelH2", "[", 
+                  RowBox[{"1", ",", "sigma"}], "]"}], "2"]}]}], ")"}]}]}], 
+           ")"}]}], ")"}]}]}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Heavy\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"Mass\"\>", "\[Rule]", 
+       RowBox[{"Hubble", " ", 
+        SqrtBox[
+         RowBox[{
+          FractionBox["9", "4"], "+", 
+          SuperscriptBox["mu", "2"]}]]}]}], ",", 
+      RowBox[{"\<\"DriftEigenvalues\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", 
+           FractionBox["3", "2"]}], "-", 
+          RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", 
+         RowBox[{
+          RowBox[{"-", 
+           FractionBox["3", "2"]}], "+", 
+          RowBox[{"\[ImaginaryI]", " ", "mu"}]}]}], "}"}]}], ",", 
+      RowBox[{"\<\"DiffusionD\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mu", " ", "\[Pi]"}]], " ", 
+             SuperscriptBox["Hubble", "2"], " ", 
+             SuperscriptBox["sigma", "3"], " ", 
+             RowBox[{"HankelH1", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", "sigma"}], 
+              "]"}], " ", 
+             RowBox[{"HankelH2", "[", 
+              RowBox[{
+               RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], "]"}]}], 
+            RowBox[{"8", " ", "\[Pi]"}]], ",", 
+           RowBox[{
+            RowBox[{"-", 
+             FractionBox["3", "8"]}], " ", 
+            SuperscriptBox["\[ExponentialE]", 
+             RowBox[{"mu", " ", "\[Pi]"}]], " ", "\[Pi]", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sigma", " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "1"}], "-", 
+                  RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                "]"}], " ", 
+               RowBox[{"HankelH2", "[", 
+                RowBox[{
+                 RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", "sigma"}],
+                 "]"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{"3", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}]}], ")"}]}]}], ")"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             FractionBox["3", "8"]}], " ", 
+            SuperscriptBox["\[ExponentialE]", 
+             RowBox[{"mu", " ", "\[Pi]"}]], " ", "\[Pi]", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sigma", " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "1"}], "-", 
+                  RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                "]"}], " ", 
+               RowBox[{"HankelH2", "[", 
+                RowBox[{
+                 RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", "sigma"}],
+                 "]"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{"3", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}]}], ")"}]}]}], ")"}]}], ",", 
+           RowBox[{
+            FractionBox["1", 
+             RowBox[{"8", " ", 
+              SuperscriptBox["Hubble", "2"], " ", 
+              SuperscriptBox["sigma", "3"]}]], 
+            RowBox[{"9", " ", 
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mu", " ", "\[Pi]"}]], " ", 
+             SuperscriptBox["\[Pi]", "3"], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", "sigma", " ", 
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "1"}], "-", 
+                   RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                 "]"}]}], "+", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"3", "+", 
+                  RowBox[{"2", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", 
+                  "sigma"}], "]"}]}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", "sigma", " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "1"}], "+", 
+                   RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                 "]"}]}], "+", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"3", "-", 
+                  RowBox[{"2", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                RowBox[{"HankelH2", "[", 
+                 RowBox[{
+                  RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                 "]"}]}]}], ")"}]}]}]}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"\<\"StationaryPurity\"\>", "\[Rule]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"48", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"-", "mu"}], " ", "\[Pi]"}]], " ", 
+          SuperscriptBox["Hubble", "3"], " ", "\[Pi]", " ", 
+          SuperscriptBox["sigma", "3"], " ", "Vphys"}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            FractionBox["1", 
+             RowBox[{"9", "+", 
+              RowBox[{"4", " ", 
+               SuperscriptBox["mu", "2"]}]}]], 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"5184", " ", 
+               SuperscriptBox["\[Pi]", "6"], " ", 
+               SuperscriptBox["sigma", "2"], " ", 
+               SuperscriptBox[
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "1"}], "-", 
+                   RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                 "]"}], "2"], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"2", " ", "sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{"3", "-", 
+                    RowBox[{"2", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}]}], ")"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"2", " ", 
+                  SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"3", "-", 
+                    RowBox[{"2", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "-", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}]}], ")"}]}], "+", 
+              RowBox[{"72", " ", 
+               SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "1"}], "-", 
+                  RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                "]"}], " ", 
+               RowBox[{"HankelH1", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", "sigma"}],
+                 "]"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"144", " ", 
+                  SuperscriptBox["\[Pi]", "4"], " ", 
+                  SuperscriptBox["sigma", "2"], " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"6", "+", 
+                    RowBox[{"4", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "-", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                  SuperscriptBox[
+                   RowBox[{"HankelH2", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                    "]"}], "2"]}], "+", 
+                 RowBox[{"4", " ", 
+                  SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"72", " ", 
+                    RowBox[{"(", 
+                    RowBox[{"9", "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "4"]}], "-", 
+                    RowBox[{"216", " ", 
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["\[Pi]", "2"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}], "+", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "6"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"27", "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["sigma", "6"], " ", 
+                    SuperscriptBox["Vphys", "2"]}]}], ")"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "72"}], " ", "\[ImaginaryI]", " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "3"}], " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], "2"], " ", 
+                    SuperscriptBox["\[Pi]", "6"]}], "-", 
+                    RowBox[{"36", " ", 
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"27", "-", 
+                    RowBox[{"12", " ", "\[ImaginaryI]", " ", "mu"}], "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "4"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}], "+", 
+                    RowBox[{"2", " ", 
+                    SuperscriptBox["Hubble", "6"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"81", "-", 
+                    RowBox[{"54", " ", "\[ImaginaryI]", " ", "mu"}], "+", 
+                    RowBox[{"12", " ", 
+                    SuperscriptBox["mu", "2"]}], "-", 
+                    RowBox[{"8", " ", "\[ImaginaryI]", " ", 
+                    SuperscriptBox["mu", "3"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"], " ", 
+                    SuperscriptBox["sigma", "6"], " ", 
+                    SuperscriptBox["Vphys", "2"]}], "-", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "9"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"9", "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["sigma", "9"], " ", 
+                    SuperscriptBox["Vphys", "3"]}]}], ")"}], " ", 
+                  SuperscriptBox[
+                   RowBox[{"HankelH2", "[", 
+                    RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                    "]"}], "2"]}]}], ")"}]}], "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "3"}], " ", "\[ImaginaryI]"}], "+", 
+                 RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+               SuperscriptBox[
+                RowBox[{"HankelH1", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"-", "\[ImaginaryI]"}], " ", "mu"}], ",", 
+                  "sigma"}], "]"}], "2"], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "5184"}], " ", 
+                  SuperscriptBox["\[Pi]", "6"], " ", 
+                  SuperscriptBox["sigma", "2"], " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "3"}], " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"]}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", 
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}]}], ")"}], " ", 
+                  SuperscriptBox[
+                   RowBox[{"HankelH2", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                    "]"}], "2"]}], "+", 
+                 RowBox[{"72", " ", "\[ImaginaryI]", " ", 
+                  SuperscriptBox["\[Pi]", "2"], " ", "sigma", " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"72", " ", 
+                    RowBox[{"(", 
+                    RowBox[{"9", "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "6"]}], "+", 
+                    RowBox[{"36", " ", "\[ImaginaryI]", " ", 
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"9", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "4"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}], "+", 
+                    RowBox[{"2", " ", 
+                    SuperscriptBox["Hubble", "6"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"27", "+", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox["mu", "2"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"], " ", 
+                    SuperscriptBox["sigma", "6"], " ", 
+                    SuperscriptBox["Vphys", "2"]}], "+", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "9"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"-", "3"}], "+", 
+                    RowBox[{"2", " ", "\[ImaginaryI]", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["sigma", "9"], " ", 
+                    SuperscriptBox["Vphys", "3"]}]}], ")"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "1"}], "+", 
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}]}], ",", "sigma"}], 
+                   "]"}], " ", 
+                  RowBox[{"HankelH2", "[", 
+                   RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                   "]"}]}], "+", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"1296", " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "3"}], " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], "2"], " ", 
+                    SuperscriptBox["\[Pi]", "8"]}], "-", 
+                    RowBox[{"7776", " ", 
+                    SuperscriptBox["Hubble", "3"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "6"], " ", 
+                    SuperscriptBox["sigma", "3"], " ", "Vphys"}], "+", 
+                    RowBox[{"72", " ", 
+                    SuperscriptBox["Hubble", "6"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"81", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"54", " ", "mu"}], "+", 
+                    RowBox[{"12", " ", "\[ImaginaryI]", " ", 
+                    SuperscriptBox["mu", "2"]}], "+", 
+                    RowBox[{"8", " ", 
+                    SuperscriptBox["mu", "3"]}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "4"], " ", 
+                    SuperscriptBox["sigma", "6"], " ", 
+                    SuperscriptBox["Vphys", "2"]}], "-", 
+                    RowBox[{"216", " ", 
+                    SuperscriptBox["Hubble", "9"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox["\[Pi]", "2"], " ", 
+                    SuperscriptBox["sigma", "9"], " ", 
+                    SuperscriptBox["Vphys", "3"]}], "+", 
+                    RowBox[{
+                    SuperscriptBox["Hubble", "12"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "3"}], " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"3", " ", "\[ImaginaryI]"}], "+", 
+                    RowBox[{"2", " ", "mu"}]}], ")"}], "2"], " ", 
+                    SuperscriptBox["sigma", "12"], " ", 
+                    SuperscriptBox["Vphys", "4"]}]}], ")"}], " ", 
+                  SuperscriptBox[
+                   RowBox[{"HankelH2", "[", 
+                    RowBox[{
+                    RowBox[{"\[ImaginaryI]", " ", "mu"}], ",", "sigma"}], 
+                    "]"}], "2"]}]}], ")"}]}]}], ")"}]}], ")"}]}], ")"}]}]}]}],
+      "\[RightAssociation]"}]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361272316475`*^9},
+ CellLabel->"Out[89]=",ExpressionUUID->"6934e40e-6729-be4d-a734-6a709d40f244"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Rank-one Kossakowski checks", "Subsection",ExpressionUUID->"2655e8bb-1b3f-8b43-9bbc-7fa1c7e6c74d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["RankOneChecks"], "Input",
+ CellLabel->"In[90]:=",ExpressionUUID->"9c1fc2a0-e828-d64f-bf92-aef4adcaad3b"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"DetGeneralMode\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"DetMassless\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"MasslessKossakowski\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"9", " ", 
+          SuperscriptBox["\[Pi]", "2"]}], 
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          SuperscriptBox["sigma", "2"]}]], ",", 
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "\[ImaginaryI]"}], "+", 
+           FractionBox["1", "sigma"]}], ")"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"\[ImaginaryI]", "+", 
+           FractionBox["1", "sigma"]}], ")"}]}], ",", 
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], 
+         RowBox[{"4", " ", 
+          SuperscriptBox["\[Pi]", "2"]}]]}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"MasslessRealDiffusion\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            SuperscriptBox["sigma", "2"]}], ")"}]}], 
+         RowBox[{"4", " ", 
+          SuperscriptBox["\[Pi]", "2"]}]], ",", 
+        RowBox[{"-", 
+         FractionBox["3", 
+          RowBox[{"2", " ", "sigma"}]]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["3", 
+          RowBox[{"2", " ", "sigma"}]]}], ",", 
+        FractionBox[
+         RowBox[{"9", " ", 
+          SuperscriptBox["\[Pi]", "2"]}], 
+         RowBox[{
+          SuperscriptBox["Hubble", "2"], " ", 
+          SuperscriptBox["sigma", "2"]}]]}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"GeneralKossakowskiToDiffusion\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"MasslessKossakowskiToDiffusion\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"MasslessKossakowskiHermitian\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9878361272974377`*^9},
+ CellLabel->"Out[90]=",ExpressionUUID->"577b956a-1fe5-604f-8ce2-479a20a48f32"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1070.25, 642.75},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowTitle->"Paper Derivations in Appendix Order",
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"7d0ebea5-bce3-c74f-9c96-6e4b9efe5f41"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[625, 23, 107, 0, 96, "Title",ExpressionUUID->"50890684-ee12-0f4f-ad2f-fce73af9b8fd"],
+Cell[735, 25, 340, 5, 55, "Text",ExpressionUUID->"c2e93862-9ca9-c94a-9ee7-f1f0036d6db4"],
+Cell[1078, 32, 330, 5, 55, "Text",ExpressionUUID->"6f29a046-d753-f048-ad77-5fc012950b7b"],
+Cell[CellGroupData[{
+Cell[1433, 41, 106, 0, 66, "Section",ExpressionUUID->"ce4f6671-59c3-0349-a8b7-d3cbfad3bb35"],
+Cell[1542, 43, 8124, 231, 759, "Input",ExpressionUUID->"429d799a-9cb9-da4f-a55b-0f72b8b7b594"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9703, 279, 134, 0, 66, "Section",ExpressionUUID->"b9ab7d88-9306-e243-864b-fceb0a7b4a92"],
+Cell[CellGroupData[{
+Cell[9862, 283, 101, 0, 53, "Subsection",ExpressionUUID->"1580c9b7-2e31-f64a-be2a-234d79f3bb4b"],
+Cell[9966, 285, 1094, 28, 85, "Input",ExpressionUUID->"c726af64-f8a4-6649-9e07-b0f4ff15d72c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11097, 318, 116, 0, 53, "Subsection",ExpressionUUID->"6e7930cd-235c-2747-bed0-cdffab67153d"],
+Cell[CellGroupData[{
+Cell[11238, 322, 1740, 46, 142, "Input",ExpressionUUID->"c20c49d7-37be-be42-bc41-0188ec9608fd"],
+Cell[12981, 370, 1481, 44, 94, "Output",ExpressionUUID->"2e1cdb91-6116-1e42-8b3b-753d02e3273b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14511, 420, 113, 0, 53, "Subsection",ExpressionUUID->"02e02bd3-b247-7040-af2e-87abbe9cfe5e"],
+Cell[14627, 422, 1864, 50, 132, "Input",ExpressionUUID->"384b3a63-0a87-994c-9858-1b4ec45cbb49"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16528, 477, 109, 0, 53, "Subsection",ExpressionUUID->"7be4fe1d-cd29-f147-8f29-c70761c66029"],
+Cell[16640, 479, 6263, 179, 451, "Input",ExpressionUUID->"80df4937-2794-4143-9a30-b4685bb6e954"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22940, 663, 101, 0, 53, "Subsection",ExpressionUUID->"384f47d0-67ca-614b-b948-10c3726e789e"],
+Cell[23044, 665, 5777, 164, 427, "Input",ExpressionUUID->"4b05f6f4-d12b-0040-b809-43e4e76b0443"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28870, 835, 119, 0, 66, "Section",ExpressionUUID->"5e215d7e-f0b3-3041-8b04-2d494f973bda"],
+Cell[CellGroupData[{
+Cell[29014, 839, 100, 0, 53, "Subsection",ExpressionUUID->"3fc31196-533e-0244-89e3-902138c54094"],
+Cell[29117, 841, 1946, 56, 212, "Input",ExpressionUUID->"e536a95e-dfd7-1a45-b1c1-662c7fb5babc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31100, 902, 93, 0, 53, "Subsection",ExpressionUUID->"a0e5fe8c-5179-6143-8dcb-469084ad9072"],
+Cell[31196, 904, 1378, 38, 104, "Input",ExpressionUUID->"db531842-409a-6147-a230-4baafc0800fd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32611, 947, 97, 0, 53, "Subsection",ExpressionUUID->"09d362eb-dc9d-3544-a1d2-6808360c670e"],
+Cell[32711, 949, 2156, 65, 169, "Input",ExpressionUUID->"8375e7dc-cd47-d34d-86d4-c19d893468f8"],
+Cell[CellGroupData[{
+Cell[34892, 1018, 134, 0, 43, "Subsubsection",ExpressionUUID->"eaf5e93f-9ee0-0845-8848-f776066d6e8e"],
+Cell[35029, 1020, 3900, 117, 349, "Input",ExpressionUUID->"2cc8dcc8-6ff9-414f-b5dd-2238ab30e72a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38978, 1143, 118, 0, 53, "Subsection",ExpressionUUID->"9926f470-47ec-0340-a008-7afa9053e216"],
+Cell[39099, 1145, 2635, 79, 305, "Input",ExpressionUUID->"5c1bfdfc-4ab0-8d4d-ad3b-9c93266f280d"],
+Cell[CellGroupData[{
+Cell[41759, 1228, 124, 0, 43, "Subsubsection",ExpressionUUID->"c449d2a3-f9f6-6d47-ba6b-33849ffe9ccc"],
+Cell[41886, 1230, 4941, 140, 399, "Input",ExpressionUUID->"e603fae8-2c39-b949-911a-90638d68ea51"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46888, 1377, 112, 0, 66, "Section",ExpressionUUID->"f0517606-c7c2-444c-bc27-a7f492bd5b3c"],
+Cell[CellGroupData[{
+Cell[47025, 1381, 111, 0, 53, "Subsection",ExpressionUUID->"23cf8eb7-a0be-c24c-95ee-f4fea0e35290"],
+Cell[47139, 1383, 13056, 380, 800, "Input",ExpressionUUID->"bd309cc5-704e-554e-9b42-c43d50011adb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[60232, 1768, 117, 0, 53, "Subsection",ExpressionUUID->"d3192eb0-a5ec-b04c-8439-53a46a60759e"],
+Cell[60352, 1770, 4465, 138, 259, "Input",ExpressionUUID->"cc2f9c94-888c-7a4f-914a-32e9aad64e4a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[64854, 1913, 90, 0, 53, "Subsection",ExpressionUUID->"3939fe81-990c-5249-823c-36cddc3d8e0b"],
+Cell[64947, 1915, 1371, 32, 102, "Input",ExpressionUUID->"5b905719-4948-1f41-a31f-e71b3a51c4bc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[66355, 1952, 87, 0, 53, "Subsection",ExpressionUUID->"13a5a173-a5a4-c14e-b02e-32602648c14a"],
+Cell[66445, 1954, 1853, 43, 147, "Input",ExpressionUUID->"ce0fd301-9ad1-eb40-bc8c-013ab9980622"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68335, 2002, 109, 0, 53, "Subsection",ExpressionUUID->"a3e7d2c8-befe-df42-96bd-89a3b9e6c72d"],
+Cell[68447, 2004, 7901, 204, 691, "Input",ExpressionUUID->"afe31ed2-3212-5249-aa22-1651c492bd6d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76385, 2213, 128, 0, 53, "Subsection",ExpressionUUID->"6482915f-fb6a-3e48-9e2e-195d218d8b9e"],
+Cell[76516, 2215, 6442, 184, 449, "Input",ExpressionUUID->"79d1566c-2c2a-cc4f-94e0-548df209a3e8"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[83007, 2405, 157, 2, 66, "Section",ExpressionUUID->"3ded6e27-e11f-af41-80f8-204f4e3554f5"],
+Cell[83167, 2409, 4621, 111, 351, "Input",ExpressionUUID->"db019961-4ba7-3846-991b-6cf84bcc0868"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87825, 2525, 91, 0, 66, "Section",ExpressionUUID->"bb46614e-fcf1-454a-961d-e9e0bc9400c6"],
+Cell[87919, 2527, 328, 5, 55, "Text",ExpressionUUID->"7fc4b01f-3dcf-3a40-a4e3-a6584fea9056"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88284, 2537, 90, 0, 66, "Section",ExpressionUUID->"b454cb78-54e2-354f-9697-2b7e907372d1"],
+Cell[88377, 2539, 275, 4, 55, "Text",ExpressionUUID->"bf35345f-6f62-f64e-80f6-a6f3b4c3c4cb"],
+Cell[CellGroupData[{
+Cell[88677, 2547, 114, 0, 53, "Subsection",ExpressionUUID->"cc446fba-a066-e54f-9c35-f6b8bd9558cd"],
+Cell[CellGroupData[{
+Cell[88816, 2551, 637, 13, 66, "Input",ExpressionUUID->"9ab8875d-2923-6f47-84a2-1728ddcd4745"],
+Cell[89456, 2566, 1525, 46, 94, "Output",ExpressionUUID->"c92b8dde-bf25-e64c-8aeb-b03d3cd28b1d"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[91030, 2618, 118, 0, 53, "Subsection",ExpressionUUID->"0ef95612-83db-b74a-8377-94162b3786e0"],
+Cell[CellGroupData[{
+Cell[91173, 2622, 411, 7, 47, "Input",ExpressionUUID->"8df03d30-487f-f148-a770-79f42eb73aea"],
+Cell[91587, 2631, 1892, 50, 70, "Output",ExpressionUUID->"4ae9da6e-f0f4-b14c-b311-e473cbedc5af"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[93528, 2687, 132, 0, 53, "Subsection",ExpressionUUID->"19d5d24c-5511-f944-baf4-af5b5ff60f0a"],
+Cell[CellGroupData[{
+Cell[93685, 2691, 557, 11, 47, "Input",ExpressionUUID->"9cdfac50-fba3-eb47-8e71-6e3e17cd8d2f"],
+Cell[94245, 2704, 1894, 54, 86, "Output",ExpressionUUID->"1f1a2295-8257-e24d-a562-3100b87b0170"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[96188, 2764, 128, 0, 53, "Subsection",ExpressionUUID->"9536358c-c1eb-c545-8c64-64f765fbc5c7"],
+Cell[CellGroupData[{
+Cell[96341, 2768, 913, 16, 104, "Input",ExpressionUUID->"26f238ae-0e0b-a947-9ae8-b291833337d9"],
+Cell[97257, 2786, 5092, 143, 276, "Output",ExpressionUUID->"e5270943-9a5d-8c4a-b046-ffe7fe60cb02"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[102398, 2935, 93, 0, 53, "Subsection",ExpressionUUID->"0acc6220-9cab-ee4b-af01-f948b4829f31"],
+Cell[CellGroupData[{
+Cell[102516, 2939, 1035, 24, 66, "Input",ExpressionUUID->"322f3aa5-4b88-2d49-990c-8e619a568e49"],
+Cell[103554, 2965, 33250, 781, 904, "Output",ExpressionUUID->"6934e40e-6729-be4d-a734-6a709d40f244"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[136853, 3752, 104, 0, 53, "Subsection",ExpressionUUID->"2655e8bb-1b3f-8b43-9bbc-7fa1c7e6c74d"],
+Cell[CellGroupData[{
+Cell[136982, 3756, 118, 1, 28, "Input",ExpressionUUID->"9c1fc2a0-e828-d64f-bf92-aef4adcaad3b"],
+Cell[137103, 3759, 2943, 87, 151, "Output",ExpressionUUID->"577b956a-1fe5-604f-8ce2-479a20a48f32"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

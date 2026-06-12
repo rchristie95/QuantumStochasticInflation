@@ -1,0 +1,13 @@
+# Local LaTeX build outputs for the active draft.
+/Old_files/
+/paper_v1.*
+/paper_v2.aux
+/paper_v2.bbl
+/paper_v2.blg
+/paper_v2.fdb_latexmk
+/paper_v2.fls
+/paper_v2.log
+/paper_v2.out
+/paper_v2.pdf
+/paper_v2.synctex.gz
+/paper_v2.toc

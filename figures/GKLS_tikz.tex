@@ -1,0 +1,71 @@
+\colorlet{bulkcol}{blue!14}
+\colorlet{boundarycol}{orange!25}
+\colorlet{reducedcol}{bulkcol!50!boundarycol}
+\begin{tikzpicture}[
+  scale=0.90,
+  transform shape,
+  x=1cm,
+  y=1cm,
+  >=Latex,
+  flow/.style={->, line width=0.8pt, draw=teal!60!black},
+  callout/.style={->, line width=0.45pt, draw=black!60},
+  entangle/.style={<->, line width=0.55pt, draw=black!60, bend left=28},
+  small/.style={font=\scriptsize, align=center},
+  label/.style={font=\footnotesize, align=center},
+  inner/.style={draw=black, line width=0.7pt, fill=bulkcol},
+  ring/.style={draw=black, line width=0.7pt, fill=boundarycol},
+  retainedmix/.style={draw=black, line width=0.7pt,
+    top color=bulkcol, bottom color=boundarycol},
+  complementmix/.style={draw=black, line width=0.7pt,
+    top color=boundarycol, bottom color=bulkcol},
+  reducedmix/.style={draw=black, line width=0.7pt,
+    fill=reducedcol},
+  jointbox/.style={draw=black!45, dashed, rounded corners=2pt, inner sep=7pt}
+]
+  % Active input: the homogeneous component together with the entering shell.
+  \coordinate (input) at (1.45,0);
+  \filldraw[ring] (input) circle[radius=1.28];
+  \filldraw[inner] (input) circle[radius=0.83];
+  \node[align=center] at (input)
+    {$\hat\rho_N$\\[-2pt]{\scriptsize bulk $\parallel$}};
+  \node[small] at ($(input)+(0,1.05)$) {$\ket{0}_\Delta$};
+  \node[small, text width=2.2cm] at ($(input)+(0,1.82)$)
+    {entering vacuum\\$\mathcal F_\Delta^\parallel$};
+  \draw[callout] ($(input)+(0.50,1.48)$) -- ($(input)+(0.42,1.10)$);
+  \node[label, text width=3.1cm] at ($(input)+(0,-1.68)$)
+    {$ \hat \rho_{N} \otimes \ket{0}_{\Delta} \in \mathcal F_N^\parallel	\otimes\mathcal F_\Delta^\parallel$};
+
+  % The redefined-bulk/decoupled-mode pair is a pair of tensor factors.
+  \node[retainedmix, circle, minimum size=2.56cm, align=center] (postbulk) at (5.55,0)
+    {{\scriptsize retained}\\[-2pt]{\scriptsize bulk $\parallel$}};
+  \node[complementmix, circle, minimum size=2.56cm, align=center, small] (postde) at (8.65,0)
+    {$\perp$\\[-2pt]{\scriptsize decoupled mode}};
+  \node[jointbox, fit=(postbulk) (postde)] (joint) {};
+  \draw[entangle] (postbulk.north east) to
+    node[small, above] {entangled} (postde.north west);
+  \node[small, text width=2.8cm] at ($(postde)+(0,2.12)$)
+    {decoupled from $\parallel$\\$\mathcal F^{\rm d,\,\perp}_{N+dN}$};
+  \draw[callout] ($(postde)+(0.25,1.82)$) -- ($(postde)+(0.15,1.29)$);
+  \node[label, text width=5.2cm] at ($(joint)+(0,-2.02)$)
+    {$\hat{\rho}_{N+\mathrm dN}^{\parallel\perp} \in \mathcal F_{N+\mathrm dN}^\parallel
+      \otimes \mathcal F^{\rm d,\,\perp}_{N+\mathrm dN}$};
+
+  % Reduced homogeneous state after tracing over the decoupled mode.
+  \coordinate (reduced) at (12.75,0);
+  \filldraw[reducedmix] (reduced) circle[radius=1.28];
+  \node[align=center] at (reduced)
+    {$\hat\rho_{N+\mathrm dN}$\\[-2pt]{\scriptsize bulk $\parallel$}};
+  \node[label, text width=2.7cm] at ($(reduced)+(0,-1.68)$)
+    {$\hat{\rho}_{N+\mathrm dN} \in \mathcal F_{N+\mathrm dN}^\parallel$};
+
+  \draw[flow] ($(input)+(1.32,0)$) --
+    node[small, above, text width=2.55cm]
+      {entangling redefinition\\$\hat V_{N+\mathrm dN}$}
+    (joint.west);
+  \draw[flow] (postde.east) --
+    node[small, above, text width=2.35cm]
+      {trace over\\$\mathcal F^{\rm d,\,\perp}_{N+\rm d N}$}
+    ($(reduced)+(-1.32,0)$);
+  \draw[flow] ($(reduced)+(1.32,0)$) -- ++(0.36,0)
+    node[right, font=\large] {$\cdots$};
+\end{tikzpicture}
