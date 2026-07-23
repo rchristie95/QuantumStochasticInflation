@@ -146,6 +146,9 @@
 \newcommand{\VV}[1]{{\color{blue}#1}}
 \newcommand{\VVc}[1]{{\color{blue}\texttt{[VV: #1]}}}
 
+\newcommand{\RC}[1]{{\color{red}#1}}
+\newcommand{\RCc}[1]{{\color{red}\texttt{[RC: #1]}}}
+\DeclareRobustCommand{\RCdel}[1]{{\color{red}\sout{#1}}}
 
 \newcommand{\panel}[1]{\includegraphics[width=\textwidth,height=.21\textheight,keepaspectratio]{#1}}
 \newcommand{\openone}{\hat{\mathds{1}}}
@@ -188,7 +191,7 @@
 \affiliation[d]{Laboratoire de Physique de l'Ecole Normale Sup\'{e}rieure, ENS, CNRS, Universit\'{e} PSL, Sorbonne Universit\'{e}, Universit\'{e} Paris Cit\'{e}, 75005 Paris, France}
 \affiliation[e]{Institute of Cosmology \& Gravitation, University of Portsmouth, Dennis Sciama Building, Burnaby Road, Portsmouth, PO1 3FX, United Kingdom}
 
-\emailAdd{robson.christie@port.ac.uk, jaewoo.joo@port.ac.uk, gkaplane@syr.edu, vincent.vennin@phys.ens.fr, david.wands@port.ac.uk}
+\emailAdd{robson.christie1995@gmail.com, jaewoo.joo@port.ac.uk, gkaplane@syr.edu, vincent.vennin@phys.ens.fr, david.wands@port.ac.uk}
 
 
 
@@ -247,7 +250,7 @@ denotes the reduced power spectrum of $f$ and $g$,  $f_k$ and $g_k$ being their 
 +D_{\phi\pi}\frac{\partial^2 P}{\partial \phi\,\partial \pi}
 +\frac12 D_{\pi\pi}\frac{\partial^2 P}{\partial \pi^2}
 \end{equation}
-where the matrix $D_{fg}(N)=(\dd \ln k_\sigma(N)/\dd N)\, \mathcal{P}_{f,g}[k_\sigma(N),N]$.
+with the matrix $D_{fg}(N)=(\dd \ln k_\sigma(N)/\dd N)\, \mathcal{P}_{f,g}[k_\sigma(N),N]$.
 
 If the field is light $(m<3H/2)$, once the system reaches the overdamped slow-roll attractor~\cite{grain2017stochastic}, phase-space collapses to one dimension (say $\phi$) and \cref{eq:Lang:Staro:phi,eq:Lang:Staro:pi} reduce to
 	\begin{equation}
@@ -274,7 +277,7 @@ If the field is light $(m<3H/2)$, once the system reaches the overdamped slow-ro
 
     The GKLS equation can also be stochastically ``unravelled'', i.e.~it can be cast into a stochastic Schr\"odinger equation (SSE) for the wavefunction. In this picture, the density matrix obtained by evaluating the ensemble average of the realisations of the SSE satisfies the GKLS equation. This is similar to saying that a classical Fokker-Planck equation can be ``unravelled'' by a stochastic Langevin equation. However, in the quantum case, the noise term in the SSE models an external measurement performed on the wavefunction, and different measurement protocols lead to different SSEs. We discuss a few possibilities, and show in which cases the equations of motion obtained for the quantum expectation values $\langle \hat{Q} \rangle$ and $\langle \hat{P} \rangle$ from the SSE match the Langevin equation~\eqref{eq:StarobinskyLangevinIntro} of stochastic inflation. 
     
-	We also compute the purity of the coarse-grained patch, which need not be conserved because the reduced density matrix evolves under decohering, non-unitary dynamics. We show that the purity either asymptotes to a finite late-time value or converges to zero at late times. We discuss how this behaviour is related to the emergence of a classical limit. This article is part of wider efforts that include several other works. In particular, recent articles have developed open-system descriptions of inflationary perturbations by tracing over ultraviolet degrees of freedom \cite{Burgess:2014eoa, Burgess:2022nwu, Colas:2022hlq, Colas:2022kfu, goldman2024lindbladian,Colas:2024ysu, Beneke:2026nlo,Cespedes:2026nrg, Lopez2025, Salcedo2026}. Other approaches emphasise the role of gravitational or hidden-variable environments \cite{Akama:2026ent}, or derive stochastic-inflation equations using Schwinger-Keldysh methods \cite{Gorbenko:2019rza,Green:2025hmo}. Related questions concerning how decoherence modifies stochastic-inflationary probability distributions were considered in \cite{Boddy:2016zkn}, while earlier attempts to model decoherence effects through additional noise sources in stochastic-inflationary Langevin equations include \cite{Haba:2018ork,Haba:2018akk}. Connections between decoherence of cosmological perturbations and stochastic inflation have also been discussed in \cite{Weenink:2011dd}.
+	We also compute the purity of the coarse-grained patch, which need not be conserved because the reduced density matrix evolves under decohering, non-unitary dynamics. We show that the purity either asymptotes to a finite late-time value or converges to zero at late times. We discuss how this behaviour is related to the emergence of a classical limit. This article is part of wider efforts that include several other works. In particular, recent articles have developed open-system descriptions of inflationary perturbations by tracing over ultraviolet degrees of freedom \cite{Burgess:2014eoa, Burgess:2022nwu, Colas:2022hlq, Colas:2022kfu, goldman2024lindbladian,Colas:2024ysu, Burgess:2024eng, Beneke:2026nlo,Cespedes:2026nrg, Lopez2025, Salcedo2026}. Other approaches emphasise the role of gravitational or hidden-variable environments \cite{Akama:2026ent}, or derive stochastic-inflation equations using Schwinger-Keldysh methods \cite{Tokuda:2017fdh,Tokuda:2018eqs,Gorbenko:2019rza,Cespedes:2023aal,Green:2025hmo,Ye:2026saa}. Related questions concerning how decoherence modifies stochastic-inflationary probability distributions were considered in \cite{Boddy:2016zkn}, while earlier attempts to model decoherence effects through additional noise sources in stochastic-inflationary Langevin equations include \cite{Haba:2018ork,Haba:2018akk}. Connections between decoherence of cosmological perturbations and stochastic inflation have also been discussed in \cite{Weenink:2011dd}.
 
 	
 	Closest to the present construction, Li \cite{Li2026Stochastic,Li2026lwl} derived a Lindblad equation for the inflaton Wigner function using the Schwinger-Keldysh formalism, together with the influence functional. This derivation finds a single Hermitian jump operator linear in the inflaton field and momentum densities, recovers the Fokker-Planck description and organises slow-roll corrections to the diffusion coefficient. Our construction takes a different route: the canonical bulk algebra fixes a different channel structure, where the boundary-adapted operator is the Bunch-Davies annihilation operator on the bulk mode and the non-Hermitian dissipator contributes to both Starobinsky diffusion and Hubble friction. As we argue below, the momentum density is not the canonical partner of the averaged field, which is one difference with respect to \cite{Li2026Stochastic,Li2026lwl}; those variables may be natural on the slow-roll attractor but are not canonical variables for a coarse-grained patch.
@@ -306,13 +309,17 @@ If the field is light $(m<3H/2)$, once the system reaches the overdamped slow-ro
 	\end{equation}
 	We coarse grain the field and its conjugate momentum by integrating over a window function $W_N(\bm{y}-\bm{x})$. We call the degree of freedom selected by	this smearing the ``coarse-grained patch'' or ``bulk'', and define its intensive field amplitude and extensive bulk momentum as
 	\begin{align} \label{eq:cg:fields:def}
-		\hat Q_N(\mathbf x)
-		&\equiv \frac{1}{\VF(N)} \int d^3y\,W_N(\mathbf y-\mathbf x)\hat\Phi(\mathbf y, N),
-		\\
-		\hat P_N(\mathbf x)
-		&\equiv \int d^3y\,W_N(\mathbf y-\mathbf x)\hat\Pi(\mathbf y, N).
-	\end{align}
-	The prefactor $\VF(N)$ is the effective comoving volume of the patch, set such that $\hat Q_N$ and $\hat P_N$ satisfy canonical commutation relations, i.e., $[\hat Q_N,\hat P_N]=i$. Together with \cref{eq:ETCR}, this imposes that~\cite{Martin:2021xml} for the real even smearing kernels considered here
+    \hat Q_N(\mathbf x)
+    &\equiv \int d^3y\,W_N(\mathbf y-\mathbf x)\hat\Phi(\mathbf y, N),
+    \\
+    \hat P_N(\mathbf x)
+    &\equiv \VF(N)\int d^3y\,W_N(\mathbf y-\mathbf x)\hat\Pi(\mathbf y, N).
+`   \end{align}
+	The prefactor $\VF(N)$ is the effective comoving volume of the patch, set such that $\hat Q_N$ and $\hat P_N$ satisfy the canonical commutation relation
+    \begin{equation}
+        [\hat Q_N,\hat P_N]=i.
+    \end{equation}
+    Together with \cref{eq:ETCR}, this imposes that~\cite{Martin:2021xml} for the real even smearing kernels considered here
 	\begin{equation}
 		\label{eq:vol:gen}
 		\VF(N) = \frac{1}{\int\dd^3\bm{y}\, W_N(\bm{y}-\bm{x})^{2}} \, .
@@ -328,9 +335,9 @@ If the field is light $(m<3H/2)$, once the system reaches the overdamped slow-ro
 		\hat P_N(\mathbf x) &= \VF(N) \int\frac{d^3k}{(2\pi)^3}\,\Theta_\sigma(N,k)\hat\Pi_{\mathbf k}(N)e^{i\mathbf k\cdot\mathbf x}.
 	\end{align}
 	The label \(\bm{x}\) only specifies the centre of the coarse-grained patch. Since the de Sitter background is spatially homogeneous and the cutoff \(\Theta_\sigma(N,k)\) depends only on \(k=|\bm{k}|\), no physical result depends on this choice, and below we set \(\bm{x}=0\) for a single representative patch. Since the sharp window satisfies \(\Theta_\sigma^2=\Theta_\sigma\), Parseval's identity gives
-\begin{equation}
-\int \dd^3\bm{x}\,W_N(\bm{x})^2=\VF^2(N)\int\frac{\dd^3\bm{k}}{(2\pi)^3}\Theta_\sigma(N,k)=\VF^2(N)\frac{k_\sigma^3(N)}{6\pi^2}.
-\end{equation}
+    \begin{equation}
+    \int \dd^3\bm{x}\,W_N(\bm{x})^2=\int\frac{\dd^3\bm{k}}{(2\pi)^3}\Theta_\sigma(N,k)=\frac{k_\sigma^3(N)}{6\pi^2}.
+    \end{equation}
 Combining this with \cref{eq:vol:gen} gives
 \begin{equation}\label{eq:VF-integral}
 \VF(N)=\frac{6\pi^2}{k_\sigma^3(N)} .
@@ -366,7 +373,9 @@ This is a time-dependent symplectic transformation of the bulk variables, hence 
 		\begin{equation}
 			\mathcal{F}=\bigotimes_{\bm{k}\in \mathbb{R}^{3}}  \mathcal{F}_{\bm{k}}\, ,
 		\end{equation}
-		where $\mathcal{F}_{\bm{k}}$ is the Fock space associated to the comoving Fourier mode $\bm{k}$. The mode labels range over all momenta\footnote{Technically Hermicity of the field demands $\Phi_{\mathbf{k}}^{\ast} = \Phi_{-\mathbf{k}} $, and so  independent modes are labelled in the half-space $\mathbb{R}^{3+}$ (one can equivalently work in the real/imaginary basis \cite{Lesgourgues:1996jc,Kiefer:1998jk,Martin:2018zbe}), although this distinction does not affect anything in the following derivations.}; reality is encoded in $\hat{\Phi}_{-\bm{k}}=\hat{\Phi}_{\bm{k}}^\dagger$ and $\hat{\Pi}_{-\bm{k}}=\hat{\Pi}_{\bm{k}}^\dagger$.
+		where $\mathcal{F}_{\bm{k}}$ is the single-mode Fock space generated by $\hat{a}_k^{\dagger}$. The mode labels range over all momenta
+        %\footnote{Technically Hermiticity of the field demands $\Phi_{\mathbf{k}}^{\ast} = \Phi_{-\mathbf{k}} $, and so  independent modes are labelled in the half-space $\mathbb{R}^{3+}$ (one can equivalently work in the real/imaginary basis \cite{Lesgourgues:1996jc,Kiefer:1998jk,Martin:2018zbe}), although this distinction does not affect anything in the following derivations.}
+        \footnote{Hermiticity of the real field implies the operator relation $\hat\Phi_{\mathbf{k}}^{\dagger}=\hat\Phi_{-\mathbf{k}}$. Thus independent field modes may equivalently be labelled by a half-space $\mathbb{R}^{3+}$, or one may work in the real/imaginary basis \cite{Lesgourgues:1996jc,Kiefer:1998jk,Martin:2018zbe}. In the present convention, however, the Fock spaces $\mathcal F_{\mathbf k}$ are associated with the independent annihilation operators $\hat a_{\mathbf k}$, which are labelled by all $\mathbf k\in\mathbb R^3$. This distinction does not affect the following derivations.}; reality is encoded in $\hat{\Phi}_{-\bm{k}}=\hat{\Phi}_{\bm{k}}^\dagger$ and $\hat{\Pi}_{-\bm{k}}=\hat{\Pi}_{\bm{k}}^\dagger$.
 
         For a free test field, in the Bunch-Davies vacuum different Fourier modes decouple hence the quantum state of the field can be written as the product
 		\begin{equation}
@@ -529,7 +538,8 @@ This is a time-dependent symplectic transformation of the bulk variables, hence 
 			\label{eq:Master1D}
 		\end{align}
 	\end{tcolorbox}
-	Equivalently, the dissipator may be written in the operator basis \((\hat Q,\hat P)\), where the corresponding Kossakowski matrix is positive and rank one, see \cref{eq:RankOneQPKossakowski} in \cref{app:diagonal}.
+	Equivalently, the dissipator may be written in the operator basis \((\hat Q,\hat P)\), where the corresponding Kossakowski matrix is positive and rank one, see \cref{eq:RankOneQPKossakowski} in \cref{app:diagonal}. The form of \cref{eq:Master1D} mirrors the fluctuation-dissipation picture of Brownian motion, in which the friction is fixed by the system-bath coupling alone while the noise depends on the state of the bath~\cite{caldeira1983path,petruccione}. The same asymmetry appears here: the damping and the diffusion both originate in the single boundary map, yet the damping is mass-independent while the diffusion is not. The \(-3p\) damping is set by the geometry of the moving cutoff, namely the rate at which the coarse-graining volume grows, and is therefore common to every test field, whereas the mass enters the diffusion coefficients~\eqref{eq:DiffusionGeneralMain} through the covariance of the entering Bunch-Davies modes.
+	
 
 	\subsection{Fokker-Planck equation for the Wigner function}
 	
@@ -1175,7 +1185,6 @@ which is in contrast with the single Lindblad operator ($\Pi_s$) found in Refs.~
 		\frac94\, ,
 		\label{eq:CriticalDiffusionInvariantMain}
 	\end{equation}
-	which holds for all masses but is most transparent at the critical point where $D_{QQ}^{\rm crit}\to 0$ as $\sigma\to 0$.
 	Thus the dissipator remains active as a squeezed phase-space noise source; field diffusion vanishes, while the momentum diffusion and \(QP\) correlation compensate so that the one-channel quantum area is fixed. The connection between the Lindblad operator and the Wigner diffusion matrix is summarised in \cref{app:diagonal}. The deterministic part is given by the shared drift equations~\eqref{eq:massiveDriftBoth}; at \(m=3H/2\), \cref{eq:dampedOscillator} is critically damped. The boundary channel still injects vacuum fluctuations, but its \(D_{QQ}\) entry, \cref{eq:DQQcrit}, vanishes in the super-Hubble cutoff limit $\sigma\to 0$; the \(D_{QP}^{\rm crit}\) and \(D_{PP}^{\rm crit}\) feed-through terms carry the field-current factors \(\sigma^3H^2\) and \(\sigma^6H^4\), respectively, and are suppressed as well, so no unsuppressed field random-walk channel emerges. The explicit super-Hubble critical Fokker--Planck operator is \cref{eq:FPCritMain}. Its stationary covariance is
 	\begin{equation}
 		\mathbf{\Sigma}_\infty^{\rm crit}
