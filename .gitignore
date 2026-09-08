@@ -11,3 +11,17 @@
 /paper_v2.pdf
 /paper_v2.synctex.gz
 /paper_v2.toc
+/paper_v3.aux
+/paper_v3.bbl
+/paper_v3.blg
+/paper_v3.fdb_latexmk
+/paper_v3.fls
+/paper_v3.log
+/paper_v3.out
+/paper_v3.pdf
+/paper_v3.synctex.gz
+/paper_v3.toc
+
+# Python cache
+__pycache__/
+*.py[cod]
