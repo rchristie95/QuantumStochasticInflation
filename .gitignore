@@ -25,3 +25,10 @@
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Generated Manim presentation files
+/.manim-venv/
+/media/
+/slides/
+/Presentation/media/
+/Presentation/slides/

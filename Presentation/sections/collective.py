@@ -1,0 +1,87 @@
+"""Presentation content: collective."""
+from presentation_common import *
+
+
+class CollectiveSection:
+    def collective_definitions(self):
+        self.step("Many oscillators, one collective mode", "A mechanical cartoon represents canonical mode coordinates, not particles. hbar=1. Define the collective coordinate as the arithmetic average Q_n=(sum q_j)/n and its momentum as the total P_n=sum p_j. Fixing Q_n to be an average requires this momentum normalization to obtain [Q_n,P_n]=i. Other simultaneous canonical rescalings are possible.")
+        self.section(2,"Average coordinate, total momentum")
+        oscillators=VGroup(*[self.oscillator(x,BULK,fr"q_{j+1},p_{j+1}") for j,x in enumerate([-4.5,-2.25,0,2.25,4.5])])
+        self.play(FadeIn(oscillators))
+        for osc in oscillators:
+            anchor = osc[0].get_start().copy()
+            bob = osc[2]
+            def update_spring(spring, anchor=anchor, bob=bob):
+                end = bob.get_center()
+                spring.set_points_as_corners([anchor + f*(end-anchor) + UP*(.1*(-1)**j if 0<j<6 else 0)
+                                              for j,f in enumerate(np.linspace(0,1,7))])
+            osc[1].add_updater(update_spring)
+        self.play(*[o[2].animate.shift(RIGHT*.25*np.sin(j+1)) for j,o in enumerate(oscillators)],rate_func=there_and_back,run_time=1.5)
+        for osc in oscillators:
+            osc[1].clear_updaters()
+        sums=equation(r"Q_n=\frac1n\sum_{j=1}^nq_j,",r"\qquad P_n=\sum_{j=1}^np_j",size=41).move_to([0,1.7,0])
+        canonical=equation(r"[q_j,p_k]=i\delta_{jk}\quad\Longrightarrow\quad[Q_n,P_n]=\frac in\sum_{j=1}^n1=i",size=34).move_to([0,-1.6,0])
+        roles=text_line("Average coordinate + total momentum",27,GREEN).move_to([0,-2.7,0])
+        self.hold()
+        self.step("Define the average coordinate", "Start with the position average over the n independent oscillators. Keep this definition fixed when choosing its conjugate momentum.")
+        self.play(Write(sums[0]));self.hold()
+        self.step("Define the total momentum", "Pair the average coordinate with the sum of microscopic momenta. Explain the intensive versus extensive choice before checking its algebra.")
+        self.play(Write(sums[1]));self.hold()
+        self.step("Check the collective commutator", "Use the independent microscopic canonical commutators. Only the diagonal terms contribute, canceling the factor of n in the average.")
+        self.play(Write(canonical),FadeIn(roles));self.hold()
+
+        self.step("Adding a mode", "Adding one oscillator updates the average by weighting the old n-member average with n. The total momentum simply adds the incoming momentum. Both outputs of the reversible canonical redefinition are retained until the trace.")
+        self.section(2,"Add one oscillator to the collective mode")
+        incoming=self.oscillator(-3.5,BULK,r"Q_n,P_n")
+        fresh=self.oscillator(3.5,SHELL,r"q_{n+1},p_{n+1}")
+        plus=equation("+",size=48).move_to([0,0,0])
+        output=equation(r"Q_{n+1}=\frac{nQ_n+q_{n+1}}{n+1},",r"\qquad P_{n+1}=P_n+p_{n+1}",size=36).move_to([0,-1.8,0])
+        labels=VGroup(text_line("Incoming collective mode",24,BULK).move_to([-3.5,1.3,0]),text_line("Fresh oscillator",24,SHELL).move_to([3.5,1.3,0]))
+        self.play(FadeIn(incoming),FadeIn(fresh),FadeIn(plus),FadeIn(labels));self.hold()
+        self.step("Update the collective coordinate", "Weight the previous n-member average by n, add the incoming coordinate, then divide by n+1.")
+        self.play(Write(output[0]));self.hold()
+        self.step("Add the canonical momenta", "The momentum is extensive, so the incoming momentum adds without averaging.")
+        self.play(Write(output[1]));self.hold()
+
+        self.step("The complementary output", "The inputs are the existing collective oscillator Q_n,P_n and the independent incoming oscillator q_{n+1},p_{n+1}. The outputs are the enlarged collective oscillator Q_{n+1},P_{n+1} and the complementary oscillator Q^perp_{n+1},P^perp_{n+1}. Show the position matrix A_n and the momentum coefficients directly. Q_{n+1}=(n Q_n+q_{n+1})/(n+1), Q^perp_{n+1}=Q_n-q_{n+1}; P_{n+1}=P_n+p_{n+1}, P^perp_{n+1}=(P_n-n p_{n+1})/(n+1). The collective and complementary modes together contain the same information as the two inputs. The next slide constructs the state-space unitary directly from this coordinate map. The axis diagram shows the n=1 example: Q_n is horizontal, q_{n+1} vertical, and the output coordinate directions lie at plus/minus pi/4. Arrow lengths are schematic: A_n specifies the rescalings. The general A_n is not an orthogonal position matrix; the joint canonical transformation has the unitary implementation shown next.")
+        self.section(2,"A reversible redefinition keeps both outputs")
+        qmap=equation(r"\begin{pmatrix}Q_{n+1}\\Q^\perp_{n+1}\end{pmatrix}=\underbrace{\begin{pmatrix}\frac n{n+1}&\frac1{n+1}\\1&-1\end{pmatrix}}_{A_n}\begin{pmatrix}Q_n\\q_{n+1}\end{pmatrix}",size=35,width=7.15).move_to([-2.65,1.35,0])
+        pmap=equation(r"\begin{pmatrix}P_{n+1}\\P^\perp_{n+1}\end{pmatrix}=\begin{pmatrix}1&1\\\frac1{n+1}&-\frac n{n+1}\end{pmatrix}\begin{pmatrix}P_n\\p_{n+1}\end{pmatrix}",size=35,width=7.15).move_to([-2.65,-.4,0])
+        caption=VGroup(text_line("The two outputs together retain",23,GREEN,width=7),text_line("all the information in the two inputs.",23,GREEN,width=7)).arrange(DOWN,buff=.14).move_to([-2.65,-2.2,0])
+        origin=np.array([2.8,.12,0])
+        horizontal=Arrow(origin,origin+RIGHT*2.2,buff=0,color=BULK,stroke_width=2.3)
+        vertical=Arrow(origin,origin+UP*1.93,buff=0,color=SHELL,stroke_width=2.3)
+        collective_axis=Arrow(origin,origin+np.array([1.57,1.57,0]),buff=0,color=MIX,stroke_width=2.7)
+        complement_axis=Arrow(origin,origin+np.array([1.57,-1.57,0]),buff=0,color=MIX,stroke_width=2.7)
+        axis_labels=VGroup(equation(r"Q_n",size=25,color=BULK).move_to([5.5,.12,0]),
+                           equation(r"q_{n+1}",size=25,color=SHELL).move_to([2.8,2.4,0]))
+        output_labels=VGroup(equation(r"Q_{n+1}",size=25,color=MIX).move_to([5.12,1.9,0]),
+                             equation(r"Q^\perp_{n+1}",size=25,color=MIX).move_to([5.12,-1.7,0]))
+        angle=Arc(radius=.5,start_angle=0,angle=PI/4,arc_center=origin,color=MUTED,stroke_width=1.5)
+        theta=equation(r"\theta",size=22,color=MUTED).move_to(origin+np.array([.7,.27,0]))
+        diagram_note=VGroup(text_line("n = 1: coordinate directions",18,MUTED,width=5),
+                            text_line("Matrix entries set the scale factors",17,MUTED,width=5)).arrange(DOWN,buff=.13).move_to([4.25,-2.55,0])
+        self.play(Write(qmap),GrowArrow(horizontal),GrowArrow(vertical),FadeIn(axis_labels),run_time=.9)
+        self.play(GrowArrow(collective_axis),GrowArrow(complement_axis),FadeIn(output_labels),Create(angle),Write(theta),FadeIn(diagram_note),run_time=.8);self.hold()
+        self.step("Transform the conjugate momenta", "The momentum coefficients are fixed by the canonical algebra. They are displayed directly; no second named matrix is introduced.")
+        self.play(Write(pmap));self.hold()
+        self.step("Both outputs retain the input information", "The enlarged collective mode and the complementary mode form a reversible redefinition. No oscillator has yet been discarded.")
+        self.play(FadeIn(caption));self.hold()
+
+        self.step("Canonical output pairs", "Define U_{A_n} by its action on the coordinate basis: U_{A_n}|Q_n,q_{n+1}>=|Q_{n+1},Q^perp_{n+1}>, where the two output labels are exactly the functions of the input labels on slide 7. Since det A_n=-1, its absolute determinant is one and this basis map needs no extra normalization factor. Equivalently, (U_{A_n} Psi)(Q_{n+1},Q^perp_{n+1})=Psi(Q_{n+1}+Q^perp_{n+1}/(n+1),Q_{n+1}-n Q^perp_{n+1}/(n+1)); changing integration variables preserves the wavefunction inner product. U_{A_n} therefore acts unitarily on the joint density matrix. Display all six independent commutators: each output oscillator is canonical; the two positions commute, the two momenta commute, and both cross position-momentum commutators vanish. Separate canonical modes can share an entangled state. Vanishing cross commutators do not imply factorization of the joint state.")
+        self.section(2,"The redefinition preserves canonical commutators")
+        unitary=equation(r"U_{A_n}\ket{Q_n,q_{n+1}}=\ket{Q_{n+1},Q^\perp_{n+1}}",size=37).move_to([0,2.03,0])
+        norm=equation(r"U_{A_n}^\dagger U_{A_n}=I",size=33,color=GREEN).move_to([0,1.13,0])
+        comm=equation(r"[Q_{n+1},P_{n+1}]=[Q^\perp_{n+1},P^\perp_{n+1}]=i",size=35).move_to([0,.1,0])
+        same_type=equation(r"[Q_{n+1},Q^\perp_{n+1}]=[P_{n+1},P^\perp_{n+1}]=0",size=34).move_to([0,-.95,0])
+        cross=equation(r"[Q_{n+1},P^\perp_{n+1}]=[Q^\perp_{n+1},P_{n+1}]=0",size=34).move_to([0,-2,0])
+        caption=text_line("Separate canonical modes can share an entangled state.",24,MIX).move_to([0,-3.04,0])
+        self.play(Write(unitary));self.hold()
+        self.step("The coordinate redefinition is unitary", "The absolute determinant of A_n is one, so its basis map preserves the inner product without an additional normalization factor.")
+        self.play(Write(norm));self.hold()
+        self.step("Each output is a canonical oscillator", "First check the two within-mode position-momentum commutators. Both are i.")
+        self.play(Write(comm));self.hold()
+        self.step("The two positions and the two momenta commute", "Next check the same-type commutators between the output modes.")
+        self.play(Write(same_type));self.hold()
+        self.step("Cross commutators do not forbid entanglement", "Finally check both cross position-momentum commutators. Separate canonical factors can still share an entangled joint state.")
+        self.play(Write(cross),FadeIn(caption));self.hold()

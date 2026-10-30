@@ -1,0 +1,78 @@
+{
+  "source_sha256": "bd15da703411350b86dfc958f2c691566f272f7e7a8a410e1405aa918eca6e6d",
+  "rows": [
+    {
+      "n": 1,
+      "fock_outcome": null,
+      "fock_probability": null,
+      "position_outcome": null,
+      "position_density": null,
+      "master_purity": 1.0
+    },
+    {
+      "n": 2,
+      "fock_outcome": 1,
+      "fock_probability": 0.08294121837702123,
+      "fock_completeness": 0.9999999964853377,
+      "position_outcome": 0.8,
+      "position_density": 0.2762330711696474,
+      "master_purity": 0.8
+    },
+    {
+      "n": 3,
+      "fock_outcome": 0,
+      "fock_probability": 0.6369807196951932,
+      "fock_completeness": 0.9999998760316339,
+      "position_outcome": -0.6,
+      "position_density": 0.27152944699690673,
+      "master_purity": 0.8164965809277261
+    },
+    {
+      "n": 4,
+      "fock_outcome": 1,
+      "fock_probability": 0.253088278164413,
+      "fock_completeness": 0.9999995763216909,
+      "position_outcome": 0.5,
+      "position_density": 0.5118857699547339,
+      "master_purity": 0.8386278693775345
+    },
+    {
+      "n": 5,
+      "fock_outcome": 0,
+      "fock_probability": 0.9578139718388247,
+      "fock_completeness": 0.9999999322300659,
+      "position_outcome": -0.4,
+      "position_density": 0.49411009834491654,
+      "master_purity": 0.8574929257125443
+    },
+    {
+      "n": 6,
+      "fock_outcome": 0,
+      "fock_probability": 0.9634235777435148,
+      "fock_completeness": 0.9999998710479464,
+      "position_outcome": 0.3,
+      "position_density": 0.6452050066083886,
+      "master_purity": 0.8728715609439693
+    },
+    {
+      "n": 7,
+      "fock_outcome": 0,
+      "fock_probability": 0.9639695584728729,
+      "fock_completeness": 0.9999997756662484,
+      "position_outcome": -0.2,
+      "position_density": 0.6626734462089394,
+      "master_purity": 0.885437744847146
+    }
+  ],
+  "axes": {
+    "Q": [
+      -3,
+      3
+    ],
+    "P": [
+      -8,
+      8
+    ]
+  },
+  "wigner_limit": 0.3183098861837907
+}
