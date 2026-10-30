@@ -1,6 +1,10 @@
 @echo off
 setlocal
 cd /d "%~dp0"
+if exist "Portable\index.html" (
+    start "" "%~dp0Portable\index.html"
+    exit /b 0
+)
 if not exist "..\..\.manim-venv\Scripts\pythonw.exe" (
     echo The presentation Python environment could not be found.
     pause

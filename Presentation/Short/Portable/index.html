@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Stochastic Inflation — Short presentation</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#101824;color:#edf3fa;font:16px system-ui;overflow:hidden}
+video{width:100%;height:100%;object-fit:contain;display:block}
+#help{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#101824ee;padding:10px 16px;border-radius:8px;white-space:nowrap}
+button{font:inherit;color:inherit;background:#263b53;border:0;border-radius:4px;padding:5px 10px;cursor:pointer}
+#error{position:fixed;inset:30%;background:#101824;padding:24px;display:none}
+</style>
+<video id="screen" muted playsinline preload="auto"></video>
+<div id="help"><button id="previous">←</button> <button id="next">Next →</button> Space: pause · V: reverse · R: replay · H: help <button id="fullscreen">Fullscreen</button></div>
+<div id="error" role="alert">A video could not load. Download or clone the complete repository, then open this file from the extracted folder. Keep the clips folder beside index.html.</div>
+<script>
+'use strict';
+const slides = [{"file": "clips/001.mp4", "rev_file": "clips/001-reverse.mp4"}, {"file": "clips/002.mp4", "rev_file": "clips/002-reverse.mp4"}, {"file": "clips/003.mp4", "rev_file": "clips/003-reverse.mp4"}, {"file": "clips/004.mp4", "rev_file": "clips/004-reverse.mp4"}, {"file": "clips/005.mp4", "rev_file": "clips/005-reverse.mp4"}, {"file": "clips/006.mp4", "rev_file": "clips/006-reverse.mp4"}, {"file": "clips/007.mp4", "rev_file": "clips/007-reverse.mp4"}, {"file": "clips/008.mp4", "rev_file": "clips/008-reverse.mp4"}, {"file": "clips/009.mp4", "rev_file": "clips/009-reverse.mp4"}, {"file": "clips/010.mp4", "rev_file": "clips/010-reverse.mp4"}, {"file": "clips/011.mp4", "rev_file": "clips/011-reverse.mp4"}, {"file": "clips/012.mp4", "rev_file": "clips/012-reverse.mp4"}, {"file": "clips/013.mp4", "rev_file": "clips/013-reverse.mp4"}, {"file": "clips/014.mp4", "rev_file": "clips/014-reverse.mp4"}, {"file": "clips/015.mp4", "rev_file": "clips/015-reverse.mp4"}, {"file": "clips/016.mp4", "rev_file": "clips/016-reverse.mp4"}, {"file": "clips/017.mp4", "rev_file": "clips/017-reverse.mp4"}, {"file": "clips/018.mp4", "rev_file": "clips/018-reverse.mp4"}, {"file": "clips/019.mp4", "rev_file": "clips/019-reverse.mp4"}, {"file": "clips/020.mp4", "rev_file": "clips/020-reverse.mp4"}, {"file": "clips/021.mp4", "rev_file": "clips/021-reverse.mp4"}, {"file": "clips/022.mp4", "rev_file": "clips/022-reverse.mp4"}, {"file": "clips/023.mp4", "rev_file": "clips/023-reverse.mp4"}, {"file": "clips/024.mp4", "rev_file": "clips/024-reverse.mp4"}, {"file": "clips/025.mp4", "rev_file": "clips/025-reverse.mp4"}, {"file": "clips/026.mp4", "rev_file": "clips/026-reverse.mp4"}, {"file": "clips/027.mp4", "rev_file": "clips/027-reverse.mp4"}, {"file": "clips/028.mp4", "rev_file": "clips/028-reverse.mp4"}, {"file": "clips/029.mp4", "rev_file": "clips/029-reverse.mp4"}, {"file": "clips/030.mp4", "rev_file": "clips/030-reverse.mp4"}, {"file": "clips/031.mp4", "rev_file": "clips/031-reverse.mp4"}, {"file": "clips/032.mp4", "rev_file": "clips/032-reverse.mp4"}, {"file": "clips/033.mp4", "rev_file": "clips/033-reverse.mp4"}, {"file": "clips/034.mp4", "rev_file": "clips/034-reverse.mp4"}, {"file": "clips/035.mp4", "rev_file": "clips/035-reverse.mp4"}, {"file": "clips/036.mp4", "rev_file": "clips/036-reverse.mp4"}, {"file": "clips/037.mp4", "rev_file": "clips/037-reverse.mp4"}, {"file": "clips/038.mp4", "rev_file": "clips/038-reverse.mp4"}, {"file": "clips/039.mp4", "rev_file": "clips/039-reverse.mp4"}, {"file": "clips/040.mp4", "rev_file": "clips/040-reverse.mp4"}, {"file": "clips/041.mp4", "rev_file": "clips/041-reverse.mp4"}, {"file": "clips/042.mp4", "rev_file": "clips/042-reverse.mp4"}, {"file": "clips/043.mp4", "rev_file": "clips/043-reverse.mp4"}, {"file": "clips/044.mp4", "rev_file": "clips/044-reverse.mp4"}, {"file": "clips/045.mp4", "rev_file": "clips/045-reverse.mp4"}, {"file": "clips/046.mp4", "rev_file": "clips/046-reverse.mp4"}, {"file": "clips/047.mp4", "rev_file": "clips/047-reverse.mp4"}, {"file": "clips/048.mp4", "rev_file": "clips/048-reverse.mp4"}, {"file": "clips/049.mp4", "rev_file": "clips/049-reverse.mp4"}, {"file": "clips/050.mp4", "rev_file": "clips/050-reverse.mp4"}, {"file": "clips/051.mp4", "rev_file": "clips/051-reverse.mp4"}, {"file": "clips/052.mp4", "rev_file": "clips/052-reverse.mp4"}, {"file": "clips/053.mp4", "rev_file": "clips/053-reverse.mp4"}, {"file": "clips/054.mp4", "rev_file": "clips/054-reverse.mp4"}, {"file": "clips/055.mp4", "rev_file": "clips/055-reverse.mp4"}, {"file": "clips/056.mp4", "rev_file": "clips/056-reverse.mp4"}, {"file": "clips/057.mp4", "rev_file": "clips/057-reverse.mp4"}, {"file": "clips/058.mp4", "rev_file": "clips/058-reverse.mp4"}, {"file": "clips/059.mp4", "rev_file": "clips/059-reverse.mp4"}, {"file": "clips/060.mp4", "rev_file": "clips/060-reverse.mp4"}, {"file": "clips/061.mp4", "rev_file": "clips/061-reverse.mp4"}, {"file": "clips/062.mp4", "rev_file": "clips/062-reverse.mp4"}, {"file": "clips/063.mp4", "rev_file": "clips/063-reverse.mp4"}];
+const video = document.getElementById('screen');
+const help = document.getElementById('help');
+let index = 0;
+function load(n, reverse = false) {
+  if (n < 0 || n >= slides.length) return;
+  index = n;
+  document.getElementById('error').style.display = 'none';
+  video.src = slides[index][reverse ? 'rev_file' : 'file'];
+  video.play().catch(() => { help.hidden = false; });
+}
+function next() {
+  if (video.paused && !video.ended && video.currentTime > 0) video.play().catch(() => {});
+  else load(index + 1);
+}
+function fullscreen() {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(() => {});
+  help.hidden = true;
+}
+video.addEventListener('error', () => { document.getElementById('error').style.display = 'block'; });
+document.getElementById('next').onclick = next;
+document.getElementById('previous').onclick = () => load(index - 1);
+document.getElementById('fullscreen').onclick = fullscreen;
+video.onclick = next;
+document.addEventListener('keydown', event => {
+  if (event.ctrlKey || event.altKey || event.metaKey) return;
+  switch (event.key.toLowerCase()) {
+    case 'arrowright': case 'pagedown': next(); break;
+    case 'arrowleft': case 'pageup': load(index - 1); break;
+    case 'v': if (index > 0) load(index - 1, true); break;
+    case 'r': load(index); break;
+    case ' ': if (video.paused) video.play().catch(() => {}); else video.pause(); break;
+    case 'f': fullscreen(); break;
+    case 'h': help.hidden = !help.hidden; break;
+    case 'home': load(0); break;
+    case 'end': load(slides.length - 1); break;
+    default: return;
+  }
+  event.preventDefault();
+});
+load(0);
+</script>
+</html>

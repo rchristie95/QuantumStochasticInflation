@@ -1,5 +1,15 @@
 # 25-minute version
 
+On another computer, pull/download the complete repository and double-click
+`../Start short presentation.cmd`, or open `Portable/index.html` in Chrome or
+Edge. The portable copy includes all rendered videos and needs no Python, Manim,
+LaTeX, or installation. Extract downloaded ZIPs before launching. Press F for
+fullscreen, Right/Left to advance/go back, Space to pause, V for reverse, R to
+replay, and H to hide/show help. The last frame holds until you advance.
+
+After rendering changes, regenerate the portable copy with
+`..\..\.manim-venv\Scripts\python.exe build_portable.py` and commit `Portable/`.
+
 The presentation and speaking script use 27 slide/topic numbers. Successive
 reveals on the same canvas keep the same number; Right-arrow pauses remain.
 `slide_numbering.py` defines the shared boundaries. The speaking script has one

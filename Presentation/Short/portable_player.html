@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Stochastic Inflation — Short presentation</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#101824;color:#edf3fa;font:16px system-ui;overflow:hidden}
+video{width:100%;height:100%;object-fit:contain;display:block}
+#help{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#101824ee;padding:10px 16px;border-radius:8px;white-space:nowrap}
+button{font:inherit;color:inherit;background:#263b53;border:0;border-radius:4px;padding:5px 10px;cursor:pointer}
+#error{position:fixed;inset:30%;background:#101824;padding:24px;display:none}
+</style>
+<video id="screen" muted playsinline preload="auto"></video>
+<div id="help"><button id="previous">←</button> <button id="next">Next →</button> Space: pause · V: reverse · R: replay · H: help <button id="fullscreen">Fullscreen</button></div>
+<div id="error" role="alert">A video could not load. Download or clone the complete repository, then open this file from the extracted folder. Keep the clips folder beside index.html.</div>
+<script>
+'use strict';
+const slides = __PLAYLIST__;
+const video = document.getElementById('screen');
+const help = document.getElementById('help');
+let index = 0;
+function load(n, reverse = false) {
+  if (n < 0 || n >= slides.length) return;
+  index = n;
+  document.getElementById('error').style.display = 'none';
+  video.src = slides[index][reverse ? 'rev_file' : 'file'];
+  video.play().catch(() => { help.hidden = false; });
+}
+function next() {
+  if (video.paused && !video.ended && video.currentTime > 0) video.play().catch(() => {});
+  else load(index + 1);
+}
+function fullscreen() {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(() => {});
+  help.hidden = true;
+}
+video.addEventListener('error', () => { document.getElementById('error').style.display = 'block'; });
+document.getElementById('next').onclick = next;
+document.getElementById('previous').onclick = () => load(index - 1);
+document.getElementById('fullscreen').onclick = fullscreen;
+video.onclick = next;
+document.addEventListener('keydown', event => {
+  if (event.ctrlKey || event.altKey || event.metaKey) return;
+  switch (event.key.toLowerCase()) {
+    case 'arrowright': case 'pagedown': next(); break;
+    case 'arrowleft': case 'pageup': load(index - 1); break;
+    case 'v': if (index > 0) load(index - 1, true); break;
+    case 'r': load(index); break;
+    case ' ': if (video.paused) video.play().catch(() => {}); else video.pause(); break;
+    case 'f': fullscreen(); break;
+    case 'h': help.hidden = !help.hidden; break;
+    case 'home': load(0); break;
+    case 'end': load(slides.length - 1); break;
+    default: return;
+  }
+  event.preventDefault();
+});
+load(0);
+</script>
+</html>
