@@ -1,7 +1,10 @@
 # Generated renders and review artifacts; retain locally for animation caching.
-/media/
-/slides/
-/previews/
+/Long/media/
+/Long/slides/
+/Long/previews/
+/Short/media/
+/Short/slides/
+/Short/previews/
 __pycache__/
 *.py[cod]
 *.log

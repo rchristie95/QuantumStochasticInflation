@@ -1,0 +1,489 @@
+[
+  {
+    "short_action": 1,
+    "title": "Title page",
+    "long_actions": [
+      1
+    ]
+  },
+  {
+    "short_action": 2,
+    "title": "Talk outline",
+    "long_actions": [
+      2
+    ]
+  },
+  {
+    "short_action": 3,
+    "title": "Classical theory / chapter",
+    "long_actions": [
+      3
+    ]
+  },
+  {
+    "short_action": 4,
+    "title": "Gradients and separate regions",
+    "long_actions": [
+      11
+    ]
+  },
+  {
+    "short_action": 5,
+    "title": "Conditions for local evolution",
+    "long_actions": [
+      12
+    ]
+  },
+  {
+    "short_action": 6,
+    "title": "Today's Hubble volume contains many regions",
+    "long_actions": [
+      13
+    ]
+  },
+  {
+    "short_action": 7,
+    "title": "What stochastic inflation does",
+    "long_actions": [
+      8
+    ]
+  },
+  {
+    "short_action": 8,
+    "title": "The sharp Fourier window",
+    "long_actions": [
+      9
+    ]
+  },
+  {
+    "short_action": 9,
+    "title": "Cutoff sweep: boundary kicks",
+    "long_actions": [
+      10
+    ]
+  },
+  {
+    "short_action": 10,
+    "title": "Phase-space Langevin dynamics",
+    "long_actions": [
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "short_action": 11,
+    "title": "The light-field slow-roll limit",
+    "long_actions": [
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  {
+    "short_action": 12,
+    "title": "Toy model / chapter",
+    "long_actions": [
+      21
+    ]
+  },
+  {
+    "short_action": 13,
+    "title": "Average coordinate and total momentum",
+    "long_actions": [
+      22,
+      23,
+      24,
+      25
+    ]
+  },
+  {
+    "short_action": 14,
+    "title": "Add one fresh oscillator",
+    "long_actions": [
+      26,
+      27,
+      28
+    ]
+  },
+  {
+    "short_action": 15,
+    "title": "Keep the complementary canonical pair",
+    "long_actions": [
+      29,
+      30,
+      31
+    ]
+  },
+  {
+    "short_action": 16,
+    "title": "A canonical and unitary redefinition",
+    "long_actions": [
+      32,
+      33,
+      34,
+      35,
+      36
+    ]
+  },
+  {
+    "short_action": 17,
+    "title": "Product inputs become entangled outputs",
+    "long_actions": [
+      37
+    ]
+  },
+  {
+    "short_action": 18,
+    "title": "Specify the pure Gaussian input covariance",
+    "long_actions": [
+      38
+    ]
+  },
+  {
+    "short_action": 19,
+    "title": "Inspect the input position and momentum marginals",
+    "long_actions": [
+      39
+    ]
+  },
+  {
+    "short_action": 20,
+    "title": "Redefine the two output modes",
+    "long_actions": [
+      40
+    ]
+  },
+  {
+    "short_action": 21,
+    "title": "The entangled joint output is still pure",
+    "long_actions": [
+      41
+    ]
+  },
+  {
+    "short_action": 22,
+    "title": "Tracing the collective complement",
+    "long_actions": [
+      42
+    ]
+  },
+  {
+    "short_action": 23,
+    "title": "Trace out the complementary oscillator",
+    "long_actions": [
+      43
+    ]
+  },
+  {
+    "short_action": 24,
+    "title": "The retained oscillator is mixed",
+    "long_actions": [
+      44
+    ]
+  },
+  {
+    "short_action": 25,
+    "title": "Measuring vs discarding the decoupled mode",
+    "long_actions": [
+      51
+    ]
+  },
+  {
+    "short_action": 26,
+    "title": "Fock and position records",
+    "long_actions": [
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ]
+  },
+  {
+    "short_action": 27,
+    "title": "Recorded rank-one outcomes preserve purity",
+    "long_actions": [
+      52
+    ]
+  },
+  {
+    "short_action": 28,
+    "title": "Oscillator trajectories: n=1",
+    "long_actions": [
+      53
+    ]
+  },
+  {
+    "short_action": 29,
+    "title": "Oscillator trajectories: n=2",
+    "long_actions": [
+      54
+    ]
+  },
+  {
+    "short_action": 30,
+    "title": "Oscillator trajectories: n=3",
+    "long_actions": [
+      55
+    ]
+  },
+  {
+    "short_action": 31,
+    "title": "Quantum stochastic inflation / chapter",
+    "long_actions": [
+      60
+    ]
+  },
+  {
+    "short_action": 32,
+    "title": "Canonical coarse-grained field variables",
+    "long_actions": [
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      75,
+      76,
+      77
+    ]
+  },
+  {
+    "short_action": 33,
+    "title": "The normalized canonical field algebra",
+    "long_actions": [
+      70,
+      71,
+      72
+    ]
+  },
+  {
+    "short_action": 34,
+    "title": "The homogeneous patch Hamiltonian",
+    "long_actions": [
+      73,
+      74
+    ]
+  },
+  {
+    "short_action": 35,
+    "title": "Bulk and boundary shell",
+    "long_actions": [
+      78
+    ]
+  },
+  {
+    "short_action": 36,
+    "title": "Select the collective bulk and shell inputs",
+    "long_actions": [
+      79
+    ]
+  },
+  {
+    "short_action": 37,
+    "title": "Prepare a product with the vacuum shell",
+    "long_actions": [
+      80
+    ]
+  },
+  {
+    "short_action": 38,
+    "title": "Incoming-bulk evolution",
+    "long_actions": [
+      81
+    ]
+  },
+  {
+    "short_action": 39,
+    "title": "Apply the incoming-bulk unitary",
+    "long_actions": [
+      82
+    ]
+  },
+  {
+    "short_action": 40,
+    "title": "Entangling redefinition",
+    "long_actions": [
+      83
+    ]
+  },
+  {
+    "short_action": 41,
+    "title": "Identify the redefined Hilbert-space factors",
+    "long_actions": [
+      84
+    ]
+  },
+  {
+    "short_action": 42,
+    "title": "Tracing the decoupled mode",
+    "long_actions": [
+      85
+    ]
+  },
+  {
+    "short_action": 43,
+    "title": "The single boundary-adapted channel",
+    "long_actions": [
+      86
+    ]
+  },
+  {
+    "short_action": 44,
+    "title": "Normalize the boundary-adapted oscillator",
+    "long_actions": [
+      87
+    ]
+  },
+  {
+    "short_action": 45,
+    "title": "Identify the single Lindblad operator",
+    "long_actions": [
+      88
+    ]
+  },
+  {
+    "short_action": 46,
+    "title": "The short-time joint state",
+    "long_actions": [
+      89,
+      90,
+      92,
+      93
+    ]
+  },
+  {
+    "short_action": 47,
+    "title": "Trace and sum the diagonal blocks",
+    "long_actions": [
+      91,
+      94,
+      95
+    ]
+  },
+  {
+    "short_action": 48,
+    "title": "One quantum channel",
+    "long_actions": [
+      96
+    ]
+  },
+  {
+    "short_action": 49,
+    "title": "Identify the effective Hamiltonian",
+    "long_actions": [
+      97
+    ]
+  },
+  {
+    "short_action": 50,
+    "title": "One non-Hermitian channel supplies damping and diffusion",
+    "long_actions": [
+      98
+    ]
+  },
+  {
+    "short_action": 51,
+    "title": "Back to the boundary channel",
+    "long_actions": [
+      102
+    ]
+  },
+  {
+    "short_action": 52,
+    "title": "Follow a conditional quantum trajectory",
+    "long_actions": [
+      103
+    ]
+  },
+  {
+    "short_action": 53,
+    "title": "Average the conditional trajectories",
+    "long_actions": [
+      104
+    ]
+  },
+  {
+    "short_action": 54,
+    "title": "Field POVM: read one decoupled quadrature",
+    "long_actions": [
+      109
+    ]
+  },
+  {
+    "short_action": 55,
+    "title": "A quadrature record has a Wiener innovation",
+    "long_actions": [
+      110
+    ]
+  },
+  {
+    "short_action": 56,
+    "title": "The normalized stochastic Schrodinger drift",
+    "long_actions": [
+      111
+    ]
+  },
+  {
+    "short_action": 57,
+    "title": "Complete the diffusive pure-state equation",
+    "long_actions": [
+      112
+    ]
+  },
+  {
+    "short_action": 58,
+    "title": "Massive spectator drift",
+    "long_actions": [
+      113,
+      114,
+      115,
+      116
+    ]
+  },
+  {
+    "short_action": 59,
+    "title": "Three mass regimes",
+    "long_actions": [
+      117,
+      118,
+      119,
+      120
+    ]
+  },
+  {
+    "short_action": 60,
+    "title": "Mass-dependent Wigner dynamics",
+    "long_actions": [
+      121
+    ]
+  },
+  {
+    "short_action": 61,
+    "title": "Prepare the initially pure field Wigner functions",
+    "long_actions": [
+      122
+    ]
+  },
+  {
+    "short_action": 62,
+    "title": "Evolve Wigner densities and compare purity",
+    "long_actions": [
+      123
+    ]
+  },
+  {
+    "short_action": 63,
+    "title": "Thanks for listening",
+    "long_actions": [
+      124
+    ]
+  }
+]

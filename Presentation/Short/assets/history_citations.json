@@ -1,0 +1,27 @@
+{
+  "source": "INSPIRE HEP",
+  "retrieved_on": "2026-10-29",
+  "papers": [
+    {
+      "label": "Starobinsky (1986)",
+      "record_id": "238463",
+      "title": "STOCHASTIC DE SITTER (INFLATIONARY) STAGE IN THE EARLY UNIVERSE",
+      "citation_count": 564,
+      "source_url": "https://inspirehep.net/literature/238463"
+    },
+    {
+      "label": "Nambu and Sasaki (1988)",
+      "record_id": "251873",
+      "title": "Stochastic Stage of an Inflationary Universe Model",
+      "citation_count": 103,
+      "source_url": "https://inspirehep.net/literature/251873"
+    },
+    {
+      "label": "Starobinsky and Yokoyama (1994)",
+      "record_id": "374606",
+      "title": "Equilibrium state of a selfinteracting scalar field in the De Sitter background",
+      "citation_count": 926,
+      "source_url": "https://inspirehep.net/literature/374606"
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+QUANTUM STOCHASTIC INFLATION — SPEAKING SCRIPT
+Robson Christie | Pusan National University, South Korea
+
+124 actions; 3,237 spoken words.
+Estimated delivery: 30.2–35.6 minutes, excluding questions.
+Allow approximately 30–35 minutes in the programme, including brief pauses.
+Timestamps below use 125 words/minute, speaking during animations, plus
+three seconds per action for pointing, equation reading and advancing.
+Action 1 is the opening state. Press Right once for each subsequent action.
+Read only the quoted prose aloud; headings and timestamps are cues.
+Pause longer where needed; the audience controls no automatic timer.
+
+The removed momentum/velocity action shifts old actions 75–125 down by one.
+Trace preparation is action 42; merging/trace is 43; reduced purity is 44.
+
+ACTION 001 | 00:00–00:20 | Title page
+"I'm Robson Christie, from Pusan National University in South Korea. Today I'll describe our work on quantum stochastic inflation, with Jaewoo Joo, Greg Kaplanek, Vincent Vennin and David Wands. The paper is available through this QR code."
+
+ACTION 002 | 00:20–00:37 | Talk outline
+"I'll begin with the classical stochastic picture, use a small oscillator model to explain the quantum information involved, and then construct the corresponding channel for an inflationary field."
+
+ACTION 003 | 00:37–00:47 | Classical theory / chapter
+"Let's start with classical stochastic inflation and the moving separation between long and short wavelengths."
+
+ACTION 004 | 00:47–01:03 | Origins
+"Starobinsky's formulation treats modes entering the long-wavelength sector as a stochastic source. It gives a practical way to describe the cumulative effect of quantum fluctuations on large scales."
+
+ACTION 005 | 01:03–01:21 | Developments
+"Nambu and Sasaki developed the phase-space description and studied relaxation toward slow roll. Their result depends on the model and initial conditions; slow roll is an approximation we will identify separately."
+
+ACTION 006 | 01:21–01:36 | Equilibrium with interactions
+"Starobinsky and Yokoyama then showed how self-interactions can lead to an equilibrium distribution. This is one example of how useful the stochastic framework has become."
+
+ACTION 007 | 01:36–01:53 | Quantum question
+"The question here is what quantum state underlies that stochastic description. In particular, how do a reduced quantum state and a trajectory conditioned on information relate to one another?"
+
+ACTION 008 | 01:53–02:10 | What stochastic inflation does
+"At a representative patch centre, define the long field by retaining Fourier modes below a moving cutoff. Q is the coarse-grained field amplitude, and N measures expansion in e-folds."
+
+ACTION 009 | 02:10–02:29 | The sharp Fourier window
+"The step function is one below the cutoff and zero above it. In de Sitter, the physical cutoff stays fixed while its comoving value grows. This brings additional modes into the long sector."
+
+ACTION 010 | 02:29–02:59 | Cutoff sweep: boundary kicks
+"The long field already contains modes at the start of this interval. Watch the cutoff sweep through the next modes, with each crossing contributing a signed kick below. At the end, shorter modes still lie outside the cutoff and continue oscillating. The blue dots record crossing amplitudes; this illustration isolates boundary kicks from subsequent bulk evolution."
+
+ACTION 011 | 02:59–03:16 | Gradients and separate regions
+"Why can we treat a sufficiently large region approximately homogeneously? Spatial gradients are suppressed by the square of the cutoff parameter. That gives a controlled starting point for local evolution."
+
+ACTION 012 | 03:16–03:35 | Conditions for local evolution
+"Local homogeneous evolution requires these gradients to be small. Slow roll is an additional assumption, rather than a consequence of coarse graining alone, and we can retain momentum when slow roll is inappropriate."
+
+ACTION 013 | 03:35–03:54 | Today's Hubble volume contains many regions
+"Today's Hubble volume contains many such late-inflation regions. These circles represent local coarse-grained regions schematically. Their histories can remain correlated through shared long-wavelength initial conditions and correlated forcing; they are not independent universes."
+
+ACTION 014 | 03:54–04:08 | Phase-space Langevin equations
+"The first phase-space Langevin equation evolves the coarse-grained field. It contains the ordinary deterministic drift and a stochastic contribution from the moving boundary."
+
+ACTION 015 | 04:08–04:23 | The momentum-density Langevin equation
+"The second equation evolves the momentum density. Keeping both variables lets us describe dynamics beyond a first-order slow-roll equation, including the response of massive fields."
+
+ACTION 016 | 04:23–04:39 | Specify the boundary-noise correlations
+"The boundary sources have a covariance matrix determined by the crossing modes. Field and momentum noise belong to the same construction, so their correlations must be treated consistently."
+
+ACTION 017 | 04:39–04:52 | Slow-roll reduction
+"We can now impose the extra slow-roll approximation. The momentum relaxes rapidly enough that the field approximately follows a first-order equation."
+
+ACTION 018 | 04:52–05:07 | Keep the slow-roll drift
+"The deterministic contribution is the potential slope divided by the Hubble friction factor, with a minus sign. It moves the field down the potential."
+
+ACTION 019 | 05:07–05:25 | Add the light-field stochastic increment
+"For a light field in the appropriate limit, the moving boundary adds the familiar H over two pi stochastic increment. This is the quantum fluctuation contribution to the classical stochastic equation."
+
+ACTION 020 | 05:25–05:38 | Normalize the Wiener increment
+"The Wiener increment has zero mean and variance dN. Individual trajectories fluctuate, while an ensemble of trajectories evolves a probability distribution."
+
+ACTION 021 | 05:38–05:49 | Toy model / chapter
+"To understand the quantum structure behind this, let's first replace the field by a collection of oscillators."
+
+ACTION 022 | 05:49–06:05 | Many oscillators, one collective mode
+"Take n independent canonical oscillators. We want to retain one collective degree of freedom while still keeping track of how its microscopic definition changes when another oscillator arrives."
+
+ACTION 023 | 06:05–06:17 | Define the average coordinate
+"Define the collective coordinate as the average of the microscopic positions. This choice makes it an intensive quantity."
+
+ACTION 024 | 06:17–06:32 | Define the total momentum
+"Its canonical partner is the total momentum, the sum rather than the average of the individual momenta. The distinction will matter again for the field."
+
+ACTION 025 | 06:32–06:45 | Check the collective commutator
+"Only equal-index microscopic commutators contribute. Their sum cancels the factor of n from the position average, leaving the canonical commutator i."
+
+ACTION 026 | 06:45–06:58 | Adding a mode
+"Now introduce one fresh oscillator. We have the previous collective mode on the left and the incoming mode on the right."
+
+ACTION 027 | 06:58–07:15 | Update the collective coordinate
+"The new average weights the old average by n, adds the fresh position, and divides by n plus one. This is simply the average over the enlarged collection."
+
+ACTION 028 | 07:15–07:26 | Add the canonical momenta
+"The total momentum updates by adding the incoming momentum. Together these define the new collective canonical pair."
+
+ACTION 029 | 07:26–07:45 | The complementary output
+"We also need a complementary output. The displayed position map gives the new average and a difference coordinate. For n equals one, the diagram shows their directions; the matrix supplies their actual normalization."
+
+ACTION 030 | 07:45–08:00 | Transform the conjugate momenta
+"The momentum transformation is fixed by preserving the canonical algebra. The total momentum belongs to the collective output, and the weighted difference belongs to the complement."
+
+ACTION 031 | 08:00–08:14 | Both outputs retain the input information
+"Together, the two outputs retain all information in the two inputs. So far the operation is reversible: neither output has been traced out."
+
+ACTION 032 | 08:14–08:29 | Canonical output pairs
+"We can implement this coordinate redefinition as a map between coordinate bases. The output labels are precisely the collective and complementary coordinates just defined."
+
+ACTION 033 | 08:29–08:44 | The coordinate redefinition is unitary
+"The absolute determinant of the position map is one. The change of variables preserves the inner product, giving a unitary operation on the joint state."
+
+ACTION 034 | 08:44–08:53 | Each output is a canonical oscillator
+"Each output has its own canonical position-momentum commutator. Both are legitimate quantum oscillators."
+
+ACTION 035 | 08:53–09:04 | The two positions and the two momenta commute
+"The positions of the two modes commute, and their momenta commute. This identifies distinct canonical factors."
+
+ACTION 036 | 09:04–09:17 | Cross commutators do not forbid entanglement
+"The cross position-momentum commutators also vanish. But commuting factors can still have an entangled state. Algebraic independence does not imply statistical independence."
+
+ACTION 037 | 09:17–09:34 | Product inputs become entangled outputs
+"Let's see that in a Gaussian example. Start with two pure squeezed inputs. This expression is their joint four-dimensional Wigner function, which initially factorizes between the two input modes."
+
+ACTION 038 | 09:34–09:53 | Specify the pure Gaussian input covariance
+"For this worked example n equals one. The covariance is diagonal, with opposite squeezing in the two inputs. We retain the general coordinate names so the connection with the preceding map stays visible."
+
+ACTION 039 | 09:53–10:20 | Inspect the input position and momentum marginals
+"W n joint is the joint four-dimensional Wigner function. These colour maps show its exact position-position and momentum-momentum marginals, integrating over the other coordinates. Both use the same density scale. The incoming momentum is horizontal on the right, ready for the retained output momentum to become the vertical axis."
+
+ACTION 040 | 10:20–10:44 | Redefine the two output modes
+"Now express that same Wigner function in the new canonical coordinates, denoted W n prime joint. The density maps update continuously under the coordinate change. Their tilted profiles show correlations between the output modes. For these inputs the new collective and complementary factors are entangled."
+
+ACTION 041 | 10:44–11:07 | The entangled joint output is still pure
+"Here is the transformed joint Gaussian explicitly. The cross terms couple the collective and complementary positions, and their momenta. This is still the same joint Wigner function in the new coordinates. Both output factors remain present, and the joint state remains pure."
+
+ACTION 042 | 11:07–11:34 | Tracing the collective complement
+"Integrate that joint Gaussian over the complementary position and momentum. The result is four over five pi, times the exponential of minus eight fifths Q squared minus two fifths P squared. This is the traced Wigner function. The next animation shows how the retained axes combine to display it."
+
+ACTION 043 | 11:34–11:56 | Trace out the complementary oscillator
+"Watch the complementary directions contract as the retained axes move together. This motion illustrates the integral written above. The final colour map plots precisely that traced Gaussian, on the same density scale as before. The complementary mode has been traced out."
+
+ACTION 044 | 11:56–12:15 | The retained oscillator is mixed
+"The retained covariance has entries five sixteenths and five quarters. Its purity is four fifths. The full state was pure, but the reduced state is mixed because the two outputs were entangled."
+
+ACTION 045 | 12:15–12:34 | Fock and position readout
+"There is another way to use the output: condition on a measurement record. Consider the same pre-trace joint state on separate trials, first with a Fock measurement and then with a position measurement."
+
+ACTION 046 | 12:34–12:46 | Fock effects resolve the identity
+"The number-state effects sum to the identity. This is a complete measurement of the complementary oscillator in its Fock basis."
+
+ACTION 047 | 12:46–13:01 | Condition on a recorded Fock outcome
+"For a particular recorded number, project onto that branch and normalize by its probability. The result describes the retained state conditional on that specific record."
+
+ACTION 048 | 13:01–13:13 | An alternative position readout
+"Alternatively, measure a position quadrature of the complementary mode. This is a different readout of the same joint output."
+
+ACTION 049 | 13:13–13:29 | Position completeness uses an integral
+"Completeness now uses an integral over the continuous outcomes. An exact position outcome is described by a probability density, rather than a finite probability at one point."
+
+ACTION 050 | 13:29–13:45 | Condition on a recorded position outcome
+"Conditioning on the recorded position selects a slice of the joint wavefunction and normalizes it. That gives a different conditional retained state from the Fock readout."
+
+ACTION 051 | 13:45–14:17 | Measuring vs discarding the decoupled mode
+"The paper's figure shows the selective route. The incoming vacuum shell and bulk undergo the same entangling redefinition. A rank-one measurement of the decoupled mode then selects a pure conditioned bulk state. If we instead trace out that mode, we obtain the mixed reduced state. Summing or integrating the conditioned states over all outcomes recovers precisely that same reduced state."
+
+ACTION 052 | 14:17–14:33 | Recorded rank-one outcomes preserve purity
+"With a pure joint input and an ideal recorded rank-one outcome, the conditional retained state is pure. Finite resolution with unresolved information need not preserve this property."
+
+ACTION 053 | 14:33–14:49 | Oscillator trajectories: n=1
+"Here are three descriptions of the oscillator sequence: the unconditioned reduced state, a Fock-conditioned state, and a position-conditioned state. Initially they start from the same single oscillator."
+
+ACTION 054 | 14:49–15:03 | Oscillator trajectories: n=2
+"Add the second oscillator. Each conditional column follows its own specified record. The unconditioned column averages over all possible outcomes, and can become mixed."
+
+ACTION 055 | 15:03–15:21 | Oscillator trajectories: n=3
+"Add the third oscillator. Fock conditioning can generate negative Wigner regions, while the position-conditioned Gaussian state has a different shape. All plots share fixed scales so we can compare them directly."
+
+ACTION 056 | 15:21–15:37 | Oscillator trajectories: n=4
+"The fourth oscillator continues the same procedure: add an input, redefine the collective mode, then trace or condition on the complement. Each step updates the retained state."
+
+ACTION 057 | 15:37–15:53 | Oscillator trajectories: n=5
+"With the fifth oscillator, the previous measurement record remains part of each conditional history. These are sequential conditional states, rather than independent snapshots chosen at each step."
+
+ACTION 058 | 15:53–16:06 | Oscillator trajectories: n=6
+"The sixth addition makes the distinction persistent. A chosen record tells us more about the retained state than the unconditioned description alone."
+
+ACTION 059 | 16:06–16:23 | Oscillator trajectories: n=7
+"After seven oscillators, the three columns remain different but compatible descriptions. Averaging the full outcome ensemble recovers the reduced column; averaging just these two selected records would not."
+
+ACTION 060 | 16:23–16:32 | Quantum stochastic inflation / chapter
+"Now let's carry the same structure into quantum field theory during inflation."
+
+ACTION 061 | 16:32–16:48 | The spectator Lagrangian
+"We begin with the spectator field and derive the canonical variables, rather than assuming that a classical stochastic field already contains the quantum state information we need."
+
+ACTION 062 | 16:48–17:02 | Choose the free spectator Lagrangian
+"Choose a free massive spectator. This lets us work out the channel explicitly and then examine how its dynamics depends on the mass."
+
+ACTION 063 | 17:02–17:15 | Write the action in cosmological time
+"Writing the action in cosmological time makes the scale-factor dependence explicit. This is the starting point for the canonical momentum and Hamiltonian."
+
+ACTION 064 | 17:15–17:31 | Canonical quantisation
+"The canonical field momentum is a cubed times the time derivative of the field. It follows by differentiating the Lagrangian with respect to the field velocity."
+
+ACTION 065 | 17:31–17:45 | Legendre transform to the Hamiltonian density
+"The Legendre transform gives the Hamiltonian density. It contains kinetic energy, gradient energy and the mass term, each with its appropriate scale-factor dependence."
+
+ACTION 066 | 17:45–17:57 | Impose the equal-time field commutator
+"Canonical quantization imposes the equal-time field-momentum commutator. We'll use this local algebra to normalize the retained collective degree of freedom."
+
+ACTION 067 | 17:57–18:14 | Canonical coarse-grained field variables
+"We now smear the field to define a coarse-grained canonical pair. The field variable is an average, while its conjugate is a total momentum associated with an effective volume."
+
+ACTION 068 | 18:14–18:26 | Define the averaged quantum field
+"Q is the field smeared with the normalized window. It represents the averaged quantum field in our chosen region."
+
+ACTION 069 | 18:26–18:41 | Define the total canonical field momentum
+"P uses the same window and the effective comoving volume to define the total canonical field momentum. That volume is determined by the squared-window normalization."
+
+ACTION 070 | 18:41–18:55 | The normalized smeared field algebra
+"To check the algebra, insert the smeared definitions into the commutator. The field commutator introduces a spatial delta function inside the two integrals."
+
+ACTION 071 | 18:55–19:07 | Collapse the field delta function
+"The delta function collapses one integral. The remaining squared-window factor cancels the effective volume, leaving exactly i."
+
+ACTION 072 | 19:07–19:23 | Read the canonical field dimensions
+"In units with hbar equal to one, Q has mass dimension one and P has mass dimension minus one. Their product therefore has the correct dimensionless canonical normalization."
+
+ACTION 073 | 19:23–19:41 | The homogeneous patch Hamiltonian
+"For the sharp Fourier window, Parseval's relation fixes the effective volume. Its physical value is constant in exact de Sitter. This is a window-defined effective volume, not a literal real-space top-hat region."
+
+ACTION 074 | 19:41–19:57 | Obtain the collective bulk Hamiltonian
+"The resulting K is the collective oscillator generator in e-fold time. It contains the kinetic and mass contributions shown here. The moving-boundary redefinition will contribute separately."
+
+ACTION 075 | 19:57–20:12 | The retained QFT mode
+"Return to the Fourier representation of the retained field. The cutoff selects the infrared modes contributing to this collective coordinate at the representative patch centre."
+
+ACTION 076 | 20:12–20:24 | Select the total field momentum
+"Its partner is the total field momentum. Together these describe one retained canonical mode within the larger infrared sector."
+
+ACTION 077 | 20:24–20:40 | Normalize the retained QFT mode
+"The displayed normalization ensures that this pair has the canonical commutator. Keeping that normalization explicit prevents the average field from being paired with an incorrectly averaged momentum."
+
+ACTION 078 | 20:40–20:54 | Bulk and boundary shell
+"The next step separates the previously retained bulk from a fresh boundary shell. This diagram shows the active collective factors entering one infinitesimal update."
+
+ACTION 079 | 20:54–21:10 | Select the collective bulk and shell inputs
+"Select the existing collective oscillator and the incoming shell oscillator. The full field contains additional factors, but these are the two relevant inputs for this channel construction."
+
+ACTION 080 | 21:10–21:24 | Prepare a product with the vacuum shell
+"Prepare their product state, with the fresh shell in its incoming vacuum. This is the initial state before bulk evolution and redefinition."
+
+ACTION 081 | 21:24–21:37 | Incoming-bulk evolution
+"First consider the evolution generated internally by the retained bulk. Its unitary is generated by the K we just defined."
+
+ACTION 082 | 21:37–21:52 | Apply the incoming-bulk unitary
+"Apply that unitary to the retained state while the shell remains in the incoming vacuum. This keeps the ordering of internal evolution and boundary redefinition explicit."
+
+ACTION 083 | 21:52–22:08 | Entangling redefinition
+"Next apply the redefinition that incorporates the fresh shell into the collective variable. As in the toy model, this generally creates correlations between the two outgoing factors."
+
+ACTION 084 | 22:08–22:24 | Identify the redefined Hilbert-space factors
+"The outputs are the enlarged retained collective mode and its complementary factor. Calling the latter decoupled identifies a factor; it does not claim the joint state is uncorrelated."
+
+ACTION 085 | 22:24–22:39 | Tracing the decoupled mode
+"Trace out that complementary output to obtain the next retained state. This is the field version of the reduced-state operation we animated for the oscillators."
+
+ACTION 086 | 22:39–22:52 | The single boundary-adapted channel
+"The boundary input determines a particular adapted operator A. It packages the field and momentum contributions entering the quantum channel."
+
+ACTION 087 | 22:52–23:05 | Normalize the boundary-adapted oscillator
+"Its normalization makes it a canonical annihilation operator for the boundary-adapted mode. The complex coefficients encode the incoming mode information."
+
+ACTION 088 | 23:05–23:17 | Identify the single Lindblad operator
+"There is one Lindblad operator, proportional to A. It combines the field and momentum structure in a single channel."
+
+ACTION 089 | 23:17–23:30 | From the short-time map to GKLS
+"To derive the master equation, expand the short-time map. The zero-quantum Kraus term contains the coherent contribution and the normalization correction."
+
+ACTION 090 | 23:30–23:46 | Include the one-quantum Kraus contribution
+"The one-quantum contribution is proportional to the square root of the time increment. Its product with its adjoint therefore contributes at first order to the density-matrix evolution."
+
+ACTION 091 | 23:46–23:59 | Check trace preservation to first order
+"The two Kraus contributions preserve trace through the order retained. This check ties the no-event normalization correction to the event contribution."
+
+ACTION 092 | 23:59–24:14 | Resolve the decoupled vacuum and one-quantum blocks
+"Before tracing, resolve the joint output into vacuum and one-quantum blocks. Each entry is an operator acting on the retained mode; off-diagonal entries encode output coherences."
+
+ACTION 093 | 24:14–24:28 | Expand the joint blocks in the boundary operator
+"Now substitute the boundary operator into those blocks. Keeping them visible makes clear which contributions survive when we trace the complementary factor."
+
+ACTION 094 | 24:28–24:40 | The partial trace removes the off-diagonal blocks
+"The partial trace selects diagonal output blocks. Off-diagonal blocks vanish because the corresponding output basis states are orthogonal."
+
+ACTION 095 | 24:40–24:52 | Sum the diagonal blocks
+"Adding the diagonal blocks yields the reduced update. The vacuum correction and one-quantum term combine into the dissipative contribution."
+
+ACTION 096 | 24:52–25:09 | One quantum channel
+"This gives the quantum master equation: a Hamiltonian commutator plus a Lindblad dissipator. It evolves the retained density matrix, including information that a field probability distribution alone does not specify."
+
+ACTION 097 | 25:09–25:24 | Identify the effective Hamiltonian
+"The effective Hamiltonian contains the ordinary collective oscillator terms and the extra term induced by redefinition. That separates the two ingredients of the update."
+
+ACTION 098 | 25:24–25:35 | One non-Hermitian channel supplies damping and diffusion
+"The single non-Hermitian channel supplies both damping and diffusion. These effects arise together from the same boundary construction."
+
+ACTION 099 | 25:35–25:50 | A different treatment of the output
+"We can revisit the treatment of the output. The toy model showed that tracing and retaining a readout lead to related but different descriptions."
+
+ACTION 100 | 25:50–26:04 | Trace out the output mode
+"If the output mode is traced out, the result is the unconditional reduced state. No particular measurement record is included in that state."
+
+ACTION 101 | 26:04–26:20 | Alternatively retain an output record
+"If an outcome is retained, we instead obtain a conditional trajectory. This is a choice of unravelling; it does not assert that inflation contains an additional physical detector."
+
+ACTION 102 | 26:20–26:34 | Back to the boundary channel
+"Apply that distinction to the field channel. The partial trace gives the master equation, while an efficient readout supplies a conditional quantum-state evolution."
+
+ACTION 103 | 26:34–26:47 | Follow a conditional quantum trajectory
+"With pure joint trajectories and efficient rank-one monitoring, the retained conditional state stays pure. The record specifies which trajectory is followed."
+
+ACTION 104 | 26:47–27:01 | Average the conditional trajectories
+"Average over the complete record ensemble to recover the reduced density matrix. The conditional and unconditional equations must agree through this ensemble relation."
+
+ACTION 105 | 27:01–27:15 | Field POVM: count the decoupled quanta
+"For Fock readout, the output effects count decoupled quanta. At the infinitesimal order of interest, vacuum and one-count outcomes supply the relevant update."
+
+ACTION 106 | 27:15–27:32 | The conditional count rate
+"The conditional count rate is three times the expectation of A dagger A. The counting increment is zero or one, with mean equal to that rate times dN."
+
+ACTION 107 | 27:32–27:46 | Evolve between recorded counts
+"Between recorded counts, the state follows the normalized no-count drift. The normalization term accounts for the information carried by the absence of a count."
+
+ACTION 108 | 27:46–28:01 | Apply the recorded quantum jump
+"When a count occurs, apply A and normalize the updated state. This produces a jump trajectory whose ensemble average follows the same master equation."
+
+ACTION 109 | 28:01–28:13 | Field POVM: read one decoupled quadrature
+"A quadrature readout gives a diffusive alternative. The measurement phase selects the output quadrature whose record we retain."
+
+ACTION 110 | 28:13–28:27 | A quadrature record has a Wiener innovation
+"The observed signal contains a conditional mean plus a Wiener innovation. Subtracting the predicted signal isolates the random innovation driving the conditional update."
+
+ACTION 111 | 28:27–28:39 | The normalized stochastic Schrodinger drift
+"The drift term includes the Hamiltonian and measurement-dependent normalization terms. These are required for a normalized conditional pure state."
+
+ACTION 112 | 28:39–28:54 | Complete the diffusive pure-state equation
+"Adding the stochastic term completes the diffusive Schrodinger equation. Its trajectories differ from counting trajectories, but averaging over their records yields the same reduced channel."
+
+ACTION 113 | 28:54–29:10 | Massive spectator dynamics
+"Finally, consider a free massive spectator in exact de Sitter. We can use the channel to study both the mean evolution and the covariance of the retained state."
+
+ACTION 114 | 29:10–29:26 | Evolve the mean collective field
+"The first equation relates the mean field velocity in e-fold time to the mean total momentum. This is the first part of the unconditional drift system."
+
+ACTION 115 | 29:26–29:37 | Evolve the mean total momentum
+"The second equation evolves the mean total momentum, including the mass force. Together these close the first-moment dynamics."
+
+ACTION 116 | 29:37–29:50 | Eliminate momentum to obtain the damped oscillator
+"Eliminate momentum to obtain a damped second-order equation for the mean field. Its characteristic roots determine three familiar mass regimes."
+
+ACTION 117 | 29:50–30:07 | Three mass regimes
+"The dividing value is mass over H equal to three halves. Below it the mean is overdamped; at it the roots coincide; above it the mean oscillates while decaying."
+
+ACTION 118 | 30:07–30:20 | Mean motion: light: overdamped
+"For the light example, mass over H equals one. The mean relaxes without oscillation. Its slower decay rate dominates at late times."
+
+ACTION 119 | 30:20–30:33 | Mean motion: critical
+"At the critical mass, the repeated root gives the boundary between overdamped and oscillatory behaviour. Watch the corresponding relaxation curve."
+
+ACTION 120 | 30:33–30:46 | Mean motion: heavy: underdamped
+"For the heavy example, mass over H equals two. The mean oscillates while its amplitude decays. Retaining momentum captures this behaviour."
+
+ACTION 121 | 30:46–31:02 | Mass-dependent Wigner dynamics
+"First moments are only part of the state. These panels show actual Gaussian Wigner densities in physical Q and P coordinates, with one shared logarithmic colour scale."
+
+ACTION 122 | 31:02–31:24 | Prepare the initially pure field Wigner functions
+"The examples are mass over H equal to one, one point five, and two. We begin with pure Gaussian states and then evolve their covariance. Each panel keeps fixed phase-space axes, so changes in width and orientation reflect the dynamics."
+
+ACTION 123 | 31:24–31:47 | Evolve Wigner densities and compare purity
+"Over ten e-folds, watch the Wigner densities and purity evolve together. The mass changes both the phase-space dynamics and the asymptotic mixedness. The reduced state contains more information than the mean trajectory, and conditional records provide a further level of description."
+
+ACTION 124 | 31:47–32:05 | Thanks for listening
+"Thank you for listening. The paper and contact details are here, and I'd be happy to discuss the boundary channel, the choice of unravelling, or the relation to the usual stochastic-inflation picture."

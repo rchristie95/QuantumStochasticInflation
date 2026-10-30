@@ -1,0 +1,127 @@
+{
+  "expected_steps": 63,
+  "original_topic_order": [
+    "Title page",
+    "Classical theory / chapter",
+    "Gradients and separate regions",
+    "What stochastic inflation does",
+    "Phase-space Langevin dynamics",
+    "Toy model / chapter",
+    "Average coordinate and total momentum",
+    "Product inputs become entangled outputs",
+    "Measuring vs discarding the decoupled mode",
+    "Oscillator trajectories: n=1",
+    "Quantum stochastic inflation / chapter",
+    "Canonical coarse-grained field variables",
+    "Bulk and boundary shell",
+    "The short-time joint state",
+    "One quantum channel",
+    "Back to the boundary channel",
+    "Field POVM: read one decoupled quadrature",
+    "Massive spectator drift",
+    "Mass-dependent Wigner dynamics"
+  ],
+  "reveal_sequences": {
+    "Title page": [
+      "Title page",
+      "Talk outline"
+    ],
+    "Classical theory / chapter": [
+      "Classical theory / chapter"
+    ],
+    "What stochastic inflation does": [
+      "What stochastic inflation does",
+      "The sharp Fourier window",
+      "Cutoff sweep: boundary kicks"
+    ],
+    "Phase-space Langevin dynamics": [
+      "Phase-space Langevin dynamics",
+      "The light-field slow-roll limit"
+    ],
+    "Toy model / chapter": [
+      "Toy model / chapter"
+    ],
+    "Average coordinate and total momentum": [
+      "Average coordinate and total momentum",
+      "Add one fresh oscillator",
+      "Keep the complementary canonical pair",
+      "A canonical and unitary redefinition"
+    ],
+    "Product inputs become entangled outputs": [
+      "Product inputs become entangled outputs",
+      "Specify the pure Gaussian input covariance",
+      "Inspect the input position and momentum marginals",
+      "Redefine the two output modes",
+      "The entangled joint output is still pure",
+      "Tracing the collective complement",
+      "Trace out the complementary oscillator",
+      "The retained oscillator is mixed"
+    ],
+    "Measuring vs discarding the decoupled mode": [
+      "Measuring vs discarding the decoupled mode",
+      "Fock and position records",
+      "Recorded rank-one outcomes preserve purity"
+    ],
+    "Oscillator trajectories: n=1": [
+      "Oscillator trajectories: n=1",
+      "Oscillator trajectories: n=2",
+      "Oscillator trajectories: n=3"
+    ],
+    "Quantum stochastic inflation / chapter": [
+      "Quantum stochastic inflation / chapter"
+    ],
+    "Canonical coarse-grained field variables": [
+      "Canonical coarse-grained field variables",
+      "The normalized canonical field algebra",
+      "The homogeneous patch Hamiltonian"
+    ],
+    "Bulk and boundary shell": [
+      "Bulk and boundary shell",
+      "Select the collective bulk and shell inputs",
+      "Prepare a product with the vacuum shell",
+      "Incoming-bulk evolution",
+      "Apply the incoming-bulk unitary",
+      "Entangling redefinition",
+      "Identify the redefined Hilbert-space factors",
+      "Tracing the decoupled mode",
+      "The single boundary-adapted channel",
+      "Normalize the boundary-adapted oscillator",
+      "Identify the single Lindblad operator"
+    ],
+    "The short-time joint state": [
+      "The short-time joint state",
+      "Trace and sum the diagonal blocks"
+    ],
+    "One quantum channel": [
+      "One quantum channel",
+      "Identify the effective Hamiltonian",
+      "One non-Hermitian channel supplies damping and diffusion"
+    ],
+    "Back to the boundary channel": [
+      "Back to the boundary channel",
+      "Follow a conditional quantum trajectory",
+      "Average the conditional trajectories"
+    ],
+    "Field POVM: read one decoupled quadrature": [
+      "Field POVM: read one decoupled quadrature",
+      "A quadrature record has a Wiener innovation",
+      "The normalized stochastic Schrodinger drift",
+      "Complete the diffusive pure-state equation"
+    ],
+    "Massive spectator drift": [
+      "Massive spectator drift",
+      "Three mass regimes"
+    ],
+    "Mass-dependent Wigner dynamics": [
+      "Mass-dependent Wigner dynamics",
+      "Prepare the initially pure field Wigner functions",
+      "Evolve Wigner densities and compare purity",
+      "Thanks for listening"
+    ],
+    "Gradients and separate regions": [
+      "Gradients and separate regions",
+      "Conditions for local evolution",
+      "Today's Hubble volume contains many regions"
+    ]
+  }
+}
